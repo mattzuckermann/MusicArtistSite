@@ -1,8 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `JZ Music Portfolio`,
+    description: `A music player for all audio content`,
+    author: `Matt Zuckermann`,
+    whatup: `hello`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -13,6 +14,14 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/src/posts`,
+      },
+    },
+    `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
@@ -31,4 +40,4 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // 'gatsby-plugin-offline',
   ],
-}
+};
