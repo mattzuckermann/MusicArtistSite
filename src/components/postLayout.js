@@ -14,6 +14,8 @@ export default class postLayout extends Component {
   }
 }
 
+//CHANGE
+
 export const query = graphql`
   query PostQuery($slug: String!) {
     markdownRemark(frontmatter: { slug: { eq: $slug } }) {
