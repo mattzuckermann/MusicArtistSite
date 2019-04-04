@@ -1,0 +1,39 @@
+{
+  "env": {
+    "browser": true,
+    "jquery": true
+  },
+  "extends": ["airbnb", "prettier", "react-app"],
+  "globals": {
+    "graphql": true,
+    "__PATH_PREFIX__": true
+  },
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": ["error"],
+    "comma-dangle": [2, "always-multiline"],
+    "func-names": 0,
+    "quotes": ["error", "single"],
+    "react/prefer-stateless-function": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-one-expression-per-line": 0,
+    "no-use-before-define": 0,
+    "react/prop-types": 0,
+    "import/no-extraneous-dependencies": 0,
+    "consistent-return": 0,
+    "no-shadow": [
+      "error",
+      {
+        "builtinGlobals": false,
+        "hoist": "functions",
+        "allow": ["size", "port", "err"]
+      }
+    ],
+    "no-param-reassign": [
+      0,
+      {
+        "props": false
+      }
+    ]
+  }
+}
