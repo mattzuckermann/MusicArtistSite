@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: `Josh Zuckermann - Music Portfolio`,
-    description: `A music player for all audio content created by Josh Zuckermann`,
+    title: `Zuckermann`,
+    description: `A music platform hosting all audio content created by Josh Zuckermann`,
     author: `Matt Zuckermann`,
   },
   plugins: [
@@ -17,12 +17,13 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `posts`,
-        path: `${__dirname}/src/posts`,
+        path: `${__dirname}/src/bios`,
       },
     },
     `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-typescript`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

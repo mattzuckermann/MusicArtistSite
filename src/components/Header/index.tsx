@@ -2,7 +2,7 @@ import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
 import './style.css';
-import joshLogo from '../../images/favicon.png';
+import joshLogo from '../../images/favicon.ico';
 import Archive from '../Archive';
 
 const Header = ({ siteTitle }) => (
@@ -55,6 +55,9 @@ const Header = ({ siteTitle }) => (
         </li>
       </ul>
     </div>
+    {() => {
+      const scott: string = true;
+    }}
   </header>
 );
 

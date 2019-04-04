@@ -17,9 +17,9 @@ const IndexPage = () => (
     </div>
     <br />
     <br />
-    {() => {
+    {/* {() => {
       const scott: boolean = 'hey';
-    }}
+    }} */}
     {/* <Archive /> */}
   </Layout>
 );
