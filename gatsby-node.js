@@ -18,8 +18,8 @@ exports.createPages = ({ graphql, actions }) => {
     graphql(ALL_POSTS_QUERY).then(results => {
       results.data.allMarkdownRemark.edges.forEach(({ node }) => {
         createPage({
-          path: `/post${node.frontmatter.slug}`,
-          component: path.resolve('./src/components/postLayout.js'),
+          path: `/bio${node.frontmatter.slug}`,
+          component: path.resolve('./src/components/Layouts/postLayout.js'),
           context: {
             slug: node.frontmatter.slug,
           },
