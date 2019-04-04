@@ -1,5 +1,10 @@
 import React from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
+import Layout from '../../components/Layouts/layout';
+import Image from '../../components/Image';
+import SEO from '../../components/SEO';
+import Archive from '../../components/Archive';
+
 // import cloudinary from 'cloudinary-core';
 // import {
 //   Img,
@@ -7,10 +12,7 @@ import { StaticQuery, graphql, Link } from 'gatsby';
 //   Transformation,
 //   CloudinaryContext,
 // } from 'cloudinary-react';
-import Layout from '../../components/Layouts/layout';
-import Image from '../../components/Image';
-import SEO from '../../components/SEO';
-import Archive from '../../components/Archive';
+
 // import Img from 'gatsby-image';
 // import image1 from '../../../images/image1.jpeg';
 // import image2 from '../../../images/image2.jpeg';
