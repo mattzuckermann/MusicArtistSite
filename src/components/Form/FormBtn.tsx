@@ -1,37 +1,37 @@
-import React from "react";
+import React from 'react';
 
 export const FormBtn = props => {
   let classes = 'btn ';
-  switch(props.type){
+  switch (props.type) {
     case 'primary':
       classes += 'btn-primary';
-    break;
+      break;
     case 'success':
       classes += 'btn-success';
-    break;
+      break;
     case 'info':
       classes += 'btn-info';
-    break;
+      break;
     case 'warning':
       classes += 'btn-warning';
-    break;
+      break;
     case 'danger':
       classes += 'btn-danger';
-    break;
+      break;
     case 'link':
       classes += 'btn-link';
-    break;
+      break;
     case 'default':
       classes += 'btn-default';
-    break;
+      break;
     default:
-    break;
+      break;
   }
-  classes += ' ' + props.additional
+  classes += ' ' + props.additional;
   //use prop addClass to add any additional classes
   return (
     <button {...props} className={classes}>
       {props.children}
     </button>
-  )
-}
+  );
+};

@@ -1,10 +1,5 @@
 import React from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
-import Layout from '../../components/Layouts/layout';
-import Image from '../../components/Image';
-import SEO from '../../components/SEO';
-import Archive from '../../components/Archive';
-
 // import cloudinary from 'cloudinary-core';
 // import {
 //   Img,
@@ -12,7 +7,10 @@ import Archive from '../../components/Archive';
 //   Transformation,
 //   CloudinaryContext,
 // } from 'cloudinary-react';
-
+import Layout from '../../../components/Layouts/layout';
+import Image from '../../../components/Image';
+import SEO from '../../../components/SEO';
+import Archive from '../../../components/Archive';
 // import Img from 'gatsby-image';
 // import image1 from '../../../images/image1.jpeg';
 // import image2 from '../../../images/image2.jpeg';
@@ -45,17 +43,12 @@ const Flag = () => (
           title="Album"
           keywords={[`music`, `album`, `react`]}
         />
-        <h1>Flag</h1>
+        <h1>Second</h1>
         <div className="container">
           <div className="row">
             <div className="col-12">
               <div id="titleName" title='Comment: "Josh Zuckermann"'>
                 Josh Zuckermann
-              </div>
-              <div>
-                <button type="button" className="btn btn-primary">
-                  Hey
-                </button>
               </div>
             </div>
           </div>

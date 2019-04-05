@@ -31,7 +31,7 @@ const Album = () => (
           title="Album"
           keywords={[`music`, `album`, `react`]}
         />
-        <h1>Albums</h1>
+        <h1>Singles</h1>
         <img src={data.file.childImageSharp.fluid.src} alt="test" />
         <div className="container">
           <div className="row">

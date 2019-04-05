@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'gatsby';
 
 class LoggedIn extends Component {
   logout = () => {
@@ -41,7 +41,11 @@ class LoggedIn extends Component {
           </li>
           <Link to="/login">
             <li className="nav-item">
-              <button onClick={this.logout} type="button" className="btn btn-info">
+              <button
+                onClick={this.logout}
+                type="button"
+                className="btn btn-info"
+              >
                 Logout
               </button>
             </li>

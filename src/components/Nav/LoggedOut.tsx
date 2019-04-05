@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import './nav.css'
+import { Link } from 'gatsby';
+import './nav.css';
 
 class LoggedOut extends Component {
   render() {
