@@ -51,6 +51,9 @@ typings/
 # Output of 'npm pack'
 *.tgz
 
+# locked package.json
+package-lock.json
+
 # dotenv environment variables file
 .env
 
