@@ -8,7 +8,10 @@ import { Panel, PanelBody } from '../../components/Panel';
 import SEO from '../../components/SEO';
 import './Admin.css';
 
-class Login extends Component {
+class Login extends Component<
+  {},
+  { username: string; password: string; message: string }
+> {
   constructor(props) {
     super(props);
     this.state = {
@@ -58,9 +61,9 @@ class Login extends Component {
     const { username, password, message } = this.state;
     return (
       <Container fluid>
-        <SEO title="Admin" />
-        <Row>
-          <Col size="sm-10" offset="sm-1">
+        <SEO description="visibility improvement" title="Admin" />
+        <Row fluid>
+          <Col size="sm-10">
             <Jumbotron>
               <H1 className="text-center">Welcome Josh Zuckermann</H1>
               <hr style={{ width: '60%' }} />
@@ -113,7 +116,7 @@ class Login extends Component {
                     disabled={!username || !password}
                     className="btn btn-lg btn-primary btn-block"
                     onClick={this.onSubmit}
-                    type="info"
+                    type="button"
                   >
                     Login
                   </button>

@@ -1,9 +1,10 @@
 import { Link } from 'gatsby';
+
 import PropTypes from 'prop-types';
 import React from 'react';
 import './style.css';
-import joshLogo from '../../images/favicon.ico';
-import Archive from '../Archive';
+import Images from '../../images';
+// import Archive from '../Archive';
 
 const Header = ({ siteTitle }) => (
   <header
@@ -29,35 +30,31 @@ const Header = ({ siteTitle }) => (
                 textDecoration: `none`,
               }}
             >
-              <img style={{ width: `100px` }} src={joshLogo} alt="Josh Logo" />
+              <img
+                style={{ width: `200px` }}
+                src={Images.favicon}
+                alt="Josh Logo"
+              />
             </Link>
           </h1>
         </li>
         <li className="navList">
           <Link to="/bio/about" className="navList">
-            About Me
+            About
           </Link>
         </li>
         <li className="navList">
           <Link to="/albums" className="navList">
-            All Albums
+            Albums
           </Link>
         </li>
         <li className="navList">
-          <Link to="/albums/rap/debut" className="navList">
-            Debut Album
-          </Link>
-        </li>
-        <li className="navList">
-          <Link to="/singles/flag" className="navList">
-            Flag Single
+          <Link to="/singles" className="navList">
+            Singles
           </Link>
         </li>
       </ul>
     </div>
-    {() => {
-      const scott: string = true;
-    }}
   </header>
 );
 

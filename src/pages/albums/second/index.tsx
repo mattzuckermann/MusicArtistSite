@@ -38,8 +38,12 @@ const Flag = () => (
     `}
     render={data => (
       <Layout>
-        <SEO title="Album" keywords={[`music`, `album`, `react`]} />
-        <h1>Flag</h1>
+        <SEO
+          description="visibility improvement"
+          title="Album"
+          keywords={[`music`, `album`, `react`]}
+        />
+        <h1>Second</h1>
         <div className="container">
           <div className="row">
             <div className="col-12">
@@ -52,7 +56,7 @@ const Flag = () => (
           <div className="row">
             <div className="col-12">
               <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-                <Image chosenImage="image3.jpeg" />
+                <Image />
               </div>
             </div>
           </div>

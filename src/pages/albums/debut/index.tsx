@@ -11,6 +11,7 @@ import Layout from '../../../components/Layouts/layout';
 import Image from '../../../components/Image';
 import SEO from '../../../components/SEO';
 import Archive from '../../../components/Archive';
+// import 'bootstrap/dist/css/bootstrap.css';
 // import Img from 'gatsby-image';
 // import image1 from '../../../images/image1.jpeg';
 // import image2 from '../../../images/image2.jpeg';
@@ -38,7 +39,11 @@ const Flag = () => (
     `}
     render={data => (
       <Layout>
-        <SEO title="Album" keywords={[`music`, `album`, `react`]} />
+        <SEO
+          description="visibility improvement"
+          title="Album"
+          keywords={[`music`, `album`, `react`]}
+        />
         <h1>Debut</h1>
         <div className="container">
           <div className="row">
@@ -52,7 +57,7 @@ const Flag = () => (
           <div className="row">
             <div className="col-12">
               <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-                <Image chosenImage="image4.jpeg" />
+                <Image />
               </div>
             </div>
           </div>

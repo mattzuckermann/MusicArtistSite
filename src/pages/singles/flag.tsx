@@ -40,7 +40,11 @@ const Flag = () => (
     `}
     render={data => (
       <Layout>
-        <SEO title="Album" keywords={[`music`, `album`, `react`]} />
+        <SEO
+          description="visibility improvement"
+          title="Album"
+          keywords={[`music`, `album`, `react`]}
+        />
         <h1>Flag</h1>
         <div className="container">
           <div className="row">
@@ -48,13 +52,18 @@ const Flag = () => (
               <div id="titleName" title='Comment: "Josh Zuckermann"'>
                 Josh Zuckermann
               </div>
+              <div>
+                <button type="button" className="btn btn-primary">
+                  Hey
+                </button>
+              </div>
             </div>
           </div>
 
           <div className="row">
             <div className="col-12">
               <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-                <Image chosenImage="image3.jpeg" />
+                <Image />
               </div>
             </div>
           </div>

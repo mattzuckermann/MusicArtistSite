@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { graphql } from 'gatsby';
 import Layout from './layout';
 
-export default class postLayout extends Component {
+export default class postLayout extends Component<{}, {}> {
   render() {
     const { markdownRemark } = this.props.data;
     return (
