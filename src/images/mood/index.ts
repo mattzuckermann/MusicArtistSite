@@ -1,0 +1,15 @@
+export default {
+  colorJeadshot: require('./color-headshot.jpeg'),
+  lyingDown: require('./image2.jpeg'),
+  leaningOver: require('./image3.jpeg'),
+  againstWall: require('./image4.jpeg'),
+  noddingAside: require('./image5.jpeg'),
+  colorHeadshot2: require('./image6.jpeg'),
+  colorHeadshot3: require('./image7.jpeg'),
+  pose1: require('./IMG_6574.jpeg'),
+  pose2: require('./IMG_6671.jpeg'),
+  pose3: require('./IMG_6673.jpeg'),
+  pose4: require('./IMG_6674.jpeg'),
+  orangeBack1: require('./IMG_6676.jpeg'),
+  orangeBack2: require('./IMG_6677.jpeg'),
+};
