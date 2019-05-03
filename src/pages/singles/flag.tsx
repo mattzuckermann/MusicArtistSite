@@ -4,6 +4,7 @@ import Layout from '../../components/Layouts/layout';
 import Image from '../../components/Image';
 import SEO from '../../components/SEO';
 import Archive from '../../components/Archive';
+import IconButton from '@material-ui/core/IconButton';
 
 // import cloudinary from 'cloudinary-core';
 // import {
@@ -42,7 +43,11 @@ const Flag = () => (
     `}
     render={data => (
       <Layout>
-        <SEO title="Album" keywords={[`music`, `album`, `react`]} />
+        <SEO
+          description="visibility improvement"
+          title="Album"
+          keywords={[`music`, `album`, `react`]}
+        />
         <h1>Flag</h1>
         <div className="container">
           <div className="row">
@@ -50,13 +55,16 @@ const Flag = () => (
               <div id="titleName" title='Comment: "Josh Zuckermann"'>
                 Josh Zuckermann
               </div>
+              <div>
+                <IconButton>Hey</IconButton>
+              </div>
             </div>
           </div>
 
           <div className="row">
             <div className="col-12">
               <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-                <Image chosenImage="image3.jpeg" />
+                <Image />
               </div>
             </div>
           </div>
