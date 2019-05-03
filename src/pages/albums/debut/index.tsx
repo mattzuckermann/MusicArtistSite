@@ -1,5 +1,7 @@
 import React from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
+import ReactAudioPlayer from 'react-audio-player';
+
 // import cloudinary from 'cloudinary-core';
 // import {
 //   Img,
@@ -44,6 +46,7 @@ const Flag = () => (
           title="Album"
           keywords={[`music`, `album`, `react`]}
         />
+        <ReactAudioPlayer src="" autoPlay controls />
         <h1>Debut</h1>
         <div className="container">
           <div className="row">

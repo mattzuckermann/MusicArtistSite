@@ -4,6 +4,7 @@ import Layout from '../../components/Layouts/layout';
 import Image from '../../components/Image';
 import SEO from '../../components/SEO';
 import Archive from '../../components/Archive';
+import IconButton from '@material-ui/core/IconButton';
 
 // import cloudinary from 'cloudinary-core';
 // import {
@@ -53,9 +54,7 @@ const Flag = () => (
                 Josh Zuckermann
               </div>
               <div>
-                <button type="button" className="btn btn-primary">
-                  Hey
-                </button>
+                <IconButton>Hey</IconButton>
               </div>
             </div>
           </div>
