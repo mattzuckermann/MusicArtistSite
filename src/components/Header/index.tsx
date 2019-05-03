@@ -35,6 +35,7 @@ const Header = ({ siteTitle }) => (
             <a
               target="_blank"
               rel="noopener noreferrer"
+              className="icon"
               href="https://www.instagram.com/joshzuckermann/"
               style={{ color: 'white' }}
             >
@@ -45,6 +46,7 @@ const Header = ({ siteTitle }) => (
             <a
               target="_blank"
               rel="noopener noreferrer"
+              className="icon"
               href="https://open.spotify.com/artist/0hRWyQpSxQ8DxcTTCPC33J?si=rOVcTrdtQVy5yfaTQ7IkkA"
               style={{ color: 'white' }}
             >
@@ -55,6 +57,7 @@ const Header = ({ siteTitle }) => (
             <a
               target="_blank"
               rel="noopener noreferrer"
+              className="icon"
               href="https://soundcloud.com/josh-zuckermann-867378017"
               style={{ color: 'white' }}
             >
@@ -92,6 +95,7 @@ const Header = ({ siteTitle }) => (
             <a
               target="_blank"
               rel="noopener noreferrer"
+              className="icon"
               href="https://www.instagram.com/cardclubband/"
               style={{ color: 'white' }}
             >
@@ -102,6 +106,7 @@ const Header = ({ siteTitle }) => (
             <a
               target="_blank"
               rel="noopener noreferrer"
+              className="icon"
               href="https://open.spotify.com/artist/17MMFjyHC8KZjcFxx06DFh?si=PaCTf9sqSb6zU7A7hM5Axw"
               style={{ color: 'white' }}
             >
@@ -112,6 +117,7 @@ const Header = ({ siteTitle }) => (
             <a
               target="_blank"
               rel="noopener noreferrer"
+              className="icon"
               href="https://johnnycilantro6tet.bandcamp.com"
               style={{ color: 'white' }}
             >

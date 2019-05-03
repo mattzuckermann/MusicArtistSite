@@ -31,6 +31,12 @@
   padding-top: 10px;
 }
 
+.icon {
+  background-color: rgba(75, 75, 75, 0.3);
+  padding: 6px;
+  border-radius: 100px;
+}
+
 .groupSize {
   color: grey;
   font-family: 'PT Sans Narrow', sans-serif;
