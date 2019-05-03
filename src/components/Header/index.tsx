@@ -92,16 +92,6 @@ const Header = ({ siteTitle }) => (
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://johnnycilantro6tet.bandcamp.com"
-              style={{ color: 'white' }}
-            >
-              <FontAwesomeIcon icon={faBandcamp} />
-            </a>
-          </li>
-          <li>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
               href="https://www.instagram.com/cardclubband/"
               style={{ color: 'white' }}
             >
@@ -116,6 +106,16 @@ const Header = ({ siteTitle }) => (
               style={{ color: 'white' }}
             >
               <FontAwesomeIcon icon={faSpotify} />
+            </a>
+          </li>
+          <li>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://johnnycilantro6tet.bandcamp.com"
+              style={{ color: 'white' }}
+            >
+              <FontAwesomeIcon icon={faBandcamp} />
             </a>
           </li>
         </ul>
