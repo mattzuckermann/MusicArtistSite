@@ -13,14 +13,14 @@ const IndexPage = () => (
       title="Home"
       keywords={[`gatsby`, `application`, `react`]}
     />
-    <h1 className="mainTitle">Enjoy the tunes.</h1>
+    <h1 className="mainTitle">"Enjoy the tunes."</h1>
     <div
       style={{
         maxWidth: `1000px`,
         marginBottom: `1.45rem`,
       }}
     >
-      <Image />
+      <Image style={{ borderRadius: 15 }} />
     </div>
   </Layout>
 );

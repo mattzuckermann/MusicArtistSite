@@ -1,7 +1,6 @@
 import React from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
 import Layout from '../../components/Layouts/layout';
-import Image from '../../components/Image';
 import SEO from '../../components/SEO';
 
 const Album = () => (
@@ -25,23 +24,8 @@ const Album = () => (
           keywords={[`music`, `album`, `react`]}
         />
         <h1>Albums</h1>
-        <img src={data.file.childImageSharp.fluid.src} alt="Josh Zuckermann" />
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <h3 id="titleName" title="Josh Zuckermann">
-                Josh Zuckermann
-              </h3>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-12">
-              <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }} />
-            </div>
-          </div>
-        </div>
+        <h3>[DEBUT COMING SOON!]</h3>
         <br />
-        {/* <Archive /> */}
       </Layout>
     )}
   />

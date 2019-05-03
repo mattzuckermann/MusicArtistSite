@@ -28,5 +28,11 @@
 
 .iconList > li {
   margin: 0;
-  padding-top: 18px;
+  padding-top: 10px;
+}
+
+.groupSize {
+  color: grey;
+  font-family: 'PT Sans Narrow', sans-serif;
+  opacity: 0.3;
 }

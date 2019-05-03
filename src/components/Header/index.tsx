@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import './header.css';
 import favicon from '../../images/favicon/favicon.ico';
-import { library, noAuto } from '@fortawesome/fontawesome-svg-core';
+import HeaderImage from '../../components/HeaderImage';
+import Image from '../../components/Image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faInstagram,
@@ -22,11 +23,14 @@ const Header = ({ siteTitle }) => (
     className="text-center"
   >
     <Grid container spacing={12}>
-      <Grid item xs={1}>
+      <Grid item sm={1} xs={2}>
         <ul
           className="iconList"
           style={{ margin: 0, listStyleType: 'none', color: 'white' }}
         >
+          <li className="groupSize">
+            <u>solo</u>
+          </li>
           <li>
             <a
               target="_blank"
@@ -59,7 +63,7 @@ const Header = ({ siteTitle }) => (
           </li>
         </ul>
       </Grid>
-      <Grid item xs={10}>
+      <Grid item sm={10} xs={8}>
         <h1 className="navList listImage" style={{ margin: 0 }}>
           <Link
             to="/"
@@ -76,11 +80,14 @@ const Header = ({ siteTitle }) => (
           </Link>
         </h1>
       </Grid>
-      <Grid item xs={1}>
+      <Grid item sm={1} xs={2}>
         <ul
           className="iconList"
           style={{ margin: 0, listStyleType: 'none', color: 'white' }}
         >
+          <li className="groupSize">
+            <u>groups</u>
+          </li>
           <li>
             <a
               target="_blank"

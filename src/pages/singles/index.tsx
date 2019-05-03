@@ -1,7 +1,6 @@
 import React from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
 import Layout from '../../components/Layouts/layout';
-import Image from '../../components/Image';
 import SEO from '../../components/SEO';
 import ReactAudioPlayer from 'react-audio-player';
 import Audio from '../../audio';
@@ -30,8 +29,23 @@ const Album = () => (
           <div className="row">
             <div>
               {Audio.map(track => (
-                <div style={{ background: '#fecbd0', marginBottom: '40px' }}>
-                  <h1 style={{ padding: '25px 0px' }}>{track.name}</h1>
+                <div
+                  style={{
+                    borderRadius: 10,
+                    background: '#fecbd0',
+                    marginBottom: '40px',
+                  }}
+                >
+                  <h1
+                    style={{
+                      padding: '25px 0px',
+                      fontFamily: 'futura',
+                      borderRadius: 5,
+                      backgroundColor: '#fb2f47',
+                    }}
+                  >
+                    {track.name}
+                  </h1>
                   <div>
                     <img style={{ width: '300px' }} src={track.image} />
                   </div>

@@ -2,4 +2,9 @@
 
 .mainTitle {
   font-family: 'ABeeZee', sans-serif;
+  font-size: 35px;
+}
+
+body {
+  padding: 0;
 }
