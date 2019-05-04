@@ -1,5 +1,5 @@
 export default {
-  colorJeadshot: require('./color-headshot.jpeg'),
+  colorHeadshot: require('./color-headshot.jpeg'),
   lyingDown: require('./image2.jpeg'),
   leaningOver: require('./image3.jpeg'),
   againstWall: require('./image4.jpeg'),
