@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import './header.css';
 import favicon from '../../images/favicon/favicon.ico';
-import HeaderImage from '../../components/HeaderImage';
-import Image from '../../components/Image';
+import HeaderImage from '../HeaderImage';
+import Image from '../Image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faInstagram,
@@ -13,8 +13,10 @@ import {
   faBandcamp,
 } from '@fortawesome/free-brands-svg-icons';
 import Grid from '@material-ui/core/Grid';
+import classNames from 'classnames';
+import navigator from '../../navigator';
 
-const Header = ({ siteTitle }) => (
+const Header = () => (
   <header
     style={{
       background: `#1a1a1a`,
@@ -35,7 +37,9 @@ const Header = ({ siteTitle }) => (
             <a
               target="_blank"
               rel="noopener noreferrer"
-              className="icon"
+              className={classNames('icon', {
+                iconHover: !navigator(),
+              })}
               href="https://www.instagram.com/joshzuckermann/"
               style={{ color: 'white' }}
             >
@@ -46,7 +50,9 @@ const Header = ({ siteTitle }) => (
             <a
               target="_blank"
               rel="noopener noreferrer"
-              className="icon"
+              className={classNames('icon', {
+                iconHover: !navigator(),
+              })}
               href="https://open.spotify.com/artist/0hRWyQpSxQ8DxcTTCPC33J?si=rOVcTrdtQVy5yfaTQ7IkkA"
               style={{ color: 'white' }}
             >
@@ -57,7 +63,9 @@ const Header = ({ siteTitle }) => (
             <a
               target="_blank"
               rel="noopener noreferrer"
-              className="icon"
+              className={classNames('icon', {
+                iconHover: !navigator(),
+              })}
               href="https://soundcloud.com/josh-zuckermann-867378017"
               style={{ color: 'white' }}
             >
@@ -68,19 +76,7 @@ const Header = ({ siteTitle }) => (
       </Grid>
       <Grid item sm={10} xs={8}>
         <h1 className="navList listImage" style={{ margin: 0 }}>
-          <Link
-            to="/"
-            style={{
-              color: `white`,
-              textDecoration: `none`,
-            }}
-          >
-            <img
-              style={{ width: `125px`, margin: 0 }}
-              src={favicon}
-              alt="Josh Logo"
-            />
-          </Link>
+          <HeaderImage style={{ width: 125 }} />
         </h1>
       </Grid>
       <Grid item sm={1} xs={2}>
@@ -95,7 +91,9 @@ const Header = ({ siteTitle }) => (
             <a
               target="_blank"
               rel="noopener noreferrer"
-              className="icon"
+              className={classNames('icon', {
+                iconHover: !navigator(),
+              })}
               href="https://www.instagram.com/cardclubband/"
               style={{ color: 'white' }}
             >
@@ -106,7 +104,9 @@ const Header = ({ siteTitle }) => (
             <a
               target="_blank"
               rel="noopener noreferrer"
-              className="icon"
+              className={classNames('icon', {
+                iconHover: !navigator(),
+              })}
               href="https://open.spotify.com/artist/17MMFjyHC8KZjcFxx06DFh?si=PaCTf9sqSb6zU7A7hM5Axw"
               style={{ color: 'white' }}
             >
@@ -117,7 +117,9 @@ const Header = ({ siteTitle }) => (
             <a
               target="_blank"
               rel="noopener noreferrer"
-              className="icon"
+              className={classNames('icon', {
+                iconHover: !navigator(),
+              })}
               href="https://johnnycilantro6tet.bandcamp.com"
               style={{ color: 'white' }}
             >
@@ -130,18 +132,43 @@ const Header = ({ siteTitle }) => (
     <hr className="hrLine" />
     <ul>
       <li className="navList">
-        <Link to="/bio/about" className="navList">
+        <Link
+          to="/"
+          className={classNames('navList', {
+            navListHover: !navigator(),
+          })}
+        >
+          HOME
+        </Link>
+      </li>
+      <li className="navList">
+        <Link
+          to="/about"
+          className={classNames('navList', {
+            navListHover: !navigator(),
+          })}
+        >
           ABOUT
         </Link>
       </li>
       <li className="navList">
-        <Link to="/albums" className="navList">
-          ALBUMS
+        <Link
+          to="/singles"
+          className={classNames('navList', {
+            navListHover: !navigator(),
+          })}
+        >
+          SINGLES
         </Link>
       </li>
       <li className="navList">
-        <Link to="/singles" className="navList">
-          SINGLES
+        <Link
+          to="/albums"
+          className={classNames('navList', {
+            navListHover: !navigator(),
+          })}
+        >
+          ALBUMS
         </Link>
       </li>
     </ul>
