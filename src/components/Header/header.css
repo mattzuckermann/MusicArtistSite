@@ -10,7 +10,7 @@
   font-family: 'PT Sans Narrow', sans-serif;
 }
 
-.navList:hover {
+.navListHover:hover {
   color: #fbfbfb;
   transition: all 0.2s ease;
 }
@@ -33,12 +33,24 @@
 
 .icon {
   background-color: rgba(75, 75, 75, 0.3);
-  padding: 6px;
+  padding: 4px;
+  font-size: 22px;
   border-radius: 100px;
+}
+
+.iconHover:hover {
+  background-color: rgba(195, 214, 213, 0.3);
+  transition: all 0.1s ease;
 }
 
 .groupSize {
   color: grey;
   font-family: 'PT Sans Narrow', sans-serif;
   opacity: 0.3;
+}
+
+@media screen and (max-width: 575px) {
+  .navList {
+    padding: 8px;
+  }
 }
