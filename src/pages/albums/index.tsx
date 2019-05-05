@@ -24,7 +24,7 @@ const Album = () => (
           keywords={[`music`, `album`, `react`]}
         />
         <h1>Albums</h1>
-        <h3>[DEBUT COMING SOON!]</h3>
+        <h3>[ DEBUT ALBUM COMING SOON ]</h3>
         <br />
       </Layout>
     )}
