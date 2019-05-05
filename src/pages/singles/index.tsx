@@ -4,6 +4,7 @@ import Layout from '../../components/Layouts/layout';
 import SEO from '../../components/SEO';
 import ReactAudioPlayer from 'react-audio-player';
 import Audio from '../../audio';
+import Grid from '@material-ui/core/Grid';
 
 const Album = () => (
   <StaticQuery
@@ -28,38 +29,46 @@ const Album = () => (
         <div className="container" style={{ textAlign: 'center' }}>
           <div className="row">
             <div>
-              {Audio.map(track => (
-                <div
-                  style={{
-                    borderRadius: 10,
-                    background: '#fecbd0',
-                    marginBottom: '40px',
-                  }}
-                >
-                  <h1
-                    style={{
-                      padding: '25px 0px',
-                      fontFamily: 'futura',
-                      borderRadius: 5,
-                      backgroundColor: '#fb2f47',
-                    }}
-                  >
-                    {track.name}
-                  </h1>
-                  <div>
-                    <img style={{ width: '300px' }} src={track.image} />
-                  </div>
-                  <ReactAudioPlayer src={track.src} autoplay controls />
-                  <br />
-                  <br />
-                  <br />
-                </div>
-              ))}
+              <Grid container spacing={24}>
+                {Audio.map(track => (
+                  <Grid item lg={4} md={4} sm={12} xs={12}>
+                    <div
+                      style={{
+                        borderRadius: 10,
+                        background: '#fecbd0',
+                        marginBottom: '40px',
+                      }}
+                    >
+                      <h1
+                        style={{
+                          padding: '25px 0px',
+                          fontFamily: 'futura',
+                          borderRadius: 5,
+                          backgroundColor: '#fb2f47',
+                        }}
+                      >
+                        {track.name}
+                      </h1>
+                      <div>
+                        <img style={{ width: '300px' }} src={track.image} />
+                      </div>
+                      <ReactAudioPlayer
+                        style={{ width: '270px' }}
+                        src={track.src}
+                        autoplay
+                        controls
+                      />
+                      <br />
+                      <br />
+                      <br />
+                    </div>
+                  </Grid>
+                ))}
+              </Grid>
             </div>
           </div>
         </div>
         <br />
-        {/* <Archive /> */}
       </Layout>
     )}
   />
