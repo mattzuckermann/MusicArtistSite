@@ -33,6 +33,7 @@
 
 .icon {
   background-color: rgba(75, 75, 75, 0.3);
+  font-size: 22px;
   padding: 4px;
   border-radius: 100px;
 }
