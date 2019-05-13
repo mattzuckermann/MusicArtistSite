@@ -2,9 +2,7 @@ import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
 import './header.css';
-import favicon from '../../images/favicon/favicon.ico';
 import HeaderImage from '../HeaderImage';
-import Image from '../Image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faInstagram,
@@ -41,7 +39,7 @@ const Header = () => (
                 iconHover: !navigator(),
               })}
               href="https://www.instagram.com/joshzuckermann/"
-              style={{ color: 'white' }}
+              style={{ color: 'white', fontSize: '22px' }}
             >
               <FontAwesomeIcon icon={faInstagram} />
             </a>
@@ -54,7 +52,7 @@ const Header = () => (
                 iconHover: !navigator(),
               })}
               href="https://open.spotify.com/artist/0hRWyQpSxQ8DxcTTCPC33J?si=rOVcTrdtQVy5yfaTQ7IkkA"
-              style={{ color: 'white' }}
+              style={{ color: 'white', fontSize: '22px' }}
             >
               <FontAwesomeIcon icon={faSpotify} />
             </a>
@@ -67,7 +65,7 @@ const Header = () => (
                 iconHover: !navigator(),
               })}
               href="https://soundcloud.com/josh-zuckermann-867378017"
-              style={{ color: 'white' }}
+              style={{ color: 'white', fontSize: '22px' }}
             >
               <FontAwesomeIcon icon={faSoundcloud} />
             </a>
@@ -95,7 +93,7 @@ const Header = () => (
                 iconHover: !navigator(),
               })}
               href="https://www.instagram.com/cardclubband/"
-              style={{ color: 'white' }}
+              style={{ color: 'white', fontSize: '22px' }}
             >
               <FontAwesomeIcon icon={faInstagram} />
             </a>
@@ -108,7 +106,7 @@ const Header = () => (
                 iconHover: !navigator(),
               })}
               href="https://open.spotify.com/artist/17MMFjyHC8KZjcFxx06DFh?si=PaCTf9sqSb6zU7A7hM5Axw"
-              style={{ color: 'white' }}
+              style={{ color: 'white', fontSize: '22px' }}
             >
               <FontAwesomeIcon icon={faSpotify} />
             </a>
@@ -121,7 +119,7 @@ const Header = () => (
                 iconHover: !navigator(),
               })}
               href="https://johnnycilantro6tet.bandcamp.com"
-              style={{ color: 'white' }}
+              style={{ color: 'white', fontSize: '22px' }}
             >
               <FontAwesomeIcon icon={faBandcamp} />
             </a>
