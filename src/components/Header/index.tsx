@@ -1,8 +1,5 @@
-import { Link } from 'gatsby';
-import PropTypes from 'prop-types';
-import React from 'react';
-import './header.css';
-import HeaderImage from '../HeaderImage';
+import { config } from '@fortawesome/fontawesome-svg-core';
+config.autoAddCss = false;
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faInstagram,
@@ -10,6 +7,11 @@ import {
   faSoundcloud,
   faBandcamp,
 } from '@fortawesome/free-brands-svg-icons';
+import './header.css';
+import { Link } from 'gatsby';
+import PropTypes from 'prop-types';
+import React from 'react';
+import HeaderImage from '../HeaderImage';
 import Grid from '@material-ui/core/Grid';
 import classNames from 'classnames';
 import navigator from '../../navigator';
