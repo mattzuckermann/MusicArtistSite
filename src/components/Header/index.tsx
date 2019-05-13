@@ -41,9 +41,12 @@ const Header = () => (
                 iconHover: !navigator(),
               })}
               href="https://www.instagram.com/joshzuckermann/"
-              style={{ color: 'white', fontSize: '22px' }}
+              style={{ color: 'white' }}
             >
-              <FontAwesomeIcon icon={faInstagram} />
+              <FontAwesomeIcon
+                icon={faInstagram}
+                style={{ fontSize: '22px' }}
+              />
             </a>
           </li>
           <li>
@@ -54,9 +57,9 @@ const Header = () => (
                 iconHover: !navigator(),
               })}
               href="https://open.spotify.com/artist/0hRWyQpSxQ8DxcTTCPC33J?si=rOVcTrdtQVy5yfaTQ7IkkA"
-              style={{ color: 'white', fontSize: '22px' }}
+              style={{ color: 'white' }}
             >
-              <FontAwesomeIcon icon={faSpotify} />
+              <FontAwesomeIcon icon={faSpotify} style={{ fontSize: '22px' }} />
             </a>
           </li>
           <li>
@@ -67,9 +70,12 @@ const Header = () => (
                 iconHover: !navigator(),
               })}
               href="https://soundcloud.com/josh-zuckermann-867378017"
-              style={{ color: 'white', fontSize: '22px' }}
+              style={{ color: 'white' }}
             >
-              <FontAwesomeIcon icon={faSoundcloud} />
+              <FontAwesomeIcon
+                icon={faSoundcloud}
+                style={{ fontSize: '22px' }}
+              />
             </a>
           </li>
         </ul>
@@ -95,9 +101,12 @@ const Header = () => (
                 iconHover: !navigator(),
               })}
               href="https://www.instagram.com/cardclubband/"
-              style={{ color: 'white', fontSize: '22px' }}
+              style={{ color: 'white' }}
             >
-              <FontAwesomeIcon icon={faInstagram} />
+              <FontAwesomeIcon
+                icon={faInstagram}
+                style={{ fontSize: '22px' }}
+              />
             </a>
           </li>
           <li>
@@ -108,9 +117,9 @@ const Header = () => (
                 iconHover: !navigator(),
               })}
               href="https://open.spotify.com/artist/17MMFjyHC8KZjcFxx06DFh?si=PaCTf9sqSb6zU7A7hM5Axw"
-              style={{ color: 'white', fontSize: '22px' }}
+              style={{ color: 'white' }}
             >
-              <FontAwesomeIcon icon={faSpotify} />
+              <FontAwesomeIcon icon={faSpotify} style={{ fontSize: '22px' }} />
             </a>
           </li>
           <li>
@@ -121,9 +130,9 @@ const Header = () => (
                 iconHover: !navigator(),
               })}
               href="https://johnnycilantro6tet.bandcamp.com"
-              style={{ color: 'white', fontSize: '22px' }}
+              style={{ color: 'white' }}
             >
-              <FontAwesomeIcon icon={faBandcamp} />
+              <FontAwesomeIcon icon={faBandcamp} style={{ fontSize: '22px' }} />
             </a>
           </li>
         </ul>
