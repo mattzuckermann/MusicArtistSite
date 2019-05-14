@@ -73,13 +73,7 @@ const Header = () => (
       </Grid>
       <Grid item sm={10} xs={8}>
         <h1 className="navList listImage" style={{ margin: 0 }}>
-          <Suspense
-            fallback={
-              <Loader type="Puff" color="#00BFFF" height="100" width="100" />
-            }
-          >
-            <HeaderImage style={{ width: 125 }} />
-          </Suspense>
+          <HeaderImage style={{ width: 125 }} />
         </h1>
       </Grid>
       <Grid item sm={1} xs={2}>
