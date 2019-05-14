@@ -1,3 +1,4 @@
+import '../components/Header/header.css';
 import React from 'react';
 import Layout from '../components/Layouts/layout';
 import Image from '../components/Image';
