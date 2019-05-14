@@ -1,17 +1,17 @@
-import React from 'react';
-import { Link } from 'gatsby';
-import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
-import classNames from 'classnames';
-import navigator from '../../navigator';
-import HeaderImage from '../HeaderImage';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { Suspense } from 'react';
 import {
   faInstagram,
   faSpotify,
   faSoundcloud,
   faBandcamp,
 } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'gatsby';
+import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
+import classNames from 'classnames';
+import navigator from '../../navigator';
+import HeaderImage from '../HeaderImage';
 
 const Header = () => (
   <header
@@ -21,7 +21,7 @@ const Header = () => (
     }}
     className="text-center"
   >
-    <Grid container spacing={12}>
+    <Grid container spacing={24}>
       <Grid item sm={1} xs={2}>
         <ul
           className="iconList"
@@ -73,7 +73,13 @@ const Header = () => (
       </Grid>
       <Grid item sm={10} xs={8}>
         <h1 className="navList listImage" style={{ margin: 0 }}>
-          <HeaderImage style={{ width: 125 }} />
+          <Suspense
+            fallback={
+              <Loader type="Puff" color="#00BFFF" height="100" width="100" />
+            }
+          >
+            <HeaderImage style={{ width: 125 }} />
+          </Suspense>
         </h1>
       </Grid>
       <Grid item sm={1} xs={2}>
