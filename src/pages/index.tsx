@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import './index.css';
 
 const IndexPage = () => (
-  <Layout>
+  <>
     <SEO
       description="visibility improvement"
       title="Home"
@@ -23,7 +23,7 @@ const IndexPage = () => (
     >
       <Image style={{ borderRadius: 15 }} />
     </div>
-  </Layout>
+  </>
 );
 
 export default IndexPage;

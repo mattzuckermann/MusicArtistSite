@@ -17,7 +17,7 @@ const Album = () => (
       }
     `}
     render={data => (
-      <Layout>
+      <>
         <SEO
           description="visibility improvement"
           title="Album"
@@ -26,7 +26,7 @@ const Album = () => (
         <h1>Albums</h1>
         <h3>[ DEBUT ALBUM COMING SOON ]</h3>
         <br />
-      </Layout>
+      </>
     )}
   />
 );

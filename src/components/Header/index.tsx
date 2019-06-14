@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import {
   faInstagram,
   faSpotify,
@@ -13,7 +13,7 @@ import classNames from 'classnames';
 import navigator from '../../navigator';
 import HeaderImage from '../HeaderImage';
 
-const Header = () => (
+const Header = props => (
   <header
     style={{
       background: `#1a1a1a`,
@@ -154,6 +154,7 @@ const Header = () => (
           className={classNames('navList', {
             navListHover: !navigator(),
           })}
+          style={props.location === '/singles' ? { color: 'white' } : {}}
         >
           SINGLES
         </Link>

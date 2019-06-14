@@ -20,7 +20,7 @@ const Album = () => (
       }
     `}
     render={data => (
-      <Layout>
+      <>
         <SEO
           description="visibility improvement"
           title="Album"
@@ -30,8 +30,8 @@ const Album = () => (
           <div className="row">
             <div>
               <Grid container spacing={24}>
-                {Audio.map(track => (
-                  <Grid item lg={4} md={4} sm={12} xs={12}>
+                {Audio.map((track, currentIndex) => (
+                  <Grid key={currentIndex} item lg={4} md={4} sm={12} xs={12}>
                     <div
                       style={{
                         borderRadius: 10,
@@ -53,9 +53,18 @@ const Album = () => (
                         <img style={{ width: '300px' }} src={track.image} />
                       </div>
                       <ReactAudioPlayer
+                        id={`${currentIndex}`}
                         style={{ width: '270px' }}
                         src={track.src}
-                        autoplay
+                        // onPlay={async () => {
+                        //   const indexArr = [];
+                        //   await Audio.forEach((track, index) => {
+                        //     indexArr.push(index);
+                        //   });
+                        //   await indexArr.filter(function(number) {
+                        //     return number !== currentIndex;
+                        //   });
+                        // }}
                         controls
                       />
                       <br />
@@ -69,7 +78,7 @@ const Album = () => (
           </div>
         </div>
         <br />
-      </Layout>
+      </>
     )}
   />
 );
