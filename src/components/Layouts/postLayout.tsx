@@ -88,7 +88,7 @@ const TextMobileStepper = () => {
         }
       `}
       render={data => (
-        <Layout>
+        <>
           <Grid container spacing={24}>
             <Grid item lg={8} md={8} sm={12} xs={12}>
               <Grid item lg={10} md={10} sm={12} xs={12}>
@@ -158,7 +158,7 @@ const TextMobileStepper = () => {
               </div>
             </Grid>
           </Grid>
-        </Layout>
+        </>
       )}
     />
   );
