@@ -1,6 +1,5 @@
 import React from 'react';
 import { graphql, StaticQuery } from 'gatsby';
-import Layout from './layout';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
