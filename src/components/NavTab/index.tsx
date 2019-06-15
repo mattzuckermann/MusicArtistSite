@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'gatsby';
 import classNames from 'classnames';
 import navigator from '../../navigator';
 
 const NavTab = ({ children, link, location }) => {
+  const [pathName, setPathName] = useState({});
+  useEffect(() => {
+    setPathName(location.pathname);
+  }, []);
   return (
     <li className="navList">
       <Link
@@ -11,7 +15,7 @@ const NavTab = ({ children, link, location }) => {
         className={classNames('navList', {
           navListHover: !navigator(),
         })}
-        style={location.pathname === link ? { color: 'white' } : {}}
+        style={pathName === link ? { color: 'white' } : {}}
       >
         {children}
       </Link>
