@@ -7,7 +7,7 @@ const NavTab = ({ children, link, location }) => {
   const [pathName, setPathName] = useState({});
   useEffect(() => {
     setPathName(location.pathname);
-  }, []);
+  }, [location]);
   return (
     <li className="navList">
       <Link
