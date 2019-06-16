@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { graphql, StaticQuery } from 'gatsby';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/styles';
@@ -11,6 +11,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import mood from '../../images/mood';
 import './postLayout.css';
 import { Video } from 'cloudinary-react';
+import { useSpring, animated } from 'react-spring';
 
 const tutorialSteps = [
   {
@@ -57,13 +58,24 @@ const useStyles = makeStyles(() => ({
     marginLeft: 'auto',
     marginRight: 'auto',
   },
+  videoCenter: {
+    '@media(maxWidth: 959px)': {
+      textAlign: 'center',
+    },
+  },
 }));
 
 const TextMobileStepper = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
   const maxSteps = tutorialSteps.length;
+
+  const fade = useSpring({
+    from: { opacity: 0 },
+    opacity: 1,
+    config: { duration: 300 },
+  });
 
   function handleNext() {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -88,7 +100,7 @@ const TextMobileStepper = () => {
         }
       `}
       render={data => (
-        <>
+        <animated.div style={fade}>
           <Grid container spacing={24}>
             <Grid item lg={8} md={8} sm={12} xs={12}>
               <Grid item lg={10} md={10} sm={12} xs={12}>
@@ -97,9 +109,17 @@ const TextMobileStepper = () => {
                   dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }}
                 />
               </Grid>
-              <Grid item lg={12} md={12} sm={12} xs={12}>
+              <Grid
+                item
+                lg={12}
+                md={12}
+                sm={12}
+                xs={12}
+                className={classes.videoCenter}
+              >
                 <div className={classes.videoPlaybackWrapper}>
                   <Video
+                    id="demo-player"
                     className="videoPlayback"
                     cloudName="joshzuckermann-netlify-com"
                     publicId="videos/Reiki-Video"
@@ -159,7 +179,7 @@ const TextMobileStepper = () => {
               </div>
             </Grid>
           </Grid>
-        </>
+        </animated.div>
       )}
     />
   );
