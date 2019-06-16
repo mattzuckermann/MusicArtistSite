@@ -1,10 +1,16 @@
 import React from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
 import Layout from '../../components/Layouts/layout';
+import {
+  Image,
+  Video,
+  CloudinaryContext,
+  Transformation,
+} from 'cloudinary-react';
 import SEO from '../../components/SEO';
-import ReactAudioPlayer from 'react-audio-player';
-import Audio from '../../audio';
 import Grid from '@material-ui/core/Grid';
+
+const Audio = ['Reiki', 'Crush', 'Two Weeks'];
 
 const Album = () => (
   <StaticQuery
@@ -47,26 +53,24 @@ const Album = () => (
                           backgroundColor: '#fb2f47',
                         }}
                       >
-                        {track.name}
+                        {track}
                       </h1>
-                      <div>
-                        <img style={{ width: '300px' }} src={track.image} />
-                      </div>
-                      <ReactAudioPlayer
-                        id={`${currentIndex}`}
-                        style={{ width: '270px' }}
-                        src={track.src}
-                        // onPlay={async () => {
-                        //   const indexArr = [];
-                        //   await Audio.forEach((track, index) => {
-                        //     indexArr.push(index);
-                        //   });
-                        //   await indexArr.filter(function(number) {
-                        //     return number !== currentIndex;
-                        //   });
-                        // }}
-                        controls
-                      />
+                      <CloudinaryContext cloudName="joshzuckermann-netlify-com">
+                        <Image publicId={`singlesImages/${track}`} format="jpg">
+                          <Transformation
+                            crop="fill"
+                            gravity="faces"
+                            width="300"
+                          />
+                        </Image>
+                        <Video
+                          publicId={`singles/${track}`}
+                          height="30"
+                          width="270"
+                          format="mp3"
+                          controls
+                        />
+                      </CloudinaryContext>
                       <br />
                       <br />
                       <br />

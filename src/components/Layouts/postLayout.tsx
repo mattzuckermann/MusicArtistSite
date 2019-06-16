@@ -10,6 +10,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import mood from '../../images/mood';
 import './postLayout.css';
+import { Video } from 'cloudinary-react';
 
 const tutorialSteps = [
   {
@@ -98,13 +99,14 @@ const TextMobileStepper = () => {
               </Grid>
               <Grid item lg={12} md={12} sm={12} xs={12}>
                 <div className={classes.videoPlaybackWrapper}>
-                  <iframe
+                  <Video
                     className="videoPlayback"
+                    cloudName="joshzuckermann-netlify-com"
+                    publicId="videos/Reiki-Video"
+                    format="mp4"
                     width="528"
                     height="297"
-                    src="https://www.youtube.com/embed/nIds3reW_dY?rel=0"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                    controls
                   />
                 </div>
               </Grid>
