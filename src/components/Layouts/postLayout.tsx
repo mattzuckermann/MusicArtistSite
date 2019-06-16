@@ -121,6 +121,7 @@ const TextMobileStepper = () => {
                   <Video
                     id="demo-player"
                     className="videoPlayback"
+                    bigPlayButton="false"
                     cloudName="joshzuckermann-netlify-com"
                     publicId="videos/Reiki-Video"
                     format="mp4"
