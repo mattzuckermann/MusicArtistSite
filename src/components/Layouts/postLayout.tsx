@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { graphql, StaticQuery } from 'gatsby';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles, useTheme } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
+import { createStyles, Theme } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -10,8 +11,10 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import mood from '../../images/mood';
 import './postLayout.css';
-import { Video } from 'cloudinary-react';
 import { useSpring, animated } from 'react-spring';
+import CircularIndeterminate from '../CircularIndeterminate';
+
+const YoutubeVideo = React.lazy(() => import('../YoutubeVideo'));
 
 const tutorialSteps = [
   {
@@ -32,42 +35,46 @@ const tutorialSteps = [
   },
 ];
 
-const useStyles = makeStyles(() => ({
-  root: {
-    maxWidth: '300px',
-    flexGrow: 1,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-  header: {
-    display: 'flex',
-    alignItems: 'center',
-    height: 50,
-    paddingLeft: 30,
-  },
-  img: {
-    height: '450px',
-    maxWidth: '300px',
-    overflow: 'hidden',
-    display: 'block',
-    width: '100%',
-    marginBottom: '0px',
-  },
-  videoPlaybackWrapper: {
-    flexGrow: 1,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-  videoCenter: {
-    '@media(maxWidth: 959px)': {
-      textAlign: 'center',
+const useStyles = makeStyles(theme =>
+  createStyles({
+    root: {
+      maxWidth: '300px',
+      flexGrow: 1,
+      marginLeft: 'auto',
+      marginRight: 'auto',
     },
-  },
-}));
+    header: {
+      display: 'flex',
+      alignItems: 'center',
+      height: 50,
+      paddingLeft: 30,
+    },
+    img: {
+      height: '450px',
+      maxWidth: '300px',
+      overflow: 'hidden',
+      display: 'block',
+      width: '100%',
+      marginBottom: '0px',
+    },
+    videoPlaybackWrapper: {
+      flexGrow: 1,
+      '@media(max-width: 959px)': {
+        textAlign: 'center',
+      },
+    },
+    backgroundVideo: {
+      width: '528px',
+      height: '297px',
+      backgroundColor: 'rgb(0,0,0,0.3)',
+      padding: '127px',
+    },
+  })
+);
 
 const TextMobileStepper = () => {
-  const classes = useStyles();
-  const theme = useTheme();
+  const classes = useStyles({});
+
   const [activeStep, setActiveStep] = useState(0);
   const maxSteps = tutorialSteps.length;
 
@@ -101,7 +108,7 @@ const TextMobileStepper = () => {
       `}
       render={data => (
         <animated.div style={fade}>
-          <Grid container spacing={24}>
+          <Grid container spacing={8}>
             <Grid item lg={8} md={8} sm={12} xs={12}>
               <Grid item lg={10} md={10} sm={12} xs={12}>
                 <h1>{data.markdownRemark.frontmatter.title}</h1>
@@ -109,26 +116,19 @@ const TextMobileStepper = () => {
                   dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }}
                 />
               </Grid>
-              <Grid
-                item
-                lg={12}
-                md={12}
-                sm={12}
-                xs={12}
-                className={classes.videoCenter}
-              >
+              <Grid item lg={12} md={12} sm={12} xs={12}>
                 <div className={classes.videoPlaybackWrapper}>
-                  <Video
-                    id="demo-player"
-                    className="videoPlayback"
-                    bigPlayButton="false"
-                    cloudName="joshzuckermann-netlify-com"
-                    publicId="videos/Reiki-Video"
-                    format="mp4"
-                    width="528"
-                    height="297"
-                    controls
-                  />
+                  <Suspense
+                    fallback={
+                      <div
+                        className={`${classes.backgroundVideo} videoPlayback`}
+                      >
+                        <CircularIndeterminate />
+                      </div>
+                    }
+                  >
+                    <YoutubeVideo />
+                  </Suspense>
                 </div>
               </Grid>
             </Grid>
@@ -156,10 +156,10 @@ const TextMobileStepper = () => {
                     >
                       Next
                       {/* {theme.direction === 'rtl' ? (
-                    <KeyboardArrowLeft />
-                  ) : (
-                    <KeyboardArrowRight />
-                  )} */}
+                        <KeyboardArrowLeft />
+                      ) : (
+                        <KeyboardArrowRight />
+                      )} */}
                     </Button>
                   }
                   backButton={
@@ -169,10 +169,10 @@ const TextMobileStepper = () => {
                       disabled={activeStep === 0}
                     >
                       {/* {theme.direction === 'rtl' ? (
-                    <KeyboardArrowRight />
-                  ) : (
-                    <KeyboardArrowLeft />
-                  )} */}
+                        <KeyboardArrowRight />
+                      ) : (
+                        <KeyboardArrowLeft />
+                      )} */}
                       Back
                     </Button>
                   }

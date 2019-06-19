@@ -1,10 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=ABeeZee');
 
-.mainTitle {
-  font-family: 'ABeeZee', sans-serif;
-  font-size: 35px;
+* {
+  box-sizing: border-box !important;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 body {
   padding: 0px !important;
+}
+
+.mainTitle {
+  font-family: 'ABeeZee', sans-serif;
+  font-size: 35px;
 }

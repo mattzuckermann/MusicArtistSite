@@ -1,6 +1,5 @@
 import React from 'react';
-import { StaticQuery, graphql, Link } from 'gatsby';
-import Layout from '../../components/Layouts/layout';
+import { StaticQuery, graphql } from 'gatsby';
 import SEO from '../../components/SEO';
 import { useSpring, animated } from 'react-spring';
 
@@ -8,7 +7,7 @@ const Album = () => {
   const fade = useSpring({
     from: { opacity: 0 },
     opacity: 1,
-    config: { duration: 1000 },
+    config: { duration: 700 },
   });
 
   return (
@@ -32,7 +31,7 @@ const Album = () => {
             keywords={[`music`, `album`, `react`]}
           />
           <h1>Albums</h1>
-          <h3>[ DEBUT ALBUM COMING SOON ]</h3>
+          <h3>DEBUT ALBUM COMING SOON</h3>
           <br />
         </animated.div>
       )}
