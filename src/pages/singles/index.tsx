@@ -4,12 +4,16 @@ import { createStyles } from '@material-ui/core/styles';
 import { Image, CloudinaryContext, Transformation } from 'cloudinary-react';
 import SEO from '../../components/SEO';
 import Grid from '@material-ui/core/Grid';
-import ReactAudioPlayer from 'react-audio-player';
 import { useTrail, animated } from 'react-spring';
 import '../index.css';
-import Tracks from '../../audio';
+import ReactPlayer from 'react-player';
 
 const Audio = ['Reiki', 'Crush', 'Two Weeks'];
+const CloudinaryTracks = [
+  'https://res.cloudinary.com/joshzuckermann-netlify-com/video/upload/v1560645715/singles/Reiki.mp3',
+  'https://res.cloudinary.com/joshzuckermann-netlify-com/video/upload/v1560645717/singles/Crush.mp3',
+  'https://res.cloudinary.com/joshzuckermann-netlify-com/video/upload/v1560648543/singles/Two%20Weeks.mp3',
+];
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -17,14 +21,17 @@ const useStyles = makeStyles(() =>
       backgroundColor: '#fecbd0',
     },
     audioPlayer: {
-      width: '270px',
-      marginBottom: '30px',
+      width: '270px !important',
+      paddingBottom: '30px',
+      marginLeft: 'auto',
+      marginRight: 'auto',
     },
   })
 );
 
 const Album = () => {
   const classes = useStyles();
+  const [playing, setPlaying] = useState('');
   const [on, toggle] = useState(false);
   const [trail, set, stop] = useTrail(3, () => ({
     transform: 'scale(0.8, 0.8), translate3d(-8%,0,0)',
@@ -82,7 +89,7 @@ const Album = () => {
                       {Audio[index]}
                     </h1>
                     <CloudinaryContext
-                      includeOwnBody="false"
+                      includeOwnBody={false}
                       cloudName="joshzuckermann-netlify-com"
                     >
                       <Image
@@ -95,9 +102,12 @@ const Album = () => {
                           width="300"
                         />
                       </Image>
-                      <ReactAudioPlayer
-                        src={Tracks[index].src}
+                      <ReactPlayer
                         className={classes.audioPlayer}
+                        height="55px"
+                        playing={playing === `${index}`}
+                        onPlay={() => setPlaying(`${index}`)}
+                        url={CloudinaryTracks[index]}
                         controls
                       />
                     </CloudinaryContext>
