@@ -1,0 +1,11 @@
+@media screen and (max-width: 568px) {
+  .videoPlayback {
+    width: 100% !important;
+  }
+}
+
+@media screen and (max-width: 334px) {
+  #carouselImage {
+    height: auto;
+  }
+}
