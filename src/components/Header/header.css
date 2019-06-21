@@ -11,7 +11,7 @@
 }
 
 .navListHover:hover {
-  color: #fbfbfb;
+  color: silver;
   transition: all 0.2s ease;
 }
 

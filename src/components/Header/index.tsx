@@ -18,6 +18,7 @@ const useStyles = makeStyles({
   header: {
     background: `#1a1a1a`,
     marginBottom: `1.45rem`,
+    overflow: 'hidden',
   },
 });
 
@@ -31,7 +32,7 @@ const Header = ({ location }) => {
   return (
     <animated.header style={fade} className={`text-center ${classes.header}`}>
       <Grid container spacing={24}>
-        <Grid item sm={1} xs={2}>
+        <Grid item md={1} sm={2} xs={2}>
           <NavColumn groupType="solo">
             <IconListItem
               link="https://www.instagram.com/joshzuckermann/"
@@ -47,13 +48,13 @@ const Header = ({ location }) => {
             />
           </NavColumn>
         </Grid>
-        <Grid item sm={10} xs={8}>
+        <Grid item md={10} sm={8} xs={8}>
           <h1 className="navList listImage" style={{ margin: 0 }}>
             <HeaderImage style={{ width: 125 }} />
           </h1>
         </Grid>
-        <Grid item sm={1} xs={2}>
-          <NavColumn groupType="groups">
+        <Grid item md={1} sm={2} xs={2}>
+          <NavColumn groupType="group">
             <IconListItem
               link="https://www.instagram.com/cardclubband/"
               icon={faInstagram}
