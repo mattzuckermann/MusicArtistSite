@@ -20,19 +20,23 @@ import { useSpring, animated } from 'react-spring';
 const tutorialSteps = [
   {
     label: 'Photo Gallery',
-    imgPath: mood.orangeBack1,
+    imgPath:
+      'https://res.cloudinary.com/joshzuckermann-netlify-com/image/upload/v1561080683/carouselImages/IMG_6676_upgzhh.jpg',
   },
   {
     label: 'Photo Gallery',
-    imgPath: mood.noddingAside,
+    imgPath:
+      'https://res.cloudinary.com/joshzuckermann-netlify-com/image/upload/v1561080678/carouselImages/image5_tnzhzj.jpg',
   },
   {
     label: 'Photo Gallery',
-    imgPath: mood.pose2,
+    imgPath:
+      'https://res.cloudinary.com/joshzuckermann-netlify-com/image/upload/v1561080685/carouselImages/IMG_6671_eyj3gx.jpg',
   },
   {
     label: 'Photo Gallery',
-    imgPath: mood.orangeBack2,
+    imgPath:
+      'https://res.cloudinary.com/joshzuckermann-netlify-com/image/upload/v1561080685/carouselImages/IMG_6677_ttngrr.jpg',
   },
 ];
 
