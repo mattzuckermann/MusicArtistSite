@@ -1,13 +1,15 @@
 import React from 'react';
+import '../components/Header/header.css';
+import '@fortawesome/fontawesome-svg-core/styles.css';
 import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
 import './layout.css';
-import Header from '../Header';
+import Header from '../components/Header';
 
-const Layout = ({ children }) => (
+const Layout = ({ children, location }) => (
   <StaticQuery
     query={graphql`
-      query SiteTitleQuery {
+      query LayoutTitleQuery {
         site {
           siteMetadata {
             title
@@ -17,7 +19,7 @@ const Layout = ({ children }) => (
     `}
     render={data => (
       <>
-        <Header siteTitle={data.site.siteMetadata.title} />
+        <Header siteTitle={data.site.siteMetadata.title} location={location} />
         <div
           style={{
             margin: `0 auto`,

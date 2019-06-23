@@ -2,13 +2,13 @@ import React from 'react';
 import { StaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
-const Image = props => (
+const HeaderImage = props => (
   <StaticQuery
     query={graphql`
-      query {
-        placeholderImage: file(relativePath: { eq: "mood/IMG_6574.jpeg" }) {
+      query HeaderImage {
+        placeholderImage: file(relativePath: { eq: "mood/favicon.png" }) {
           childImageSharp {
-            fluid(maxWidth: 1000) {
+            fluid(maxWidth: 125) {
               ...GatsbyImageSharpFluid_tracedSVG
             }
           }
@@ -23,4 +23,4 @@ const Image = props => (
     )}
   />
 );
-export default Image;
+export default HeaderImage;

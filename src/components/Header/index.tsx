@@ -1,62 +1,93 @@
-import { Link } from 'gatsby';
-
-import PropTypes from 'prop-types';
 import React from 'react';
-import './style.css';
-import Images from '../../images';
-// import Archive from '../Archive';
+import Grid from '@material-ui/core/Grid';
+import HeaderImage from '../HeaderImage';
+import {
+  faInstagram,
+  faSpotify,
+  faSoundcloud,
+  faBandcamp,
+} from '@fortawesome/free-brands-svg-icons';
+import IconListItem from '../IconListItem';
+import NavTab from '../NavTab';
+import NavColumn from '../NavColumn';
+import PropTypes from 'prop-types';
+import { useSpring, animated } from 'react-spring';
+import { makeStyles } from '@material-ui/styles';
 
-const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
-    >
-      <ul>
-        <li className="navList listImage">
-          <h1 style={{ margin: 0 }}>
-            <Link
-              to="/"
-              style={{
-                color: `white`,
-                textDecoration: `none`,
-              }}
-            >
-              <img
-                style={{ width: `200px` }}
-                src={Images.favicon}
-                alt="Josh Logo"
-              />
-            </Link>
+const useStyles = makeStyles({
+  header: {
+    background: `#1a1a1a`,
+    marginBottom: `1.45rem`,
+    overflow: 'hidden',
+  },
+});
+
+const Header = ({ location }) => {
+  const classes = useStyles();
+  const fade = useSpring({
+    from: { opacity: 0 },
+    opacity: 1,
+    config: { duration: 300 },
+  });
+  return (
+    <animated.header style={fade} className={`text-center ${classes.header}`}>
+      <Grid container spacing={24}>
+        <Grid item md={1} sm={2} xs={2}>
+          <NavColumn groupType="solo">
+            <IconListItem
+              link="https://www.instagram.com/joshzuckermann/"
+              icon={faInstagram}
+            />
+            <IconListItem
+              link="https://open.spotify.com/artist/0hRWyQpSxQ8DxcTTCPC33J?si=rOVcTrdtQVy5yfaTQ7IkkA"
+              icon={faSpotify}
+            />
+            <IconListItem
+              link="https://soundcloud.com/josh-zuckermann-867378017"
+              icon={faSoundcloud}
+            />
+          </NavColumn>
+        </Grid>
+        <Grid item md={10} sm={8} xs={8}>
+          <h1 className="navList listImage" style={{ margin: 0 }}>
+            <HeaderImage style={{ width: 125 }} />
           </h1>
-        </li>
-        <li className="navList">
-          <Link to="/bio/about" className="navList">
-            About
-          </Link>
-        </li>
-        <li className="navList">
-          <Link to="/albums" className="navList">
-            Albums
-          </Link>
-        </li>
-        <li className="navList">
-          <Link to="/singles" className="navList">
-            Singles
-          </Link>
-        </li>
+        </Grid>
+        <Grid item md={1} sm={2} xs={2}>
+          <NavColumn groupType="group">
+            <IconListItem
+              link="https://www.instagram.com/cardclubband/"
+              icon={faInstagram}
+            />
+            <IconListItem
+              link="https://open.spotify.com/artist/17MMFjyHC8KZjcFxx06DFh?si=PaCTf9sqSb6zU7A7hM5Axw"
+              icon={faSpotify}
+            />
+            <IconListItem
+              link="https://johnnycilantro6tet.bandcamp.com"
+              icon={faBandcamp}
+            />
+          </NavColumn>
+        </Grid>
+      </Grid>
+      <hr className="hrLine" />
+      <ul>
+        <NavTab location={location} link="/">
+          HOME
+        </NavTab>
+        <NavTab location={location} link="/about">
+          ABOUT
+        </NavTab>
+        <NavTab location={location} link="/singles">
+          SINGLES
+        </NavTab>
+        <NavTab location={location} link="/albums">
+          ALBUMS
+        </NavTab>
       </ul>
-    </div>
-  </header>
-);
+    </animated.header>
+  );
+};
 
 Header.propTypes = {
   siteTitle: PropTypes.string,

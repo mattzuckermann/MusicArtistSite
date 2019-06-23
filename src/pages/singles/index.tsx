@@ -1,135 +1,125 @@
-import React from 'react';
-import { StaticQuery, graphql, Link } from 'gatsby';
-import Layout from '../../components/Layouts/layout';
-import Image from '../../components/Image';
+import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/styles';
+import { createStyles } from '@material-ui/core/styles';
+import { Image, CloudinaryContext, Transformation } from 'cloudinary-react';
 import SEO from '../../components/SEO';
-import Archive from '../../components/Archive';
-// import 'bootstrap/dist/css/bootstrap.css';
-import image1 from '../../images';
-import image2 from '../../images';
-import image3 from '../../images';
-import image4 from '../../images';
-import image5 from '../../images';
+import Grid from '@material-ui/core/Grid';
+import { useTrail, animated } from 'react-spring';
+import '../index.css';
+import ReactPlayer from 'react-player';
 
-const Album = () => (
-  <StaticQuery
-    query={graphql`
-      query {
-        file(relativePath: { regex: "/image5/" }) {
-          childImageSharp {
-            fluid(maxWidth: 500) {
-              ...GatsbyImageSharpFluid_tracedSVG
-            }
-          }
-        }
-      }
-    `}
-    render={data => (
-      <Layout>
-        <SEO
-          description="visibility improvement"
-          title="Album"
-          keywords={[`music`, `album`, `react`]}
-        />
-        <h1>Singles</h1>
-        <img src={data.file.childImageSharp.fluid.src} alt="test" />
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <div id="titleName" title='Comment: "Josh Zuckermann"'>
-                Josh Zuckermann
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-12">
-              <div className="img-zoom-container">
-                <div id="myresult" className="img-zoom-result" />
-              </div>
-              <div
-                id="carouselExampleControls"
-                className="carousel slide"
-                data-ride="carousel"
-              />
-              <div className="carousel-inner img-zoom-container">
-                <div className="carousel-item active">
-                  <img
-                    id="myimage1"
-                    className="d-block"
-                    src="{image1}"
-                    alt="Second slide"
-                  />
-                </div>
-                <div className="carousel-item">
-                  <img
-                    id="myimage2"
-                    className="d-block"
-                    src="{image2}"
-                    alt="Second slide"
-                  />
-                </div>
-                <div className="carousel-item">
-                  <img
-                    id="myimage3"
-                    className="d-block"
-                    src="{image3}"
-                    alt="Third slide"
-                  />
-                </div>
-                <div className="carousel-item">
-                  <img
-                    id="myimage4"
-                    className="d-block"
-                    src="{image4}"
-                    alt="Fourth slide"
-                  />
-                </div>
-                <div className="carousel-item">
-                  <img
-                    id="myimage5"
-                    className="d-block"
-                    src="{image5}"
-                    alt="Fifth slide"
-                  />
-                </div>
-              </div>
-              <a
-                className="carousel-control-prev"
-                href="#carouselExampleControls"
-                role="button"
-                data-slide="prev"
-              >
-                <span
-                  className="carousel-control-prev-icon"
-                  aria-hidden="true"
-                />
-                <span className="sr-only">Previous</span>
-              </a>
-              <a
-                className="carousel-control-next"
-                href="#carouselExampleControls"
-                role="button"
-                data-slide="next"
-              >
-                <span
-                  className="carousel-control-next-icon"
-                  aria-hidden="true"
-                />
-                <span className="sr-only">Next</span>
-              </a>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-12">
-              <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }} />
-            </div>
+const Audio = ['Reiki', 'Crush', 'Two Weeks'];
+const CloudinaryTracks = [
+  'https://res.cloudinary.com/joshzuckermann-netlify-com/video/upload/v1560645715/singles/Reiki.mp3',
+  'https://res.cloudinary.com/joshzuckermann-netlify-com/video/upload/v1560645717/singles/Crush.mp3',
+  'https://res.cloudinary.com/joshzuckermann-netlify-com/video/upload/v1560648543/singles/Two%20Weeks.mp3',
+];
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    SinglesBackgroundColor: {
+      backgroundColor: '#fecbd0',
+    },
+    audioPlayer: {
+      width: '270px !important',
+      paddingBottom: '30px',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  })
+);
+
+const Album = () => {
+  const classes = useStyles();
+  const [playing, setPlaying] = useState('');
+  const [on, toggle] = useState(false);
+  const [trail, set, stop] = useTrail(3, () => ({
+    transform: 'scale(0.8, 0.8), translate3d(-8%,0,0)',
+    opacity: 0,
+  }));
+  set({
+    opacity: on ? 1 : 0,
+    transform: on
+      ? 'scale(1, 1), translate3d(0,0,0,)'
+      : 'scale(0.8,0.8), translate3d(-8%,0,0)',
+    config: { duration: 3500 / 4 },
+  });
+  stop();
+
+  useEffect(() => {
+    toggle(true);
+  }, []);
+
+  return (
+    <div>
+      <SEO
+        description="visibility improvement"
+        title="Album"
+        keywords={[`music`, `album`, `react`]}
+      />
+      <div className="container">
+        <div className="row">
+          <div>
+            <Grid container spacing={24} style={{ textAlign: 'center' }}>
+              {trail.map((props, index) => (
+                <Grid
+                  item
+                  style={{
+                    borderRadius: 10,
+                    margin: '10px 0px 40px 0px',
+                  }}
+                  key={index}
+                  lg={6}
+                  md={6}
+                  sm={12}
+                  xs={12}
+                >
+                  <animated.div
+                    className={`${classes.SinglesBackgroundColor}`}
+                    style={props}
+                  >
+                    <h1
+                      style={{
+                        padding: '25px 0px',
+                        fontFamily: 'futura',
+                        borderRadius: 5,
+                        backgroundColor: '#fb2f47',
+                      }}
+                    >
+                      {Audio[index]}
+                    </h1>
+                    <CloudinaryContext
+                      includeOwnBody={false}
+                      cloudName="joshzuckermann-netlify-com"
+                    >
+                      <Image
+                        publicId={`singlesImages/${Audio[index]}`}
+                        format="jpg"
+                      >
+                        <Transformation
+                          crop="fill"
+                          gravity="faces"
+                          width="300"
+                        />
+                      </Image>
+                      <ReactPlayer
+                        className={classes.audioPlayer}
+                        height="55px"
+                        playing={playing === `${index}`}
+                        onPlay={() => setPlaying(`${index}`)}
+                        url={CloudinaryTracks[index]}
+                        controls
+                      />
+                    </CloudinaryContext>
+                  </animated.div>
+                </Grid>
+              ))}
+            </Grid>
           </div>
         </div>
-        <br />
-        {/* <Archive /> */}
-      </Layout>
-    )}
-  />
-);
+      </div>
+    </div>
+  );
+};
 
 export default Album;

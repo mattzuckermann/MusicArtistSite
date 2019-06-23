@@ -1,32 +1,34 @@
+import '../components/Header/header.css';
 import React from 'react';
-import { Link } from 'gatsby';
-
-import Layout from '../components/Layouts/layout';
 import Image from '../components/Image';
 import SEO from '../components/SEO';
-import Archive from '../components/Archive';
-import 'bootstrap/dist/css/bootstrap.css';
+import './index.css';
+import { useSpring, animated } from 'react-spring';
 
-const IndexPage = () => (
-  <Layout>
-    <SEO
-      description="visibility improvement"
-      title="Home"
-      keywords={[`gatsby`, `application`, `react`]}
-    />
-    <h1>Hey peeps...</h1>
-    <p>Welcome to my music site.</p>
-    <p>Enjoy the sweet tunes.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <br />
-    <br />
-    {/* {() => {
-      const scott: boolean = 'hey';
-    }} */}
-    {/* <Archive /> */}
-  </Layout>
-);
+const IndexPage = () => {
+  const fade = useSpring({
+    from: { opacity: 0 },
+    opacity: 1,
+    config: { duration: 600 },
+  });
+  return (
+    <animated.div style={fade}>
+      <SEO
+        description="visibility improvement"
+        title="Home"
+        keywords={[`gatsby`, `application`, `react`]}
+      />
+      <h1 className="mainTitle">Josh Zuckermann</h1>
+      <div
+        style={{
+          maxWidth: `1000px`,
+          marginBottom: `1.45rem`,
+        }}
+      >
+        <Image style={{ borderRadius: 15 }} />
+      </div>
+    </animated.div>
+  );
+};
 
 export default IndexPage;

@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow');
+
+.navList {
+  text-decoration: none;
+  color: #585858;
+  display: inline-block;
+  margin: 0;
+  padding: 14px;
+  font-size: 15px;
+  font-family: 'PT Sans Narrow', sans-serif;
+}
+
+.navListHover:hover {
+  color: silver;
+  transition: all 0.2s ease;
+}
+
+.hrLine {
+  background-color: #585858;
+  width: 100%;
+  opacity: 0.3;
+  margin: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.iconList > li {
+  margin: 0;
+  padding-top: 10px;
+}
+
+.icon {
+  background-color: rgba(75, 75, 75, 0.3);
+  font-size: 22px;
+  padding: 4px;
+  border-radius: 100px;
+}
+
+.iconHover:hover {
+  background-color: rgba(195, 214, 213, 0.3);
+  transition: all 0.1s ease;
+}
+
+.groupSize {
+  color: grey;
+  font-family: 'PT Sans Narrow', sans-serif;
+  opacity: 0.3;
+}
+
+@media screen and (max-width: 575px) {
+  .navList {
+    padding: 8px;
+  }
+}
