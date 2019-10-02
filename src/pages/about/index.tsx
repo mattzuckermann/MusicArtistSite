@@ -1,7 +1,7 @@
-import React, { useState, Suspense } from 'react';
-import { graphql, StaticQuery } from 'gatsby';
+import React, { useState } from 'react';
+import { graphql, useStaticQuery } from 'gatsby';
 import Grid from '@material-ui/core/Grid';
-import YoutubeVideo from '../../components/YoutubeVideo';
+import YouTubeVideo from '../../components/YouTubeVideo';
 import { makeStyles } from '@material-ui/styles';
 import { createStyles } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
@@ -10,35 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import './about.css';
 import { useSpring, animated } from 'react-spring';
-// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-// import CircularIndeterminate from '../../components/CircularIndeterminate';
-// const YoutubeVideo = React.lazy(() => import('../../components/YoutubeVideo'));
 
-const tutorialSteps = [
-  {
-    label: 'Photo Gallery',
-    imgPath:
-      'https://res.cloudinary.com/joshzuckermann-netlify-com/image/upload/v1561080683/carouselImages/IMG_6676_upgzhh.jpg',
-  },
-  {
-    label: 'Photo Gallery',
-    imgPath:
-      'https://res.cloudinary.com/joshzuckermann-netlify-com/image/upload/v1561080678/carouselImages/image5_tnzhzj.jpg',
-  },
-  {
-    label: 'Photo Gallery',
-    imgPath:
-      'https://res.cloudinary.com/joshzuckermann-netlify-com/image/upload/v1561080685/carouselImages/IMG_6671_eyj3gx.jpg',
-  },
-  {
-    label: 'Photo Gallery',
-    imgPath:
-      'https://res.cloudinary.com/joshzuckermann-netlify-com/image/upload/v1561080685/carouselImages/IMG_6677_ttngrr.jpg',
-  },
-];
-
-const useStyles = makeStyles(theme =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       maxWidth: '300px',
@@ -76,10 +49,33 @@ const useStyles = makeStyles(theme =>
 );
 
 const About = () => {
-  const classes = useStyles({});
+  const classes = useStyles();
+
+  const { allContentfulPhotoAlbum, markdownRemark } = useStaticQuery(graphql`
+    query bioQuery($slug: String) {
+      allContentfulPhotoAlbum {
+        edges {
+          node {
+            name
+            carouselImages {
+              url
+            }
+          }
+        }
+      }
+      markdownRemark(frontmatter: { slug: { eq: $slug } }) {
+        html
+        frontmatter {
+          title
+          date
+          slug
+        }
+      }
+    }
+  `);
 
   const [activeStep, setActiveStep] = useState(0);
-  const maxSteps = tutorialSteps.length;
+  const maxSteps = allContentfulPhotoAlbum.edges[0].node.carouselImages.length;
 
   const fade = useSpring({
     from: { opacity: 0 },
@@ -96,96 +92,63 @@ const About = () => {
   }
 
   return (
-    <StaticQuery
-      query={graphql`
-        query aboutQuery($slug: String) {
-          markdownRemark(frontmatter: { slug: { eq: $slug } }) {
-            html
-            frontmatter {
-              title
-              date
-              slug
-            }
-          }
-        }
-      `}
-      render={data => (
-        <animated.div style={fade}>
-          <Grid container spacing={8}>
-            <Grid item lg={8} md={8} sm={12} xs={12}>
-              <Grid item lg={10} md={10} sm={12} xs={12}>
-                <h1>{data.markdownRemark.frontmatter.title}</h1>
-                <div
-                  dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }}
-                />
-              </Grid>
-              <Grid item lg={12} md={12} sm={12} xs={12}>
-                <div className={classes.videoPlaybackWrapper}>
-                  {/* <Suspense
-                    fallback={
-                      <div
-                        className={`${classes.backgroundVideo} videoPlayback`}
-                      >
-                        <CircularIndeterminate />
-                      </div>
-                    }
-                  > */}
-                  <YoutubeVideo />
-                  {/* </Suspense> */}
-                </div>
-              </Grid>
-            </Grid>
-            <Grid item lg={4} md={4} sm={12} xs={12}>
-              <div className={classes.root}>
-                <Paper square elevation={0} className={classes.header}>
-                  <Typography>{tutorialSteps[activeStep].label}</Typography>
-                </Paper>
-                <img
-                  id="carouselImage"
-                  className={classes.img}
-                  src={tutorialSteps[activeStep].imgPath}
-                  alt={tutorialSteps[activeStep].label}
-                />
-                <MobileStepper
-                  steps={maxSteps}
-                  position="static"
-                  variant="text"
-                  activeStep={activeStep}
-                  nextButton={
-                    <Button
-                      size="small"
-                      onClick={handleNext}
-                      disabled={activeStep === maxSteps - 1}
-                    >
-                      Next
-                      {/* {theme.direction === 'rtl' ? (
-                        <KeyboardArrowLeft />
-                      ) : (
-                        <KeyboardArrowRight />
-                      )} */}
-                    </Button>
-                  }
-                  backButton={
-                    <Button
-                      size="small"
-                      onClick={handleBack}
-                      disabled={activeStep === 0}
-                    >
-                      {/* {theme.direction === 'rtl' ? (
-                        <KeyboardArrowRight />
-                      ) : (
-                        <KeyboardArrowLeft />
-                      )} */}
-                      Back
-                    </Button>
-                  }
-                />
-              </div>
-            </Grid>
+    <animated.div style={fade}>
+      <Grid container spacing={8}>
+        <Grid item lg={8} md={8} sm={12} xs={12}>
+          <Grid item lg={10} md={10} sm={12} xs={12}>
+            <h1>{markdownRemark.frontmatter.title}</h1>
+            <div dangerouslySetInnerHTML={{ __html: markdownRemark.html }} />
           </Grid>
-        </animated.div>
-      )}
-    />
+          <Grid item lg={12} md={12} sm={12} xs={12}>
+            <div className={classes.videoPlaybackWrapper}>
+              <YouTubeVideo />
+            </div>
+          </Grid>
+        </Grid>
+        <Grid item lg={4} md={4} sm={12} xs={12}>
+          <div className={classes.root}>
+            <Paper square elevation={0} className={classes.header}>
+              <Typography>
+                {allContentfulPhotoAlbum.edges[0].node.name}
+              </Typography>
+            </Paper>
+            <img
+              id="carouselImage"
+              className={classes.img}
+              src={
+                allContentfulPhotoAlbum.edges[0].node.carouselImages[activeStep]
+                  .url
+              }
+              alt={allContentfulPhotoAlbum.edges[0].node.name}
+            />
+            <MobileStepper
+              steps={maxSteps}
+              position="static"
+              variant="text"
+              activeStep={activeStep}
+              nextButton={
+                <Button
+                  size="small"
+                  onClick={handleNext}
+                  disabled={activeStep === maxSteps - 1}
+                >
+                  Next
+                </Button>
+              }
+              backButton={
+                <Button
+                  size="small"
+                  onClick={handleBack}
+                  disabled={activeStep === 0}
+                >
+                  Back
+                </Button>
+              }
+            />
+          </div>
+        </Grid>
+      </Grid>
+    </animated.div>
   );
 };
 

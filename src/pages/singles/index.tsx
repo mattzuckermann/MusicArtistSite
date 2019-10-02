@@ -1,19 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import React, { FunctionComponent, useState, useEffect } from 'react';
+import { useTrail, animated } from 'react-spring';
 import { createStyles } from '@material-ui/core/styles';
-import { Image, CloudinaryContext, Transformation } from 'cloudinary-react';
+import { makeStyles } from '@material-ui/styles';
+import { useStaticQuery, graphql } from 'gatsby';
 import SEO from '../../components/SEO';
 import Grid from '@material-ui/core/Grid';
-import { useTrail, animated } from 'react-spring';
-import '../index.css';
 import ReactPlayer from 'react-player';
-
-const Audio = ['Reiki', 'Crush', 'Two Weeks'];
-const CloudinaryTracks = [
-  'https://res.cloudinary.com/joshzuckermann-netlify-com/video/upload/v1560645715/singles/Reiki.mp3',
-  'https://res.cloudinary.com/joshzuckermann-netlify-com/video/upload/v1560645717/singles/Crush.mp3',
-  'https://res.cloudinary.com/joshzuckermann-netlify-com/video/upload/v1560648543/singles/Two%20Weeks.mp3',
-];
+import '../index.css';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -26,14 +19,53 @@ const useStyles = makeStyles(() =>
       marginLeft: 'auto',
       marginRight: 'auto',
     },
+    trackTitle: {
+      padding: '25px 0px',
+      fontFamily: 'futura',
+      borderRadius: 5,
+      backgroundColor: '#fb2f47',
+    },
   })
 );
 
-const Album = () => {
+const Album: FunctionComponent<{ index: string; boolean: boolean }> = ({
+  index = '',
+  boolean = false,
+}) => {
   const classes = useStyles();
-  const [playing, setPlaying] = useState('');
-  const [on, toggle] = useState(false);
-  const [trail, set, stop] = useTrail(3, () => ({
+  const [playing, setPlaying] = useState(index);
+  const [on, toggle] = useState(boolean);
+
+  // Effect to toggle "on" state to true and run animations
+  useEffect((): void => {
+    toggle(true);
+  }, []);
+
+  // GraphQL query to read all tracks from contentful
+  const { allContentfulTrack } = useStaticQuery(graphql`
+    query tracksQuery {
+      allContentfulTrack {
+        edges {
+          node {
+            order
+            name
+            cloudinary {
+              url
+              format
+              bytes
+              duration
+            }
+            cloudinaryImage {
+              url
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  // React Spring animations that run once component mounts
+  const [trail, set, stop] = useTrail(allContentfulTrack.edges.length, () => ({
     transform: 'scale(0.8, 0.8), translate3d(-8%,0,0)',
     opacity: 0,
   }));
@@ -46,79 +78,52 @@ const Album = () => {
   });
   stop();
 
-  useEffect(() => {
-    toggle(true);
-  }, []);
-
   return (
-    <div>
+    <main>
       <SEO
         description="visibility improvement"
         title="Album"
-        keywords={[`music`, `album`, `react`]}
+        keywords={[`music`, `album`, `josh`, `zuckermann`, `rap`, `chicago`]}
       />
-      <div className="container">
-        <div className="row">
-          <div>
-            <Grid container spacing={24} style={{ textAlign: 'center' }}>
-              {trail.map((props, index) => (
-                <Grid
-                  item
-                  style={{
-                    borderRadius: 10,
-                    margin: '10px 0px 40px 0px',
-                  }}
-                  key={index}
-                  lg={6}
-                  md={6}
-                  sm={12}
-                  xs={12}
-                >
-                  <animated.div
-                    className={`${classes.SinglesBackgroundColor}`}
-                    style={props}
-                  >
-                    <h1
-                      style={{
-                        padding: '25px 0px',
-                        fontFamily: 'futura',
-                        borderRadius: 5,
-                        backgroundColor: '#fb2f47',
-                      }}
-                    >
-                      {Audio[index]}
-                    </h1>
-                    <CloudinaryContext
-                      includeOwnBody={false}
-                      cloudName="joshzuckermann-netlify-com"
-                    >
-                      <Image
-                        publicId={`singlesImages/${Audio[index]}`}
-                        format="jpg"
-                      >
-                        <Transformation
-                          crop="fill"
-                          gravity="faces"
-                          width="300"
-                        />
-                      </Image>
-                      <ReactPlayer
-                        className={classes.audioPlayer}
-                        height="55px"
-                        playing={playing === `${index}`}
-                        onPlay={() => setPlaying(`${index}`)}
-                        url={CloudinaryTracks[index]}
-                        controls
-                      />
-                    </CloudinaryContext>
-                  </animated.div>
-                </Grid>
-              ))}
+      <Grid container spacing={24} style={{ textAlign: 'center' }}>
+        {trail.map((props: object, index: number) => {
+          let { node: track } = allContentfulTrack.edges[index];
+          return (
+            <Grid
+              item
+              style={{
+                borderRadius: 10,
+                margin: '10px 0px 40px 0px',
+              }}
+              key={index}
+              lg={6}
+              md={6}
+              sm={12}
+              xs={12}
+            >
+              <animated.div
+                className={`${classes.SinglesBackgroundColor}`}
+                style={props}
+              >
+                <h1 className={classes.trackTitle}>{track.name}</h1>
+                <img
+                  style={{ width: '300px' }}
+                  src={track.cloudinaryImage[0].url}
+                />
+                <ReactPlayer
+                  className={classes.audioPlayer}
+                  height="55px"
+                  playing={playing === `${index}`}
+                  onPlay={() => setPlaying(`${index}`)}
+                  url={track.cloudinary[0].url}
+                  controls
+                />
+              </animated.div>
             </Grid>
-          </div>
-        </div>
-      </div>
-    </div>
+          );
+        })}
+      </Grid>
+    </main>
   );
 };
 
