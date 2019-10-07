@@ -1,5 +1,4 @@
 import React from 'react';
-import { StaticQuery, graphql } from 'gatsby';
 import SEO from '../../components/SEO';
 import { useSpring, animated } from 'react-spring';
 
@@ -11,31 +10,16 @@ const Album = () => {
   });
 
   return (
-    <StaticQuery
-      query={graphql`
-        query {
-          file(relativePath: { regex: "/image7/" }) {
-            childImageSharp {
-              fluid(maxWidth: 200) {
-                ...GatsbyImageSharpFluid_tracedSVG
-              }
-            }
-          }
-        }
-      `}
-      render={data => (
-        <animated.div style={fade}>
-          <SEO
-            description="visibility improvement"
-            title="Album"
-            keywords={[`music`, `album`, `react`]}
-          />
-          <h1>Albums</h1>
-          <h3>DEBUT ALBUM COMING SOON</h3>
-          <br />
-        </animated.div>
-      )}
-    />
+    <animated.div style={fade}>
+      <SEO
+        description="visibility improvement"
+        title="Album"
+        keywords={[`music`, `album`, `react`]}
+      />
+      <h1>Albums</h1>
+      <h3>DEBUT ALBUM COMING SOON</h3>
+      <br />
+    </animated.div>
   );
 };
 
