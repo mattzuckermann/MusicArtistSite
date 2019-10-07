@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import Grid from '@material-ui/core/Grid';
-import { YouTubeVideo } from '../../components/YouTubeVideo/YouTubeVideo';
+import YouTubeVideo from '../../components/YouTubeVideo';
 import { makeStyles } from '@material-ui/styles';
 import { createStyles } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
