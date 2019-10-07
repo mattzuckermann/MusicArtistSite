@@ -1,6 +1,6 @@
 import React from 'react';
 
-const YouTubeVideo = () => {
+export const YouTubeVideo = () => {
   return (
     <div>
       <iframe
@@ -14,5 +14,3 @@ const YouTubeVideo = () => {
     </div>
   );
 };
-
-export default YouTubeVideo;
