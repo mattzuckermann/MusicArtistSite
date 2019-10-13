@@ -3,7 +3,6 @@ import { graphql, useStaticQuery } from 'gatsby';
 import Grid from '@material-ui/core/Grid';
 import YouTubeVideo from '../../components/YouTubeVideo';
 import { makeStyles } from '@material-ui/styles';
-import { createStyles } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -11,42 +10,40 @@ import Button from '@material-ui/core/Button';
 import './about.css';
 import { useSpring, animated } from 'react-spring';
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    root: {
-      maxWidth: '300px',
-      flexGrow: 1,
-      marginLeft: 'auto',
-      marginRight: 'auto',
+const useStyles = makeStyles({
+  root: {
+    maxWidth: '300px',
+    flexGrow: 1,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+    height: 50,
+    paddingLeft: 30,
+  },
+  img: {
+    height: '450px',
+    maxWidth: '400px',
+    overflow: 'hidden',
+    display: 'block',
+    width: '100%',
+    marginBottom: '0px',
+  },
+  videoPlaybackWrapper: {
+    flexGrow: 1,
+    '@media(max-width: 959px)': {
+      textAlign: 'center',
     },
-    header: {
-      display: 'flex',
-      alignItems: 'center',
-      height: 50,
-      paddingLeft: 30,
-    },
-    img: {
-      height: '450px',
-      maxWidth: '300px',
-      overflow: 'hidden',
-      display: 'block',
-      width: '100%',
-      marginBottom: '0px',
-    },
-    videoPlaybackWrapper: {
-      flexGrow: 1,
-      '@media(max-width: 959px)': {
-        textAlign: 'center',
-      },
-    },
-    backgroundVideo: {
-      width: '528px',
-      height: '297px',
-      backgroundColor: 'rgb(0,0,0,0.3)',
-      padding: '127px',
-    },
-  })
-);
+  },
+  backgroundVideo: {
+    width: '528px',
+    height: '297px',
+    backgroundColor: 'rgb(0,0,0,0.3)',
+    padding: '127px',
+  },
+});
 
 const About = () => {
   const classes = useStyles();
@@ -122,9 +119,9 @@ const About = () => {
               alt={allContentfulPhotoAlbum.edges[0].node.name}
             />
             <MobileStepper
+              variant="dots"
               steps={maxSteps}
               position="static"
-              variant="text"
               activeStep={activeStep}
               nextButton={
                 <Button
