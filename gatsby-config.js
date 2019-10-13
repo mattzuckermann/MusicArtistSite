@@ -4,7 +4,7 @@ require('dotenv').config({
 
 module.exports = {
   siteMetadata: {
-    title: 'Zuckermann',
+    title: 'Zuckermann | Portfolio',
     description:
       'A music platform hosting all audio content created by Josh Zuckermann',
     author: 'Matt Zuckermann',
