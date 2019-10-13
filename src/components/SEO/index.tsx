@@ -45,6 +45,10 @@ function SEO({ description, lang, meta, keywords, title }) {
           content: `website`,
         },
         {
+          property: `og:image`,
+          content: `https://res.cloudinary.com/mczuckermann/image/upload/v1570998430/JZ-SEO-Image.png`,
+        },
+        {
           name: `twitter:card`,
           content: `summary`,
         },
