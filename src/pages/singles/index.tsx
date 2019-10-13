@@ -85,7 +85,7 @@ const Album: FunctionComponent<{ index: string; boolean: boolean }> = ({
         title="Album"
         keywords={[`music`, `album`, `josh`, `zuckermann`, `rap`, `chicago`]}
       />
-      <Grid container spacing={24} style={{ textAlign: 'center' }}>
+      <Grid container spacing={6} style={{ textAlign: 'center' }}>
         {trail.map((props: object, index: number) => {
           let { node: track } = allContentfulTrack.edges[index];
           return (
