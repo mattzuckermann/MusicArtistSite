@@ -44,6 +44,14 @@ module.exports = {
         path: `${__dirname}/src/bios`,
       },
     },
+    {
+      resolve: 'gatsby-source-cloudinary',
+      options: {
+        cloudName: 'joshzuckermann-netlify-com',
+        apiKey: '293734324154777',
+        apiSecret: 'UnmLFnzyNKCza5VHp29yg0JtCaw',
+      },
+    },
     'gatsby-transformer-remark',
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
