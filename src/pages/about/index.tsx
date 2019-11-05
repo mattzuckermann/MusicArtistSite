@@ -7,6 +7,7 @@ import MobileStepper from '@material-ui/core/MobileStepper';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import SEO from '../../components/SEO';
 import './about.css';
 import { useSpring, animated } from 'react-spring';
 
@@ -90,8 +91,19 @@ const About = () => {
 
   return (
     <animated.div style={fade}>
+      <SEO
+        title="About"
+        keywords={[`music`, `album`, `josh`, `zuckermann`, `rap`, `chicago`]}
+      />
       <Grid container spacing={8}>
-        <Grid item lg={8} md={8} sm={12} xs={12}>
+        <Grid
+          style={{ paddingBottom: '0px' }}
+          item
+          lg={8}
+          md={8}
+          sm={12}
+          xs={12}
+        >
           <Grid item lg={10} md={10} sm={12} xs={12}>
             <h1>{markdownRemark.frontmatter.title}</h1>
             <div dangerouslySetInnerHTML={{ __html: markdownRemark.html }} />

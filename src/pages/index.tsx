@@ -16,7 +16,7 @@ const IndexPage = () => {
     <animated.div style={fade}>
       <SEO
         description="Josh Zuckermann is a music artist from Chicago, Illinois, talented in classical, jazz, pop, hiphop, rock, and much more."
-        title="Zuckermann | Music"
+        title="Home"
         keywords={[`gatsby`, `application`, `react`]}
       />
       <h1 className="mainTitle">Josh Zuckermann</h1>

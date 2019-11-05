@@ -11,11 +11,7 @@ const Album = () => {
 
   return (
     <animated.div style={fade}>
-      <SEO
-        description="visibility improvement"
-        title="Album"
-        keywords={[`music`, `album`, `react`]}
-      />
+      <SEO title="Albums" keywords={[`music`, `album`, `react`]} />
       <h1>Albums</h1>
       <h3>DEBUT ALBUM COMING SOON</h3>
       <br />
