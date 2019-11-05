@@ -2,25 +2,27 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 
 const TrackLine = ({
-  currentTrack,
-  index,
-  smallPlayButton,
-  setTrack,
   allCloudinaryMedia,
-  track,
   classes,
+  currentTrack,
+  setTrack,
   playing,
   setPlaying,
+  track,
+  index,
 }) => {
-  const timeClock = `0${Math.floor(
-    track.cloudinary[0].duration / 60
-  )}:${Math.floor(track.cloudinary[0].duration % 60)}`;
+  const minutes = `0${Math.floor(track.cloudinary[0].duration / 60)}`;
+  const seconds = `${Math.floor(track.cloudinary[0].duration % 60)}`;
+  const trackDuration = `${minutes}:${seconds}`;
   return (
     <div>
       <button
-        className={classNames(`${classes.audioButton}`, {
-          [smallPlayButton]: currentTrack === index && playing,
-        })}
+        className={classNames(
+          `${classes.buttonGeneral} ${classes.buttonPaused}`,
+          {
+            [classes.buttonPlaying]: currentTrack === index && playing,
+          }
+        )}
         onClick={() => {
           if (currentTrack !== index) setTrack(index);
           if (currentTrack === index) {
@@ -43,7 +45,7 @@ const TrackLine = ({
         />
       </button>
       <span className={classes.trackButton}>{track.name} -</span>
-      <span className={classes.timeClock}>{timeClock}</span>
+      <span className={classes.trackDuration}>{trackDuration}</span>
     </div>
   );
 };

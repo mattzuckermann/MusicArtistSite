@@ -35,18 +35,21 @@ const useStyles = makeStyles(() =>
       color: '#ffffff',
       width: '200px',
     },
-    timeClock: {
+    trackDuration: {
       fontFamily: 'futura',
       marginLeft: '9px',
       color: '#FFFFFF',
       width: '200px',
       fontSize: '11px',
     },
-    audioButton: {
+    buttonGeneral: {
       border: '2px solid black',
       borderRadius: '5px',
     },
-    smallPlayButton: {
+    buttonPaused: {
+      backgroundColor: '#ffffff',
+    },
+    buttonPlaying: {
       backgroundColor: '#a1bbb5',
     },
   })
@@ -132,7 +135,6 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
   return (
     <main className={classes.singlesBackgroundColor}>
       <SEO
-        description="visibility improvement"
         title="Singles"
         keywords={[`music`, `album`, `josh`, `zuckermann`, `rap`, `chicago`]}
       />
@@ -144,6 +146,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
             </h1>
             <ReactPlayer
               ref={audioPlayerEl}
+              controlsList="nodownload"
               className={classes.audioPlayer}
               height="40px"
               width="300px"
@@ -181,19 +184,17 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
         <Grid item>
           {trail.map((props: object, index: number) => {
             let { node: track } = allContentfulTrack.edges[index];
-            let smallPlayButton = classes.smallPlayButton;
             return (
               <animated.div key={track.name} style={props}>
                 <TrackLine
-                  smallPlayButton={smallPlayButton}
                   allCloudinaryMedia={allCloudinaryMedia}
+                  classes={classes}
                   currentTrack={currentTrack}
                   setTrack={setTrack}
-                  index={index}
-                  track={track}
-                  classes={classes}
-                  setPlaying={setPlaying}
                   playing={playing}
+                  setPlaying={setPlaying}
+                  track={track}
+                  index={index}
                 />
               </animated.div>
             );
