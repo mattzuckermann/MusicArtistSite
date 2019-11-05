@@ -31,7 +31,7 @@ const Header = ({ location }) => {
   });
   return (
     <animated.header style={fade} className={`text-center ${classes.header}`}>
-      <Grid container spacing={10}>
+      <Grid container>
         <Grid item md={1} sm={2} xs={2}>
           <NavColumn groupType="solo">
             <IconListItem
