@@ -85,17 +85,15 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
   };
 
   // GraphQL query to read all tracks from contentful and cloudinary
-  const { allContentfulTrack, allCloudinaryMedia } = useStaticQuery(graphql`
+  const { allContentfulSingle, allCloudinaryMedia } = useStaticQuery(graphql`
     query tracksQuery {
-      allContentfulTrack {
+      allContentfulSingle(sort: { order: ASC, fields: orderNumber }) {
         edges {
           node {
-            order
-            name
-            cloudinary {
+            orderNumber
+            trackName
+            cloudinaryAudio {
               url
-              format
-              bytes
               duration
             }
             cloudinaryImage {
@@ -119,7 +117,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
   `);
 
   // React Spring animations that run once component mounts
-  const [trail, set, stop] = useTrail(allContentfulTrack.edges.length, () => ({
+  const [trail, set, stop] = useTrail(allContentfulSingle.edges.length, () => ({
     transform: 'scale(0.8, 0.8), translate3d(-8%,0,0)',
     opacity: 0,
   }));
@@ -142,11 +140,11 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
         <Grid item>
           <animated.div style={fade}>
             <h1 className={classes.trackHeader} style={{ color: 'white' }}>
-              {allContentfulTrack.edges[currentTrack].node.name}
+              {allContentfulSingle.edges[currentTrack].node.trackName}
             </h1>
             <ReactPlayer
               ref={audioPlayerEl}
-              controlsList="nodownload"
+              // controlsList="nodownload"
               className={classes.audioPlayer}
               height="40px"
               width="300px"
@@ -155,7 +153,8 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
               onPlay={() => setPlaying(true)}
               playing={playing}
               url={
-                allContentfulTrack.edges[currentTrack].node.cloudinary[0].url
+                allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0]
+                  .url
               }
               controls
             />
@@ -175,7 +174,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
                 border: '2px solid #FFFFFF',
               }}
               src={
-                allContentfulTrack.edges[currentTrack].node.cloudinaryImage[0]
+                allContentfulSingle.edges[currentTrack].node.cloudinaryImage[0]
                   .url
               }
             />
@@ -183,9 +182,9 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
         </Grid>
         <Grid item>
           {trail.map((props: object, index: number) => {
-            let { node: track } = allContentfulTrack.edges[index];
+            let { node: track } = allContentfulSingle.edges[index];
             return (
-              <animated.div key={track.name} style={props}>
+              <animated.div key={track.trackName} style={props}>
                 <TrackLine
                   allCloudinaryMedia={allCloudinaryMedia}
                   classes={classes}

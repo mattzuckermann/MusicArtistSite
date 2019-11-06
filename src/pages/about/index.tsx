@@ -55,7 +55,7 @@ const About = () => {
         edges {
           node {
             name
-            carouselImages {
+            carouselImage {
               url
             }
           }
@@ -73,7 +73,7 @@ const About = () => {
   `);
 
   const [activeStep, setActiveStep] = useState(0);
-  const maxSteps = allContentfulPhotoAlbum.edges[0].node.carouselImages.length;
+  const maxSteps = allContentfulPhotoAlbum.edges[0].node.carouselImage.length;
 
   const fade = useSpring({
     from: { opacity: 0 },
@@ -125,7 +125,7 @@ const About = () => {
               id="carouselImage"
               className={classes.img}
               src={
-                allContentfulPhotoAlbum.edges[0].node.carouselImages[activeStep]
+                allContentfulPhotoAlbum.edges[0].node.carouselImage[activeStep]
                   .url
               }
               alt={allContentfulPhotoAlbum.edges[0].node.name}

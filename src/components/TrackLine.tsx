@@ -11,8 +11,8 @@ const TrackLine = ({
   track,
   index,
 }) => {
-  const minutes = `0${Math.floor(track.cloudinary[0].duration / 60)}`;
-  const seconds = `${Math.floor(track.cloudinary[0].duration % 60)}`;
+  const minutes = `0${Math.floor(track.cloudinaryAudio[0].duration / 60)}`;
+  const seconds = `${Math.floor(track.cloudinaryAudio[0].duration % 60)}`;
   const trackDuration = `${minutes}:${seconds}`;
   return (
     <div>
@@ -44,7 +44,10 @@ const TrackLine = ({
           alt="play-button"
         />
       </button>
-      <span className={classes.trackButton}>{track.name} -</span>
+      <span className={classes.trackButton}>{track.orderNumber}.</span>
+      <span className={classes.trackButton} style={{ marginLeft: '4px' }}>
+        {track.trackName} -
+      </span>
       <span className={classes.trackDuration}>{trackDuration}</span>
     </div>
   );
