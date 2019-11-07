@@ -44,11 +44,28 @@ const TrackLine = ({
           alt="play-button"
         />
       </button>
-      <span className={classes.trackButton}>{track.orderNumber}.</span>
-      <span className={classes.trackButton} style={{ marginLeft: '4px' }}>
+      <span
+        className={classNames(`${classes.trackButton}`, {
+          [classes.trackBold]: currentTrack === index && playing,
+        })}
+      >
+        {index + 1}.
+      </span>
+      <span
+        className={classNames(`${classes.trackButton}`, {
+          [classes.trackBold]: currentTrack === index && playing,
+        })}
+        style={{ marginLeft: '4px' }}
+      >
         {track.trackName} -
       </span>
-      <span className={classes.trackDuration}>{trackDuration}</span>
+      <span
+        className={classNames(`${classes.trackDuration}`, {
+          [classes.trackBold]: currentTrack === index && playing,
+        })}
+      >
+        {trackDuration}
+      </span>
     </div>
   );
 };

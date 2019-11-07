@@ -52,6 +52,9 @@ const useStyles = makeStyles(() =>
     buttonPlaying: {
       backgroundColor: '#a1bbb5',
     },
+    trackBold: {
+      fontWeight: 'bold',
+    },
   })
 );
 
