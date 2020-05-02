@@ -110,7 +110,15 @@ const About = () => {
           </Grid>
           <Grid item lg={12} md={12} sm={12} xs={12}>
             <div className={classes.videoPlaybackWrapper}>
-              <YouTubeVideo />
+              <YouTubeVideo videoLink="https://www.youtube.com/embed/7mK53nDB-Cw?controls=0" />
+            </div>
+          </Grid>
+          <Grid item lg={12} md={12} sm={12} xs={12}>
+            <div className={classes.videoPlaybackWrapper}>
+              <YouTubeVideo
+                videoLink="https://www.youtube.com/embed/nIds3reW_dY?controls=0
+              "
+              />
             </div>
           </Grid>
         </Grid>
