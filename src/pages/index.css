@@ -11,6 +11,7 @@ html {
 body {
   padding: 0px !important;
   background-color: whitesmoke;
+  overflow: hidden;
 }
 
 .mainTitle {
