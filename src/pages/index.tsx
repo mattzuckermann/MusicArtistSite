@@ -15,7 +15,7 @@ const IndexPage = () => {
   return (
     <animated.div style={fade}>
       <SEO
-        description="Josh Zuckermann is a music artist from Chicago, Illinois, talented in classical, jazz, pop, hiphop, rock, and much more."
+        description="Josh Zuckermann is a music artist from Chicago, Illinois, talented in classical, jazz, pop, hiphop, and rock."
         title="Home"
         keywords={[`gatsby`, `application`, `react`]}
       />
@@ -24,9 +24,12 @@ const IndexPage = () => {
         style={{
           maxWidth: `1000px`,
           marginBottom: `1.45rem`,
+          minHeight: `400px` /* height of container */,
+          overflow: `hidden`,
+          border: `3px solid black`,
         }}
       >
-        <Image style={{ borderRadius: 15 }} />
+        <Image style={{ borderRadius: 15, margin: '-200px -100px -400px -100px', minHeight: "1200px" }} />
       </div>
     </animated.div>
   );

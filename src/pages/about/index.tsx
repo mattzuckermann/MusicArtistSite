@@ -114,7 +114,10 @@ const About = () => {
             </div>
           </Grid>
           <Grid item lg={12} md={12} sm={12} xs={12}>
-            <div className={classes.videoPlaybackWrapper}>
+            <div
+              style={{ marginBottom: '-32px' }}
+              className={classes.videoPlaybackWrapper}
+            >
               <YouTubeVideo
                 videoLink="https://www.youtube.com/embed/nIds3reW_dY?controls=0
               "
@@ -165,6 +168,8 @@ const About = () => {
           </div>
         </Grid>
       </Grid>
+      <br />
+      <br />
     </animated.div>
   );
 };
