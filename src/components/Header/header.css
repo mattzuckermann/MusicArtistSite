@@ -6,7 +6,7 @@
   display: inline-block;
   margin: 0;
   padding: 14px;
-  font-size: 15px;
+  font-size: 17px;
   font-family: 'PT Sans Narrow', sans-serif;
 }
 
@@ -44,7 +44,7 @@
 }
 
 .groupSize {
-  color: grey;
+  color: white;
   font-family: 'PT Sans Narrow', sans-serif;
   opacity: 0.3;
 }
