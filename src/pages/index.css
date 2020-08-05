@@ -16,5 +16,14 @@ body {
 
 .mainTitle {
   font-family: 'ABeeZee', sans-serif;
-  font-size: 35px;
+  font-size: 37px;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  text-shadow: 3px 6px rgb(189, 168, 150, 0.6);
+}
+
+@media screen and (max-width: 650px) {
+  .mainTitle {
+    font-size: 23px;
+  }
 }

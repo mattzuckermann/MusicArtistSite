@@ -12,8 +12,13 @@ const Album = () => {
   return (
     <animated.div style={fade}>
       <SEO title="Albums" keywords={[`music`, `album`, `react`]} />
-      <h1>Albums</h1>
-      <h3>DEBUT ALBUM COMING SOON</h3>
+      <h1 style={{ fontFamily: 'ABeeZee, sans-serif', fontSize: '65px' }}>
+        ALBUMS
+      </h1>
+      <hr style={{ height: '5px', backgroundColor: 'black' }} />
+      <h2 style={{ fontFamily: 'ABeeZee, sans-serif' }}>
+        Debut album coming soon
+      </h2>
       <br />
     </animated.div>
   );

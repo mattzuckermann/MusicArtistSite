@@ -55,7 +55,7 @@ const TrackLine = ({
         className={classNames(`${classes.trackButton}`, {
           [classes.trackBold]: currentTrack === index && playing,
         })}
-        style={{ marginLeft: '4px' }}
+        style={{ marginLeft: '4px', fontSize: "20px" }}
       >
         {track.trackName} -
       </span>

@@ -17,8 +17,6 @@ const useStyles = makeStyles(() =>
     },
     audioPlayer: {
       marginBottom: '3px',
-      marginLeft: 'auto',
-      marginRight: 'auto',
     },
     trackTitle: {
       padding: '25px 0px',
@@ -27,7 +25,8 @@ const useStyles = makeStyles(() =>
       backgroundColor: '#fb2f47',
     },
     trackHeader: {
-      margin: 0,
+      margin: '-10px 0px 20px 0px',
+      fontSize: '90px',
     },
     trackButton: {
       fontFamily: 'futura',
@@ -145,31 +144,36 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
             <h1 className={classes.trackHeader} style={{ color: 'white' }}>
               {allContentfulSingle.edges[currentTrack].node.trackName}
             </h1>
-            <ReactPlayer
-              ref={audioPlayerEl}
-              // controlsList="nodownload"
-              className={classes.audioPlayer}
-              height="40px"
-              width="300px"
-              volume="0.5"
-              onPause={() => setPlaying(false)}
-              onPlay={() => setPlaying(true)}
-              playing={playing}
-              url={
-                allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0]
-                  .url
-              }
-              controls
-            />
           </animated.div>
         </Grid>
+      </Grid>
+      <Grid item>
+        <animated.div style={fade}>
+          <ReactPlayer
+            ref={audioPlayerEl}
+            className={classes.audioPlayer}
+            height="54px"
+            padding="10px 0px"
+            width="100%"
+            volume="0.50"
+            onPause={() => setPlaying(false)}
+            onPlay={() => setPlaying(true)}
+            playing={playing}
+            url={
+              allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0]
+                .url
+            }
+            controls
+          />
+        </animated.div>
       </Grid>
       <Grid container>
         <Grid item>
           <animated.div style={fade}>
             <img
               style={{
-                width: '300px',
+                margin: '25px 0px 0px 0px',
+                width: '400px',
                 marginRight: '12px',
                 display: 'flex',
                 alignItems: 'center',
@@ -183,7 +187,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
             />
           </animated.div>
         </Grid>
-        <Grid item>
+        <Grid item style={{ margin: '25px 0px 0px 5px' }}>
           {trail.map((props: object, index: number) => {
             let { node: track } = allContentfulSingle.edges[index];
             return (
