@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import Grid from '@material-ui/core/Grid';
 import YouTubeVideo from '../../components/YouTubeVideo';
@@ -48,7 +48,6 @@ const useStyles = makeStyles({
 
 const About = () => {
   const classes = useStyles();
-  const iFrame = useRef(null);
   const { allContentfulPhotoAlbum, markdownRemark } = useStaticQuery(graphql`
     query bioQuery($slug: String) {
       allContentfulPhotoAlbum {
@@ -71,17 +70,6 @@ const About = () => {
       }
     }
   `);
-
-  useEffect(() => {
-    //   iFrame.current.offsetTop(700);
-    // const node = iFrame.current;
-    const node2 = document.getElementById('iFrame');
-    node2.scrollTo(100, 100);
-    // node.scrollTo({
-    //   top: 100,
-    //   left: 100,
-    // });
-  }, []);
 
   const [activeStep, setActiveStep] = useState(0);
   const maxSteps = allContentfulPhotoAlbum.edges[0].node.carouselImage.length;
@@ -106,12 +94,12 @@ const About = () => {
         title="About"
         keywords={[`music`, `album`, `josh`, `zuckermann`, `rap`, `chicago`]}
       />
-      <Grid container spacing={2}>
+      <Grid container spacing={1}>
         <Grid
           style={{ paddingBottom: '0px' }}
           item
-          lg={8}
-          md={8}
+          lg={7}
+          md={7}
           sm={12}
           xs={12}
         >
@@ -120,7 +108,10 @@ const About = () => {
               {markdownRemark.frontmatter.title}
             </h1>
             <hr style={{ height: '5px', backgroundColor: 'black' }} />
-            <div dangerouslySetInnerHTML={{ __html: markdownRemark.html }} />
+            <div
+              style={{ padding: '0px 20px' }}
+              dangerouslySetInnerHTML={{ __html: markdownRemark.html }}
+            />
           </Grid>
           <Grid item lg={12} md={12} sm={12} xs={12}>
             <div className={classes.videoPlaybackWrapper}>
@@ -129,7 +120,7 @@ const About = () => {
           </Grid>
           <Grid item lg={12} md={12} sm={12} xs={12}>
             <div className={classes.videoPlaybackWrapper}>
-              <YouTubeVideo videoLink="https://www.youtube.com/embed/nIds3reW_dY?controls=0" />
+              <YouTubeVideo videoLink="https://www.youtube.com/embed/nIds3reW_dY?rel=0" />
             </div>
           </Grid>
           <Grid item lg={12} md={12} sm={12} xs={12}>
@@ -137,24 +128,11 @@ const About = () => {
               style={{ marginBottom: '-32px' }}
               className={classes.videoPlaybackWrapper}
             >
-              <YouTubeVideo videoLink="https://www.youtube.com/embed/FPlv7ss4taE?controls=0" />
+              <YouTubeVideo videoLink="https://www.youtube.com/embed/bnRVlXlIsJs?rel=0" />
             </div>
           </Grid>
         </Grid>
-        <Grid item lg={4} md={4} sm={12} xs={12}>
-          <div>
-            <iframe
-              id="iFrame"
-              ref={iFrame}
-              // scrolling="no"
-              src="https://johnnycilantro6tet.bandcamp.com/"
-              style={{
-                width: '405px',
-                height: '770px',
-                // paddingLeft: "-185px"
-              }}
-            ></iframe>
-          </div>
+        <Grid item lg={5} md={5} sm={12} xs={12}>
           <div className={classes.root} style={{ position: 'relative' }}>
             <Paper square elevation={0} className={classes.header}>
               <Typography>
@@ -193,6 +171,25 @@ const About = () => {
                   Back
                 </Button>
               }
+            />
+          </div>
+          <br />
+          <br />
+          <div
+            id="iframe-wrapper"
+            style={{
+              padding: '0px',
+              textAlign: 'center',
+            }}
+          >
+            <iframe
+              scrolling="no"
+              src="/iframes"
+              style={{
+                width: '410px',
+                height: '770px',
+                overflow: 'hidden',
+              }}
             />
           </div>
         </Grid>
