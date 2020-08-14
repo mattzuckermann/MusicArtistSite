@@ -207,6 +207,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
           })}
         </Grid>
       </Grid>
+      <br />
     </main>
   );
 };
