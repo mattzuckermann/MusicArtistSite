@@ -28,12 +28,12 @@
 
 .iconList > li {
   margin: 0;
-  padding-top: 10px;
+  padding-top: 20px;
 }
 
 .icon {
   background-color: rgba(75, 75, 75, 0.3);
-  font-size: 22px;
+  font-size: 32px;
   padding: 4px;
   border-radius: 100px;
 }

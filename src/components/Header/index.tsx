@@ -1,12 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import HeaderImage from '../HeaderImage';
-import {
-  faInstagram,
-  faSpotify,
-  faSoundcloud,
-  faBandcamp,
-} from '@fortawesome/free-brands-svg-icons';
+import { faInstagram, faSpotify } from '@fortawesome/free-brands-svg-icons';
 import IconListItem from '../IconListItem';
 import NavTab from '../NavTab';
 import NavColumn from '../NavColumn';
@@ -33,18 +28,14 @@ const Header = ({ location }) => {
     <animated.header style={fade} className={`text-center ${classes.header}`}>
       <Grid container>
         <Grid item md={1} sm={2} xs={2}>
-          <NavColumn groupType="solo">
-            <IconListItem
-              link="https://www.instagram.com/joshzuckermann/"
-              icon={faInstagram}
-            />
+          <NavColumn>
             <IconListItem
               link="https://open.spotify.com/artist/0hRWyQpSxQ8DxcTTCPC33J?si=rOVcTrdtQVy5yfaTQ7IkkA"
               icon={faSpotify}
             />
             <IconListItem
-              link="https://soundcloud.com/josh-zuckermann-867378017"
-              icon={faSoundcloud}
+              link="https://www.instagram.com/joshzuckermann/"
+              icon={faInstagram}
             />
           </NavColumn>
         </Grid>
@@ -52,22 +43,6 @@ const Header = ({ location }) => {
           <h1 className="navList listImage" style={{ margin: 0 }}>
             <HeaderImage style={{ width: 125 }} />
           </h1>
-        </Grid>
-        <Grid item md={1} sm={2} xs={2}>
-          <NavColumn groupType="group">
-            <IconListItem
-              link="https://www.instagram.com/cardclubband/"
-              icon={faInstagram}
-            />
-            <IconListItem
-              link="https://open.spotify.com/artist/17MMFjyHC8KZjcFxx06DFh?si=PaCTf9sqSb6zU7A7hM5Axw"
-              icon={faSpotify}
-            />
-            <IconListItem
-              link="https://johnnycilantro6tet.bandcamp.com"
-              icon={faBandcamp}
-            />
-          </NavColumn>
         </Grid>
       </Grid>
       <hr className="hrLine" />
