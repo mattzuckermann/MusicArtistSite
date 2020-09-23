@@ -66,6 +66,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
   const [faded, changeFaded] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [currentTrack, changeTrack] = useState(0);
+  const [loopIndex, changeLoopIndex] = useState(2);
   const audioPlayerEl = useRef(null);
 
   // Effect to toggle "on" state to true and run animations
@@ -84,6 +85,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
     setTimeout(() => changeTrack(index), 1000);
     setTimeout(() => changeFaded(true), 1000);
     setTimeout(() => setPlaying(true), 1000);
+    setTimeout(() => changeLoopIndex(2), 1000);
   };
 
   // GraphQL query to read all tracks from contentful and cloudinary
@@ -155,17 +157,60 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
             height="54px"
             padding="10px 0px"
             width="100%"
-            volume="0.50"
+            volume="1.0"
             onPause={() => setPlaying(false)}
             onPlay={() => setPlaying(true)}
+            onEnded={() => {
+              // Waits a period of time between songs (a tenth of a second)
+              setTimeout(() => {
+                // Case statement regarding what operation should be done when a song ends.
+                // This is dictated by the loop button which changes the loop index
+                // depending on what icon is shown.
+                switch (loopIndex) {
+                  case 2:
+                    if (currentTrack != 4) {
+                      changeTrack(currentTrack + 1);
+                      setPlaying(true);
+                    }
+                    break;
+                  case 3:
+                    if (currentTrack != 4) {
+                      changeTrack(currentTrack + 1);
+                      setPlaying(true);
+                    } else {
+                      changeTrack(0);
+                      setPlaying(true);
+                    }
+                    break;
+                  case 4:
+                    changeTrack(currentTrack);
+                    setPlaying(true);
+                    break;
+                }
+              }, 100);
+            }}
             playing={playing}
             url={
               allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0]
                 .url
             }
-            controls
+            controls={true}
           />
         </animated.div>
+
+        {/* 
+            Loop button that is responsible for dictating behavior of
+            onEnded parameter for ReactPlayer
+        */}
+        <img
+          onClick={() => {
+            if (loopIndex != 4) changeLoopIndex(loopIndex + 1);
+            else changeLoopIndex(2);
+          }}
+          src={allCloudinaryMedia.edges[loopIndex].node.url}
+          style={{ width: '35px', marginBottom: '0px' }}
+          draggable={false}
+        />
       </Grid>
       <Grid container>
         <Grid item>
@@ -188,6 +233,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
           </animated.div>
         </Grid>
         <Grid item style={{ margin: '25px 0px 0px 5px' }}>
+          {/* Loops through tracks stored in Contentful and runs React Spring animation on them */}
           {trail.map((props: object, index: number) => {
             let { node: track } = allContentfulSingle.edges[index];
             return (
@@ -197,6 +243,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
                   classes={classes}
                   currentTrack={currentTrack}
                   setTrack={setTrack}
+                  changeLoopIndex={changeLoopIndex}
                   playing={playing}
                   setPlaying={setPlaying}
                   track={track}

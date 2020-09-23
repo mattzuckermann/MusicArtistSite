@@ -5,15 +5,18 @@ const TrackLine = ({
   allCloudinaryMedia,
   classes,
   currentTrack,
+  changeLoopIndex,
   setTrack,
   playing,
   setPlaying,
   track,
   index,
 }) => {
-  const minutes = `0${Math.floor(track.cloudinaryAudio[0].duration / 60)}`;
-  const seconds = `${Math.floor(track.cloudinaryAudio[0].duration % 60)}`;
-  const trackDuration = `${minutes}:${seconds}`;
+  const minutes = Math.floor(track.cloudinaryAudio[0].duration / 60);
+  const minutesFormatted = minutes < 10 ? `0${minutes}` : minutes;
+  const seconds = Math.floor(track.cloudinaryAudio[0].duration % 60);
+  const secondsFormatted = seconds === 0 ? '00' : seconds;
+  const trackDuration = `${minutesFormatted}:${secondsFormatted}`;
   return (
     <div>
       <button
@@ -41,6 +44,7 @@ const TrackLine = ({
             height: '10px',
             margin: '0px',
           }}
+          draggable={false}
           alt="play-button"
         />
       </button>
@@ -55,7 +59,7 @@ const TrackLine = ({
         className={classNames(`${classes.trackButton}`, {
           [classes.trackBold]: currentTrack === index && playing,
         })}
-        style={{ marginLeft: '4px', fontSize: "20px" }}
+        style={{ marginLeft: '4px', fontSize: '20px' }}
       >
         {track.trackName} -
       </span>
