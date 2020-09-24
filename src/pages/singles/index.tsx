@@ -66,13 +66,43 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
   const [faded, changeFaded] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [currentTrack, changeTrack] = useState(0);
-  const [loopIndex, changeLoopIndex] = useState(2);
+  const [loopIndex, setLoopIndex] = useState(2);
+  const [shuffleIndex, setShuffleIndex] = useState(5);
+  const [myMap, setMyMap] = useState(new Map());
   const audioPlayerEl = useRef(null);
+
+  const shuffleFunction = () => {
+    myMap.delete(`${currentTrack}`);
+    // recursive function that generates random number within singles array
+    // and checks hash map containing remaining tracks that haven't played
+    // during this "shuffle session."
+    const checkHash = () => {
+      // The conditional wrapping the function statement is to prevent an infinite
+      // loop once the hash map is completely empty; if omitted, the recursive
+      // "checkHash" function would never exit after the last song has been played
+      // within that particular "shuffle session" and in time the website would likely crash.
+      if (Array.from(myMap).length != 0) {
+        let tempIndex = Math.floor(
+          Math.random() * allContentfulSingle.edges.length
+        );
+        if (myMap.has(`${tempIndex}`)) {
+          changeTrack(tempIndex);
+          setPlaying(true);
+        } else {
+          checkHash();
+        }
+      }
+    };
+    // Run recursive "checkHash" function, thus changing the track index
+    // and setting "playing" boolean to true.
+    checkHash();
+  };
 
   // Effect to toggle "on" state to true and run animations
   useEffect((): void => {
     toggle(true);
     changeFaded(true);
+    for (let i: string in allContentfulSingle.edges) myMap.set(i, i);
   }, []);
 
   const fade = useSpring({
@@ -85,7 +115,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
     setTimeout(() => changeTrack(index), 1000);
     setTimeout(() => changeFaded(true), 1000);
     setTimeout(() => setPlaying(true), 1000);
-    setTimeout(() => changeLoopIndex(2), 1000);
+    setTimeout(() => setLoopIndex(2), 1000);
   };
 
   // GraphQL query to read all tracks from contentful and cloudinary
@@ -164,16 +194,27 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
               // Waits a period of time between songs (a tenth of a second)
               setTimeout(() => {
                 // Case statement regarding what operation should be done when a song ends.
-                // This is dictated by the loop button which changes the loop index
-                // depending on what icon is shown.
+                // This is dictated by the loop and shuffle buttons which change the loop index and
+                // shuffle indices depending on what icons are shown in the UI.
                 switch (loopIndex) {
+                  case 4:
+                    setPlaying(true);
+                    break;
                   case 2:
+                    if (shuffleIndex === 6) {
+                      shuffleFunction();
+                      break;
+                    }
                     if (currentTrack != 4) {
                       changeTrack(currentTrack + 1);
                       setPlaying(true);
                     }
                     break;
                   case 3:
+                    if (shuffleIndex === 6) {
+                      shuffleFunction();
+                      break;
+                    }
                     if (currentTrack != 4) {
                       changeTrack(currentTrack + 1);
                       setPlaying(true);
@@ -181,10 +222,6 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
                       changeTrack(0);
                       setPlaying(true);
                     }
-                    break;
-                  case 4:
-                    changeTrack(currentTrack);
-                    setPlaying(true);
                     break;
                 }
               }, 100);
@@ -197,20 +234,6 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
             controls={true}
           />
         </animated.div>
-
-        {/* 
-            Loop button that is responsible for dictating behavior of
-            onEnded parameter for ReactPlayer
-        */}
-        <img
-          onClick={() => {
-            if (loopIndex != 4) changeLoopIndex(loopIndex + 1);
-            else changeLoopIndex(2);
-          }}
-          src={allCloudinaryMedia.edges[loopIndex].node.url}
-          style={{ width: '35px', marginBottom: '0px' }}
-          draggable={false}
-        />
       </Grid>
       <Grid container>
         <Grid item>
@@ -233,6 +256,41 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
           </animated.div>
         </Grid>
         <Grid item style={{ margin: '25px 0px 0px 5px' }}>
+          {/* 
+            Loop button that is responsible for dictating behavior of
+            onEnded parameter for ReactPlayer component
+        */}
+          <img
+            onClick={() => {
+              if (loopIndex != 4) setLoopIndex(loopIndex + 1);
+              else setLoopIndex(2);
+            }}
+            src={allCloudinaryMedia.edges[loopIndex].node.url}
+            style={{ width: '35px', marginBottom: '0px' }}
+            draggable={false}
+            title={loopIndex === 2 ? "Repeat" : (loopIndex === 3) ? "Repeat Track" : "Don't repeat"}
+          />
+          {/* 
+              shuffleButton that changes shuffleIndex thus alters operations of
+              "onEnded" attribute on ReactPlayer component
+          */}
+          <img
+            onClick={() => {
+              if (shuffleIndex != 6) setShuffleIndex(shuffleIndex + 1);
+              else {
+                setShuffleIndex(5);
+                // setting shuffle back to off will in turn clear the myMap hash map containing
+                // the track indices and then refill them to full, thus restarting the "shuffle session."
+                myMap.clear();
+                for (let i: string in allContentfulSingle.edges)
+                  myMap.set(i, i);
+              }
+            }}
+            title={shuffleIndex === 6 ? "Don't shuffle" : 'Shuffle'}
+            src={allCloudinaryMedia.edges[shuffleIndex].node.url}
+            style={{ width: '35px', marginBottom: '0px' }}
+            draggable={false}
+          />
           {/* Loops through tracks stored in Contentful and runs React Spring animation on them */}
           {trail.map((props: object, index: number) => {
             let { node: track } = allContentfulSingle.edges[index];
@@ -243,7 +301,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
                   classes={classes}
                   currentTrack={currentTrack}
                   setTrack={setTrack}
-                  changeLoopIndex={changeLoopIndex}
+                  setLoopIndex={setLoopIndex}
                   playing={playing}
                   setPlaying={setPlaying}
                   track={track}

@@ -5,7 +5,7 @@ const TrackLine = ({
   allCloudinaryMedia,
   classes,
   currentTrack,
-  changeLoopIndex,
+  setLoopIndex,
   setTrack,
   playing,
   setPlaying,
