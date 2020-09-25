@@ -268,7 +268,13 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
             src={allCloudinaryMedia.edges[loopIndex].node.url}
             style={{ width: '35px', marginBottom: '0px' }}
             draggable={false}
-            title={loopIndex === 2 ? "Repeat" : (loopIndex === 3) ? "Repeat Track" : "Don't repeat"}
+            title={
+              loopIndex === 2
+                ? 'Repeat'
+                : loopIndex === 3
+                ? 'Repeat Track'
+                : "Don't repeat"
+            }
           />
           {/* 
               shuffleButton that changes shuffleIndex thus alters operations of
