@@ -4,6 +4,6 @@ title: 'About The Artist'
 date: '2020-08-05'
 ---
 
-Josh Zuckermann is a musician and composer from Chicago, Illinois. Josh recently graduated from the Wheaton College Conservatory of Music with a B.A. in Music Composition.
+Josh Zuckermann is an eclectic artist from Illinois and a recent graduate from the Wheaton College (IL) Conservatory of Music studying Music Composition.
 
-Josh plays a wide variety of musical genres, including: classical, jazz, rap/hip-hop, rock, pop, and folk. In his spare time, Josh enjoys being with friends, rock climbing, exercising, and attending concerts.
+Josh plays a wide variety of musical genres, including: classical, jazz, rap, R&B, rock, pop, and folk. He utilizes a combination of guitar, piano, and bass with electronic production to produce R&B and pop tracks. He is a singer, rapper, and songwriter whose production contains multiple layers to create an expansive sonic atmosphere. His music draws inspiration from Frank Ocean, Daniel Caesar, and Childish Gambino, and he crafts a wholistic vision of the music as he writes, performs, and records everything himself. In April 2020, he released I Want to Feel, the lead single to his upcoming album coming out in November.
