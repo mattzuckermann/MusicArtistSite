@@ -12,7 +12,6 @@ const IndexPage = () => {
     'o',
     's',
     'h',
-    ' ',
     'Z',
     'u',
     'c',
