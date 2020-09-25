@@ -17,6 +17,7 @@ const useStyles = makeStyles({
     flexGrow: 1,
     marginLeft: 'auto',
     marginRight: 'auto',
+    marginBottom: "26.1px"
   },
   header: {
     display: 'flex',
@@ -46,7 +47,6 @@ const useStyles = makeStyles({
     padding: '127px',
   },
   bioTitle: {
-    // fontSize: '65px',
     fontSize: '50px',
     padding: '0px 25px',
     '@media(max-width: 959px)': {
@@ -70,8 +70,7 @@ const useStyles = makeStyles({
     },
   },
   carouselGridWrapper: {
-    marginTop: '140px',
-    marginTop: '7˝0px',
+    marginTop: '54px',
     '@media(max-width: 959px)': {
       marginTop: '0px',
     },
@@ -106,9 +105,9 @@ const About = () => {
   const [activeStep, setActiveStep] = useState(0);
   const maxSteps = allContentfulPhotoAlbum.edges[0].node.carouselImage.length;
   const videoArray = [
-    'https://www.youtube.com/embed/7mK53nDB-Cw?rel=0',
     'https://www.youtube.com/embed/nIds3reW_dY?rel=0',
     'https://www.youtube.com/embed/bnRVlXlIsJs?rel=0',
+    'https://www.youtube.com/embed/7mK53nDB-Cw?rel=0',
   ];
   const fade = useSpring({
     from: { opacity: 0 },
@@ -174,11 +173,6 @@ const About = () => {
           xs={12}
         >
           <div className={classes.root} style={{ position: 'relative' }}>
-            {/* <Paper square elevation={0} className={classes.header}>
-              <Typography>
-                {allContentfulPhotoAlbum.edges[0].node.name}
-              </Typography>
-            </Paper> */}
             <img
               id="carouselImage"
               className={classes.img}
@@ -213,8 +207,6 @@ const About = () => {
               }
             />
           </div>
-          <br />
-          <br />
           <div
             id="iframe-wrapper"
             style={{
