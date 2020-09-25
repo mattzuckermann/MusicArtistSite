@@ -1,7 +1,11 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import HeaderImage from '../HeaderImage';
-import { faInstagram, faSpotify } from '@fortawesome/free-brands-svg-icons';
+import {
+  faInstagram,
+  faSpotify,
+  faFacebook,
+} from '@fortawesome/free-brands-svg-icons';
 import IconListItem from '../IconListItem';
 import NavTab from '../NavTab';
 import NavColumn from '../NavColumn';
@@ -36,6 +40,10 @@ const Header = ({ location }) => {
             <IconListItem
               link="https://www.instagram.com/joshzuckermann/"
               icon={faInstagram}
+            />
+            <IconListItem
+              link="https://www.facebook.com/profile.php?id=1330928786"
+              icon={faFacebook}
             />
           </NavColumn>
         </Grid>

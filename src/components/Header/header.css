@@ -26,14 +26,19 @@
   text-align: center;
 }
 
-.iconList > li {
+.iconList:nth-child(1) {
   margin: 0;
-  padding-top: 20px;
+  padding-top: 13px;
+}
+
+.iconList:nth-child(n+2) {
+  margin: 0;
+  padding-top: 10px;
 }
 
 .icon {
   background-color: rgba(75, 75, 75, 0.3);
-  font-size: 32px;
+  font-size: 30px;
   padding: 4px;
   border-radius: 100px;
 }
