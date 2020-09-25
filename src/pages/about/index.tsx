@@ -56,7 +56,13 @@ const useStyles = makeStyles({
   bioParagraphs: {
     padding: '0px 20px',
     '@media(max-width: 959px)': {
-      padding: '0px 45px',
+      padding: '0px 60px',
+    },
+    '@media(max-width: 420px)': {
+      padding: '0px 50px',
+    },
+    '@media(max-width: 350px)': {
+      padding: '0px 40px',
     },
   },
   lineDivide: {
