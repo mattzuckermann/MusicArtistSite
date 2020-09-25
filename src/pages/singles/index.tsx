@@ -187,7 +187,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
             height="54px"
             padding="10px 0px"
             width="100%"
-            volume="1.0"
+            volume="1"
             onPause={() => setPlaying(false)}
             onPlay={() => setPlaying(true)}
             onEnded={() => {
@@ -205,7 +205,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
                       shuffleFunction();
                       break;
                     }
-                    if (currentTrack != 4) {
+                    if (currentTrack != allContentfulSingle.edges.length - 1) {
                       changeTrack(currentTrack + 1);
                       setPlaying(true);
                     }
@@ -215,7 +215,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
                       shuffleFunction();
                       break;
                     }
-                    if (currentTrack != 4) {
+                    if (currentTrack != allContentfulSingle.edges.length - 1) {
                       changeTrack(currentTrack + 1);
                       setPlaying(true);
                     } else {
