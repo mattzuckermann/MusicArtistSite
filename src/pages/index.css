@@ -14,12 +14,37 @@ body {
   overflow: hidden;
 }
 
+.nameRow {
+  position: relative;
+  left: 90px;
+  z-index: 100;
+}
+
+.mainTitleWrapper:nth-child(1) {
+  padding-top: 25px;
+}
+
 .mainTitle {
   font-family: 'ABeeZee', sans-serif;
-  font-size: 37px;
+  font-size: 30px;
   writing-mode: vertical-rl;
   text-orientation: upright;
   text-shadow: 3px 6px rgb(189, 168, 150, 0.6);
+}
+
+@media screen and (max-width: 959px) {
+  .nameRow {
+    left: 80px;
+  }
+}
+
+@media screen and (max-width: 776px) {
+  .nameRow {
+    left: 70px;
+  }
+  .mainTitle {
+    font-size: 25px;
+  }
 }
 
 @media screen and (max-width: 650px) {
