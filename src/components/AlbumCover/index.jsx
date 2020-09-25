@@ -30,9 +30,8 @@ const useStyles = makeStyles({
   },
   slideInDesc: {
     width: '100%',
-    fontFamily: 'Hind',
     position: 'absolute',
-    top: '25%',
+    top: '30%',
     textAlign: 'center',
     padding: '15px',
     fontSize: '20px',

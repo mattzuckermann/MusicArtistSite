@@ -4,9 +4,8 @@ import { makeStyles } from '@material-ui/styles';
 const useStyles = makeStyles({
   slideInDesc: {
     width: '100%',
-    fontFamily: 'Hind',
     position: 'absolute',
-    top: '25%',
+    top: '40%',
     textAlign: 'center',
     padding: '15px',
     fontSize: '20px',
