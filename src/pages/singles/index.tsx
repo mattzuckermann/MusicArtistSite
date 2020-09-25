@@ -26,7 +26,7 @@ const useStyles = makeStyles(() =>
     },
     trackHeader: {
       margin: '-10px 0px 20px 0px',
-      fontSize: '90px',
+      fontSize: '50px',
     },
     trackButton: {
       fontFamily: 'futura',
@@ -187,7 +187,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
             height="54px"
             padding="10px 0px"
             width="100%"
-            volume="1"
+            volume="0.6"
             onPause={() => setPlaying(false)}
             onPlay={() => setPlaying(true)}
             onEnded={() => {

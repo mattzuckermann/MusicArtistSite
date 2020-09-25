@@ -5,7 +5,6 @@ const TrackLine = ({
   allCloudinaryMedia,
   classes,
   currentTrack,
-  setLoopIndex,
   setTrack,
   playing,
   setPlaying,
@@ -59,7 +58,7 @@ const TrackLine = ({
         className={classNames(`${classes.trackButton}`, {
           [classes.trackBold]: currentTrack === index && playing,
         })}
-        style={{ marginLeft: '4px', fontSize: '20px' }}
+        style={{ marginLeft: '4px', fontSize: '18px' }}
       >
         {track.trackName} -
       </span>
