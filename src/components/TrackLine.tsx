@@ -48,23 +48,26 @@ const TrackLine = ({
         />
       </button>
       <span
+        // Checking if track is currently in queue, and responding with altered css
         className={classNames(`${classes.trackButton}`, {
-          [classes.trackBold]: currentTrack === index && playing,
+          [classes.trackGreen]: currentTrack === index,
         })}
       >
         {index + 1}.
       </span>
       <span
+        // Checking if track is currently in queue, and responding with altered css
         className={classNames(`${classes.trackButton}`, {
-          [classes.trackBold]: currentTrack === index && playing,
+          [classes.trackGreen]: currentTrack === index,
         })}
         style={{ marginLeft: '4px', fontSize: '18px' }}
       >
         {track.trackName} -
       </span>
       <span
+        // Checking if track is currently in queue, and responding with altered css
         className={classNames(`${classes.trackDuration}`, {
-          [classes.trackBold]: currentTrack === index && playing,
+          [classes.trackGreen]: currentTrack === index,
         })}
       >
         {trackDuration}
