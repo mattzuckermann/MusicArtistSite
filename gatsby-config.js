@@ -52,6 +52,12 @@ module.exports = {
         apiSecret: 'UnmLFnzyNKCza5VHp29yg0JtCaw',
       },
     },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: 'UA-179162368-1',
+      },
+    },
     'gatsby-transformer-remark',
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
