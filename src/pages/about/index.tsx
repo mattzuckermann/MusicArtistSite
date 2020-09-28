@@ -8,6 +8,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import SEO from '../../components/SEO';
+import classnames from 'classnames';
+import navigator from '../../js/navigator';
 import './about.css';
 import { useSpring, animated } from 'react-spring';
 
@@ -17,7 +19,7 @@ const useStyles = makeStyles({
     flexGrow: 1,
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginBottom: "26.1px"
+    marginBottom: '26.1px',
   },
   header: {
     display: 'flex',
@@ -80,6 +82,18 @@ const useStyles = makeStyles({
     '@media(max-width: 959px)': {
       marginTop: '0px',
     },
+  },
+  iframeTabletLaptop: {
+    marginBottom: '0px',
+    width: '410px',
+    height: '770px',
+    overflow: 'hidden',
+  },
+  iframePhone: {
+    marginBottom: '0px',
+    width: '410px',
+    height: '1550px',
+    overflow: 'hidden',
   },
 });
 
@@ -223,17 +237,18 @@ const About = () => {
             <iframe
               scrolling="no"
               src="/iframes"
-              style={{
-                width: '410px',
-                height: '770px',
-                overflow: 'hidden',
-              }}
+              // classnames package checking what device is rendering iFrame and responding
+              // accordingly with proper CSS.
+              className={classnames('', {
+                [classes.iframeTabletLaptop]:
+                  // !navigator() || (navigator() && screen.width >= 700),
+                  true,
+                [classes.iframePhone]: navigator() && screen.width < 700,
+              })}
             />
           </div>
         </Grid>
       </Grid>
-      <br />
-      <br />
     </animated.div>
   );
 };
