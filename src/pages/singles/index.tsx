@@ -115,7 +115,6 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
     setTimeout(() => changeTrack(index), 1000);
     setTimeout(() => changeFaded(true), 1000);
     setTimeout(() => setPlaying(true), 1000);
-    setTimeout(() => setLoopIndex(2), 1000);
   };
 
   // GraphQL query to read all tracks from contentful and cloudinary
