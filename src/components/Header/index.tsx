@@ -54,7 +54,7 @@ const Header = ({ location }) => {
         </Grid>
       </Grid>
       <hr className="hrLine" />
-      <ul>
+      <ul className="navRow">
         <NavTab location={location} link="/">
           HOME
         </NavTab>

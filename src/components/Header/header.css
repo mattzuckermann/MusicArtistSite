@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow');
 
+.navRow {
+  margin: 13.05px;
+}
+
 .navList {
   text-decoration: none;
   color: #585858;
@@ -31,7 +35,7 @@
   padding-top: 13px;
 }
 
-.iconList:nth-child(n+2) {
+.iconList:nth-child(n + 2) {
   margin: 0;
   padding-top: 10px;
 }
@@ -57,5 +61,11 @@
 @media screen and (max-width: 575px) {
   .navList {
     padding: 8px;
+  }
+}
+
+@media screen and (max-width: 340px) {
+  .navList {
+    padding: 7px;
   }
 }
