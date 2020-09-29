@@ -47,9 +47,9 @@ module.exports = {
     {
       resolve: 'gatsby-source-cloudinary',
       options: {
-        cloudName: 'joshzuckermann-netlify-com',
-        apiKey: '293734324154777',
-        apiSecret: 'UnmLFnzyNKCza5VHp29yg0JtCaw',
+        cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
+        apiKey: `${process.env.CLOUDINARY_API_KEY}`,
+        apiSecret: `${process.env.CLOUDINARY_API_SECRET}`,
         maxResults: 15,
       },
     },
