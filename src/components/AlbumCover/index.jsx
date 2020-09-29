@@ -19,13 +19,13 @@ const useStyles = makeStyles({
       margin: '0px 20%',
     },
     '@media(max-width: 1200px) and (min-height: 1000px)': {
-      margin: '0px 7%',
+      margin: '0px 11%',
     },
     '@media(max-width: 959px)': {
-      margin: '0px 7%',
+      margin: '0px 20%',
     },
     '@media(max-width: 750px)': {
-      margin: '0px 6%',
+      margin: '0px 11%',
     },
   },
   slideInDesc: {
