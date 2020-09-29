@@ -16,7 +16,7 @@ const NavTab = ({ children, link, location }) => {
           navListHover: !navigator(),
         })}
         style={
-          pathName === link || pathName === `${link}/` ? { color: 'white' } : {}
+          pathName === link || pathName === `${link}` ? { color: 'white' } : {}
         }
       >
         {children}
