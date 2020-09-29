@@ -322,10 +322,10 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
             // a phone or tablet and ends the process if so since there is no mouse to hover
             // on a phone or tablet
             onMouseEnter={() => {
-              setShuffleIsHovered(true);
+              if (!navigator()) setShuffleIsHovered(true);
             }}
             onMouseLeave={() => {
-              setShuffleIsHovered(false);
+              if (!navigator()) setShuffleIsHovered(false);
             }}
             title={shuffleIndex === 9 ? "Don't shuffle" : 'Shuffle'}
             src={
