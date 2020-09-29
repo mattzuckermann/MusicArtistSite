@@ -7,6 +7,7 @@ import SEO from '../../components/SEO';
 import Grid from '@material-ui/core/Grid';
 import ReactPlayer from 'react-player';
 import TrackLine from '../../components/TrackLine';
+import navigator from '../../js/navigator';
 import '../index.css';
 
 const useStyles = makeStyles(() =>
@@ -67,7 +68,9 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
   const [playing, setPlaying] = useState(false);
   const [currentTrack, changeTrack] = useState(0);
   const [loopIndex, setLoopIndex] = useState(2);
-  const [shuffleIndex, setShuffleIndex] = useState(5);
+  const [shuffleIndex, setShuffleIndex] = useState(8);
+  const [shuffleIsHovered, setShuffleIsHovered] = useState(false);
+  const [repeatIsHovered, setRepeatIsHovered] = useState(false);
   const [myMap, setMyMap] = useState(new Map());
   const audioPlayerEl = useRef(null);
 
@@ -138,6 +141,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
       allCloudinaryMedia(
         sort: { order: ASC, fields: created_at }
         filter: { format: { eq: "png" } }
+        limit: 15
       ) {
         edges {
           node {
@@ -186,7 +190,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
             height="54px"
             padding="10px 0px"
             width="100%"
-            volume="0.6"
+            volume={0.6}
             onPause={() => setPlaying(false)}
             onPlay={() => setPlaying(true)}
             onEnded={() => {
@@ -200,7 +204,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
                     setPlaying(true);
                     break;
                   case 2:
-                    if (shuffleIndex === 6) {
+                    if (shuffleIndex === 9) {
                       shuffleFunction();
                       break;
                     }
@@ -210,7 +214,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
                     }
                     break;
                   case 3:
-                    if (shuffleIndex === 6) {
+                    if (shuffleIndex === 9) {
                       shuffleFunction();
                       break;
                     }
@@ -264,9 +268,17 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
               if (loopIndex != 4) setLoopIndex(loopIndex + 1);
               else setLoopIndex(2);
             }}
-            src={allCloudinaryMedia.edges[loopIndex].node.url}
-            style={{ width: '35px', marginBottom: '0px' }}
-            draggable={false}
+            // onMouseEnter and onMouseLeave alters repeatIsHovered state
+            // which affects which source file is used in src attribute (see below)
+            // In addition, the imported navigator() function checks if the device is
+            // a phone or tablet and ends the process if so since there is no mouse to hover
+            // on a phone or tablet
+            onMouseEnter={() => {
+              if (!navigator()) setRepeatIsHovered(true);
+            }}
+            onMouseLeave={() => {
+              if (!navigator()) setRepeatIsHovered(false);
+            }}
             title={
               loopIndex === 2
                 ? 'Repeat'
@@ -274,6 +286,19 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
                 ? 'Repeat Track'
                 : "Don't repeat"
             }
+            src={
+              // checks repeatIsHovered state as well as current loopIndex to alter
+              // src file to desired Cloudinary image
+              !repeatIsHovered
+                ? allCloudinaryMedia.edges[loopIndex].node.url
+                : loopIndex === 2
+                ? allCloudinaryMedia.edges[5].node.url
+                : loopIndex === 3
+                ? allCloudinaryMedia.edges[6].node.url
+                : allCloudinaryMedia.edges[7].node.url
+            }
+            style={{ width: '35px', marginBottom: '0px' }}
+            draggable={false}
           />
           {/* 
               shuffleButton that changes shuffleIndex thus alters operations of
@@ -281,9 +306,9 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
           */}
           <img
             onClick={() => {
-              if (shuffleIndex != 6) setShuffleIndex(shuffleIndex + 1);
+              if (shuffleIndex != 9) setShuffleIndex(shuffleIndex + 1);
               else {
-                setShuffleIndex(5);
+                setShuffleIndex(8);
                 // setting shuffle back to off will in turn clear the myMap hash map containing
                 // the track indices and then refill them to full, thus restarting the "shuffle session."
                 myMap.clear();
@@ -291,8 +316,27 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
                   myMap.set(i, i);
               }
             }}
-            title={shuffleIndex === 6 ? "Don't shuffle" : 'Shuffle'}
-            src={allCloudinaryMedia.edges[shuffleIndex].node.url}
+            // onMouseEnter and onMouseLeave alters shuffleIsHovered state
+            // which affects which source file is used in src attribute (see below);
+            // In addition, the imported navigator() function checks if the device is
+            // a phone or tablet and ends the process if so since there is no mouse to hover
+            // on a phone or tablet
+            onMouseEnter={() => {
+              setShuffleIsHovered(true);
+            }}
+            onMouseLeave={() => {
+              setShuffleIsHovered(false);
+            }}
+            title={shuffleIndex === 9 ? "Don't shuffle" : 'Shuffle'}
+            src={
+              // checks shuffleIsHovered state as well as current shuffleIndex to alter
+              // src file to desired Cloudinary image
+              !shuffleIsHovered
+                ? allCloudinaryMedia.edges[shuffleIndex].node.url
+                : shuffleIndex === 8
+                ? allCloudinaryMedia.edges[10].node.url
+                : allCloudinaryMedia.edges[11].node.url
+            }
             style={{ width: '35px', marginBottom: '0px' }}
             draggable={false}
           />
