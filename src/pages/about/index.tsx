@@ -76,7 +76,7 @@ const useStyles = makeStyles({
     },
   },
   carouselGridWrapper: {
-    marginTop: '54px',
+    marginTop: '80px',
     '@media(max-width: 959px)': {
       marginTop: '0px',
     },
