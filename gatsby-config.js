@@ -50,6 +50,7 @@ module.exports = {
         cloudName: 'joshzuckermann-netlify-com',
         apiKey: '293734324154777',
         apiSecret: 'UnmLFnzyNKCza5VHp29yg0JtCaw',
+        maxResults: 15,
       },
     },
     {
