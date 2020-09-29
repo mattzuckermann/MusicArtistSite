@@ -26,7 +26,7 @@ const useStyles = makeStyles(() =>
       backgroundColor: '#fb2f47',
     },
     trackHeader: {
-      margin: '-10px 0px 20px 0px',
+      margin: '-5px 0px 20px 0px',
       fontSize: '50px',
     },
     trackButton: {
