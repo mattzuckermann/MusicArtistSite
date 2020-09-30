@@ -118,9 +118,10 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
     setTimeout(() => changeTrack(index), 1000);
     setTimeout(() => changeFaded(true), 1000);
     setTimeout(() => setPlaying(true), 1000);
+    if (loopIndex === 4) setTimeout(() => setLoopIndex(3), 1000);
   };
 
-  // GraphQL query to read all tracks from contentful and cloudinary
+  // GraphQL query to read all tracks from contentful and cloudinary.
   const { allContentfulSingle, allCloudinaryMedia } = useStaticQuery(graphql`
     query tracksQuery {
       allContentfulSingle(sort: { order: ASC, fields: orderNumber }) {
