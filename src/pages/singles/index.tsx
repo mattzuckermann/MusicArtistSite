@@ -76,6 +76,10 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
 
   const shuffleFunction = () => {
     myMap.delete(`${currentTrack}`);
+    // if repeat all is selected, refresh "shuffle session" when myMap === 0
+    if (Array.from(myMap).length === 0 && loopIndex == 3) {
+      for (let i: string in allContentfulSingle.edges) myMap.set(i, i);
+    }
     // recursive function that generates random number within singles array
     // and checks hash map containing remaining tracks that haven't played
     // during this "shuffle session."
@@ -88,7 +92,10 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
         let tempIndex = Math.floor(
           Math.random() * allContentfulSingle.edges.length
         );
-        if (myMap.has(`${tempIndex}`)) {
+        // check that tempIndex isn't current track for edge case when
+        // repeat all is true and refreshing hash map (i.e. myMap) so
+        // same track doesn't play twice in a row (due to refresh of myMap)
+        if (myMap.has(`${tempIndex}`) && tempIndex !== currentTrack) {
           changeTrack(tempIndex);
           setPlaying(true);
         } else {
@@ -118,6 +125,13 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
     setTimeout(() => changeTrack(index), 1000);
     setTimeout(() => changeFaded(true), 1000);
     setTimeout(() => setPlaying(true), 1000);
+    // switching songs manually will in turn clear the myMap hash map containing
+    // the track indices and then refill them to full, thus restarting the "shuffle session."
+    myMap.clear();
+    for (let i: string in allContentfulSingle.edges) myMap.set(i, i);
+
+    // switching songs manually will in turn set loopIndex back to loop all
+    // if loop one is currently selected.
     if (loopIndex === 4) setTimeout(() => setLoopIndex(3), 1000);
   };
 
@@ -201,9 +215,11 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
                 // This is dictated by the loop and shuffle buttons which change the loop index and
                 // shuffle indices depending on what icons are shown in the UI.
                 switch (loopIndex) {
+                  // case 4 is repeat one
                   case 4:
                     setPlaying(true);
                     break;
+                  // case 2 loop is repeat none
                   case 2:
                     if (shuffleIndex === 9) {
                       shuffleFunction();
@@ -214,6 +230,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
                       setPlaying(true);
                     }
                     break;
+                  // case 3 is repeat all
                   case 3:
                     if (shuffleIndex === 9) {
                       shuffleFunction();
@@ -347,6 +364,8 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
             return (
               <animated.div key={track.trackName} style={props}>
                 <TrackLine
+                  allContentfulSingle={allContentfulSingle}
+                  myMap={allContentfulSingle}
                   allCloudinaryMedia={allCloudinaryMedia}
                   classes={classes}
                   currentTrack={currentTrack}
