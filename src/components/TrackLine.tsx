@@ -2,8 +2,6 @@ import React from 'react';
 import classNames from 'classnames';
 
 const TrackLine = ({
-  allContentfulSingle,
-  myMap,
   allCloudinaryMedia,
   classes,
   currentTrack,
@@ -37,8 +35,8 @@ const TrackLine = ({
         <img
           src={
             currentTrack === index && playing
-              ? allCloudinaryMedia.edges[1].node.url
-              : allCloudinaryMedia.edges[0].node.url
+              ? allCloudinaryMedia.edges[1].node.secure_url
+              : allCloudinaryMedia.edges[0].node.secure_url
           }
           style={{
             width: '10px',

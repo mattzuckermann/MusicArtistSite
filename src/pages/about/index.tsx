@@ -104,7 +104,7 @@ const About = () => {
           node {
             name
             carouselImage {
-              url
+              secure_url
             }
           }
         }
@@ -196,7 +196,7 @@ const About = () => {
               className={classes.img}
               src={
                 allContentfulPhotoAlbum.edges[0].node.carouselImage[activeStep]
-                  .url
+                  .secure_url
               }
               alt={allContentfulPhotoAlbum.edges[0].node.name}
             />

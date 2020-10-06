@@ -144,11 +144,11 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
             orderNumber
             trackName
             cloudinaryAudio {
-              url
+              secure_url
               duration
             }
             cloudinaryImage {
-              url
+              secure_url
             }
           }
         }
@@ -161,7 +161,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
         edges {
           node {
             id
-            url
+            secure_url
           }
         }
       }
@@ -250,7 +250,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
             playing={playing}
             url={
               allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0]
-                .url
+                .secure_url
             }
             controls={true}
           />
@@ -271,7 +271,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
               }}
               src={
                 allContentfulSingle.edges[currentTrack].node.cloudinaryImage[0]
-                  .url
+                  .secure_url
               }
             />
           </animated.div>
@@ -308,12 +308,12 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
               // checks repeatIsHovered state as well as current loopIndex to alter
               // src file to desired Cloudinary image
               !repeatIsHovered
-                ? allCloudinaryMedia.edges[loopIndex].node.url
+                ? allCloudinaryMedia.edges[loopIndex].node.secure_url
                 : loopIndex === 2
-                ? allCloudinaryMedia.edges[5].node.url
+                ? allCloudinaryMedia.edges[5].node.secure_url
                 : loopIndex === 3
-                ? allCloudinaryMedia.edges[6].node.url
-                : allCloudinaryMedia.edges[7].node.url
+                ? allCloudinaryMedia.edges[6].node.secure_url
+                : allCloudinaryMedia.edges[7].node.secure_url
             }
             style={{ width: '35px', marginBottom: '0px' }}
             draggable={false}
@@ -350,10 +350,10 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
               // checks shuffleIsHovered state as well as current shuffleIndex to alter
               // src file to desired Cloudinary image
               !shuffleIsHovered
-                ? allCloudinaryMedia.edges[shuffleIndex].node.url
+                ? allCloudinaryMedia.edges[shuffleIndex].node.secure_url
                 : shuffleIndex === 8
-                ? allCloudinaryMedia.edges[10].node.url
-                : allCloudinaryMedia.edges[11].node.url
+                ? allCloudinaryMedia.edges[10].node.secure_url
+                : allCloudinaryMedia.edges[11].node.secure_url
             }
             style={{ width: '35px', marginBottom: '0px' }}
             draggable={false}
