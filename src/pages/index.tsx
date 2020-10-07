@@ -42,15 +42,14 @@ const IndexPage = () => {
         keywords={[`gatsby`, `application`, `react`]}
       />
       <Grid container spacing={3}>
-        <Grid
-        className="nameRow"
-          item
-          lg={1}
-          xs={1}
-        >
+        <Grid className="nameRow" item lg={1} xs={1}>
           {trail.map((props, index) => {
             return (
-              <animated.div key={index} className="mainTitleWrapper" style={props}>
+              <animated.div
+                key={index}
+                className="mainTitleWrapper"
+                style={props}
+              >
                 <span className="mainTitle">{nameArray[index]}</span>
               </animated.div>
             );
@@ -67,9 +66,8 @@ const IndexPage = () => {
           >
             <Image
               style={{
-                borderRadius: 15,
-                margin: '-200px -100px -400px -100px',
-                minHeight: '1200px',
+                borderRadius: '35px',
+                maxHeight: '850px',
               }}
             />
           </div>
