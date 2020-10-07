@@ -13,6 +13,7 @@ const VideoJs = props => {
       player.on('ended', () => {
         player.handleTechLoadStart_();
         player.hasStarted(false);
+        player.exitFullscreen();
       });
     });
     return () => {
