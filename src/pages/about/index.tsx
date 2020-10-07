@@ -276,8 +276,6 @@ const About = () => {
             }}
           >
             <iframe
-              ref={iframeRef}
-              id="iframe1"
               border="0"
               frameborder="0"
               style={{ backgroundColor: 'black' }}
