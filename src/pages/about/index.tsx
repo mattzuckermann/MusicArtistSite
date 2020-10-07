@@ -83,35 +83,35 @@ const useStyles = makeStyles({
       marginTop: '0px',
     },
   },
-  iframeTabletLaptop: {
-    marginBottom: '0px',
-    width: '410px',
-    height: '770px',
-    overflow: 'hidden',
+  topIframe: {
+    border: 0,
+    width: '350px',
+    height: '470px',
     '@media(max-width: 959px)': {
-      width: '785px',
+      marginRight: '40px',
     },
-    '@media(max-width: 765px)': {
-      width: '410px',
+    '@media(max-width: 754px)': {
+      width: '375px',
+      marginRight: '0px',
+      height: '490px',
+    },
+    '@media(max-width: 435px)': {
+      width: '350px',
+      height: '470px',
     },
   },
-  iframePhone: {
-    marginBottom: '0px',
-    width: '410px',
-    height: '1550px',
-    overflow: 'hidden',
-    '@media(max-width: 480px)': {
-      width: '100%',
-      height: '1470px',
+  bottomIframe: {
+    border: 0,
+    width: '350px',
+    height: '470px',
+    marginTop: '7.5px',
+    '@media(max-width: 754px)': {
+      width: '375px',
+      height: '490px',
     },
-    '@media(max-width: 380px)': {
-      height: '1430px',
-    },
-    '@media(max-width: 360px)': {
-      height: '1410px',
-    },
-    '@media(max-width: 340px)': {
-      height: '1390px',
+    '@media(max-width: 435px)': {
+      width: '350px',
+      height: '470px',
     },
   },
 });
@@ -276,19 +276,23 @@ const About = () => {
             }}
           >
             <iframe
-              border="0"
-              frameborder="0"
-              style={{ backgroundColor: 'black' }}
-              scrolling="no"
-              src="/iframes"
-              // classnames package checking what device is rendering iFrame and responding
-              // accordingly with proper CSS.
-              className={classnames('', {
-                [classes.iframeTabletLaptop]:
-                  !navigator() || (navigator() && screen.width >= 700),
-                [classes.iframePhone]: navigator() && screen.width < 700,
-              })}
-            />
+              className={classes.topIframe}
+              src="https://bandcamp.com/EmbeddedPlayer/album=3135504522/size=large/bgcol=333333/linkcol=0f91ff/tracklist=false/transparent=true/"
+              seamless
+            >
+              <a href="https://kassiusband.bandcamp.com/album/ep">
+                EP by Kassius
+              </a>
+            </iframe>
+            <iframe
+              className={classes.bottomIframe}
+              src="https://bandcamp.com/EmbeddedPlayer/album=2293224677/size=large/bgcol=333333/linkcol=0f91ff/tracklist=false/transparent=true/"
+              seamless
+            >
+              <a href="https://johnnycilantro6tet.bandcamp.com/album/kitchen-cooked">
+                Kitchen Cooked by Johnny Cilantro and the Well Seasoned Sextet
+              </a>
+            </iframe>
           </div>
         </Grid>
       </Grid>
