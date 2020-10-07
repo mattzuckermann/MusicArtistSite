@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     height: '5px',
     marginLeft: '5px',
     marginRight: '5px',
-    backgroundColor: 'black',
+    backgroundColor: 'white',
     '@media(max-width: 959px)': {
       marginLeft: '30px',
       marginRight: '30px',

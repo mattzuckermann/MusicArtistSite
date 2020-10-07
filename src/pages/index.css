@@ -10,7 +10,8 @@ html {
 
 body {
   padding: 0px !important;
-  background-color: whitesmoke;
+  background-color: #bb9e83;
+  color: white;
   overflow: hidden;
 }
 
@@ -48,7 +49,7 @@ body {
 
 @media screen and (max-width: 820px) {
   .mainTitle {
-    font-size: 25px;
+    font-size: 20px;
   }
 }
 
@@ -60,16 +61,22 @@ body {
 
 @media screen and (max-width: 763px) {
   .mainTitle {
-    font-size: 24px;
+    font-size: 19px;
   }
 }
 
 @media screen and (max-width: 650px) {
   .mainTitle {
-    font-size: 23px;
+    font-size: 15px;
   }
   .nameRow {
     left: 60px;
+  }
+}
+
+@media screen and (max-width: 600px) and (max-height: 600px) {
+  .mainTitle {
+    font-size: 13px;
   }
 }
 

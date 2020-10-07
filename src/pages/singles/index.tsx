@@ -22,8 +22,6 @@ const useStyles = makeStyles(() =>
     trackTitle: {
       padding: '25px 0px',
       fontFamily: 'futura',
-      borderRadius: 5,
-      backgroundColor: '#fb2f47',
     },
     trackHeader: {
       margin: '-5px 0px 20px 0px',
