@@ -3,7 +3,7 @@
   "private": true,
   "description": "Music portfolio showcasing Chicago musician Josh Zuckermann",
   "version": "0.1.0",
-  "author": "Matt Zuckermann <mczuckermann@gmail.com>",
+  "author": "Matt Zuckermann <matt@mattzuckermann.dev>",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/free-brands-svg-icons": "^5.11.2",
