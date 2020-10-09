@@ -6,14 +6,9 @@ import { useSpring, animated } from 'react-spring';
 import { makeStyles } from '@material-ui/styles';
 const useStyles = makeStyles({
   bioTitle: {
-    fontSize: '50px',
+    fontSize: '45px',
+    fontFamily: 'futura',
     padding: '0px 25px',
-    '@media(max-width: 959px)': {
-      padding: '0px 45px',
-    },
-  },
-  bioParagraphs: {
-    padding: '0px 20px',
     '@media(max-width: 959px)': {
       padding: '0px 45px',
     },
@@ -62,7 +57,7 @@ const Album = () => {
   return (
     <animated.div style={fade}>
       <SEO title="Albums" keywords={[`music`, `album`, `react`]} />
-      <h1 className={classes.bioTitle}>Albums</h1>
+      <h1 className={classes.bioTitle}>Discography</h1>
       <hr className={classes.lineDivide} />
       {allContentfulAlbum.edges.map((album, index) => (
         <AlbumCover contentfulAlbum={album.node} key={index} fade={fade} />

@@ -49,7 +49,8 @@ const useStyles = makeStyles({
     padding: '127px',
   },
   bioTitle: {
-    fontSize: '50px',
+    fontSize: '45px',
+    fontFamily: 'futura',
     padding: '0px 25px',
     '@media(max-width: 959px)': {
       padding: '0px 45px',
@@ -57,14 +58,16 @@ const useStyles = makeStyles({
   },
   bioParagraphs: {
     padding: '0px 20px',
+    fontFamily: 'futura',
     '@media(max-width: 959px)': {
       padding: '0px 60px',
     },
     '@media(max-width: 420px)': {
-      padding: '0px 50px',
+      padding: '0px 40px',
+      fontSize: 17,
     },
     '@media(max-width: 350px)': {
-      padding: '0px 40px',
+      padding: '0px 30px',
     },
   },
   lineDivide: {
@@ -78,15 +81,16 @@ const useStyles = makeStyles({
     },
   },
   carouselGridWrapper: {
-    marginTop: '80px',
+    marginTop: '14px',
     '@media(max-width: 959px)': {
-      marginTop: '0px',
+      marginTop: '-10px',
     },
   },
   topIframe: {
     border: 0,
     width: '350px',
     height: '470px',
+    marginTop: '15px',
     '@media(max-width: 959px)': {
       marginRight: '40px',
     },
@@ -104,7 +108,7 @@ const useStyles = makeStyles({
     border: 0,
     width: '350px',
     height: '470px',
-    marginTop: '7.5px',
+    marginTop: '5.5px',
     '@media(max-width: 754px)': {
       width: '375px',
       height: '490px',
@@ -150,18 +154,34 @@ const About = () => {
         'https://stream.mux.com/QBlTqHrlNASrg5m202LmYBR01ckD7UoByzRwj8KEcnIqw.m3u8',
       thumbnail:
         'https://res.cloudinary.com/dmgmf4lbz/image/upload/v1602074131/Video%20Files/Thumbnail%20Photos/Screen_Shot_2020-10-07_at_5.33.46_AM_lbp7gq.png',
+      credits: [
+        {
+          name: 'Luis Lopez',
+          portfolio: '',
+          youtube:
+            'https://www.youtube.com/channel/UCVmf-xFdzgARk144QxP-lRg/videos',
+        },
+      ],
     },
     {
       url:
         'https://stream.mux.com/6Sw5CWVPlXsO00KpxkTkLUA8WFYBEhMe4ucTBenNzoiM.m3u8',
       thumbnail:
         'https://res.cloudinary.com/dmgmf4lbz/image/upload/v1602073305/Video%20Files/Thumbnail%20Photos/Screen_Shot_2020-10-07_at_5.19.40_AM_uviw96.png',
+      credits: [
+        {
+          name: 'Veronica Mullen',
+          portfolio: 'https://vmullenmedia.com',
+          youtube: 'https://www.youtube.com/user/Veronnnniica',
+        },
+      ],
     },
     {
       url:
         'https://stream.mux.com/7meQHJH001whheuTxXR6bs2RqcXVR1YI6ZeVpUZT7qXA.m3u8',
       thumbnail:
         'https://res.cloudinary.com/dmgmf4lbz/image/upload/v1602073601/Video%20Files/Thumbnail%20Photos/Screen_Shot_2020-10-07_at_5.25.54_AM_fqqtxt.png',
+      credits: [],
     },
   ];
 
@@ -202,7 +222,7 @@ const About = () => {
           sm={12}
           xs={12}
         >
-          <Grid item lg={10} md={10} sm={12} xs={12}>
+          <Grid item lg={12} md={12} sm={12} xs={12}>
             <h1 className={classes.bioTitle}>
               {markdownRemark.frontmatter.title}
             </h1>
@@ -221,6 +241,7 @@ const About = () => {
                     type: 'application/x-mpegURL',
                   }}
                   videoPoster={video.thumbnail}
+                  videoCredits={video.credits}
                 />
               </div>
             </Grid>

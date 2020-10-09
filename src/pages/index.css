@@ -33,7 +33,8 @@ body {
   background-color: rgba(178, 184, 143, 0.687);
   border-radius: 8px;
   padding: 2px 8px 1px 4px;
-  font-family: 'ABeeZee', sans-serif;
+  /* font-family: 'ABeeZee', sans-serif; */
+  font-family: 'futura';
   color: white;
   font-size: 25px;
   writing-mode: vertical-rl;

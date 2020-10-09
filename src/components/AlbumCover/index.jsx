@@ -39,7 +39,7 @@ const useStyles = makeStyles({
     backgroundColor: 'black',
     border: 'white solid 2px',
     color: 'white',
-    opacity: "0.6"
+    opacity: '0.6',
   },
 });
 
@@ -68,7 +68,9 @@ const AlbumCover = ({ contentfulAlbum, fade }) => {
           />
         ) : (
           <div className={classes.slideInDesc}>
-            Debut album coming November 2020
+            <div style={{ fontFamily: 'futura' }}>
+              Debut album coming November 2020
+            </div>
           </div>
         )}
       </div>

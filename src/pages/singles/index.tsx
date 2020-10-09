@@ -13,7 +13,7 @@ import '../index.css';
 const useStyles = makeStyles(() =>
   createStyles({
     singlesBackgroundColor: {
-      backgroundColor: '#191919',
+      backgroundColor: `#1a1a1a`,
       padding: '20px',
     },
     audioPlayer: {
@@ -23,9 +23,10 @@ const useStyles = makeStyles(() =>
       padding: '25px 0px',
       fontFamily: 'futura',
     },
-    trackHeader: {
-      margin: '-5px 0px 20px 0px',
-      fontSize: '50px',
+    singlesHeader: {
+      fontSize: '45px',
+      fontFamily: 'futura',
+      margin: '-5px 0px 22px 15px',
     },
     trackButton: {
       fontFamily: 'futura',
@@ -52,6 +53,12 @@ const useStyles = makeStyles(() =>
     },
     trackGreen: {
       color: '#1ED760',
+    },
+    lineDivide: {
+      height: '5px',
+      // marginLeft: '2px',
+      // marginRight: '2px',
+      backgroundColor: 'white',
     },
   })
 );
@@ -188,13 +195,12 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
       />
       <Grid container>
         <Grid item>
-          <animated.div style={fade}>
-            <h1 className={classes.trackHeader} style={{ color: 'white' }}>
-              {allContentfulSingle.edges[currentTrack].node.trackName}
-            </h1>
-          </animated.div>
+          <h1 className={classes.singlesHeader} style={{ color: 'white' }}>
+            Singles
+          </h1>
         </Grid>
       </Grid>
+      <hr className={classes.lineDivide} />
       <Grid item>
         <animated.div style={fade}>
           <ReactPlayer
@@ -276,9 +282,9 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
         </Grid>
         <Grid item style={{ margin: '25px 0px 0px 5px' }}>
           {/* 
-            Loop button that is responsible for dictating behavior of
-            onEnded parameter for ReactPlayer component
-        */}
+              Loop button that is responsible for dictating behavior of
+              onEnded parameter for ReactPlayer component
+          */}
           <img
             onClick={() => {
               if (loopIndex != 4) setLoopIndex(loopIndex + 1);
@@ -317,9 +323,9 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
             draggable={false}
           />
           {/* 
-              shuffleButton that changes shuffleIndex thus alters operations of
-              "onEnded" attribute on ReactPlayer component
-          */}
+                shuffleButton that changes shuffleIndex thus alters operations of
+                "onEnded" attribute on ReactPlayer component
+            */}
           <img
             onClick={() => {
               if (shuffleIndex != 9) setShuffleIndex(shuffleIndex + 1);

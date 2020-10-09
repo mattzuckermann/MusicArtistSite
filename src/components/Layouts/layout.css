@@ -58,6 +58,9 @@ strong {
   font-weight: inherit;
   font-weight: bolder;
 }
+caption {
+  font-family: futura;
+}
 dfn {
   font-style: italic;
 }
@@ -201,7 +204,7 @@ html {
 }
 body {
   color: hsla(0, 0%, 0%, 0.8);
-  font-family: georgia, serif;
+  font-family: futura, serif;
   font-weight: normal;
   word-wrap: break-word;
   font-kerning: normal;
@@ -210,6 +213,7 @@ body {
   -webkit-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
   font-feature-settings: 'kern', 'liga', 'clig', 'calt';
 }
+
 img {
   max-width: 100%;
   margin-left: 0;
