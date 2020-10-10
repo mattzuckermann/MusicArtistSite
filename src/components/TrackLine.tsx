@@ -52,6 +52,7 @@ const TrackLine = ({
         className={classNames(`${classes.trackButton}`, {
           [classes.trackGreen]: currentTrack === index,
         })}
+        style={{ fontSize: '13px' }}
       >
         {index + 1}.
       </span>
