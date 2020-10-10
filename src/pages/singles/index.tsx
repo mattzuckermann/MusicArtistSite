@@ -319,7 +319,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
                 ? allCloudinaryMedia.edges[6].node.secure_url
                 : allCloudinaryMedia.edges[7].node.secure_url
             }
-            style={{ width: '35px', marginBottom: '0px' }}
+            style={{ width: '35px', marginBottom: '10px' }}
             draggable={false}
           />
           {/* 
@@ -359,7 +359,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
                 ? allCloudinaryMedia.edges[10].node.secure_url
                 : allCloudinaryMedia.edges[11].node.secure_url
             }
-            style={{ width: '35px', marginBottom: '0px' }}
+            style={{ width: '35px', marginBottom: '10px' }}
             draggable={false}
           />
           {/* Loops through tracks stored in Contentful and runs React Spring animation on them */}
