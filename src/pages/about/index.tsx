@@ -157,7 +157,7 @@ const About = () => {
       credits: [
         {
           name: 'Luis Lopez',
-          portfolio: '',
+          portfolio: 'https://www.instagram.com/luisisnotthatstupid/?igshid=ujfxxuoqv5c',
           youtube:
             'https://www.youtube.com/channel/UCVmf-xFdzgARk144QxP-lRg/videos',
         },
