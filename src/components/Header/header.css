@@ -32,19 +32,18 @@
 
 .iconList:nth-child(1) {
   margin: 0;
-  padding-top: 13px;
+  padding-top: 20px;
 }
 
 .iconList:nth-child(n + 2) {
   margin: 0;
-  padding-top: 10px;
+  padding-top: 15px;
 }
 
 .icon {
   background-color: rgba(75, 75, 75, 0.3);
-  font-size: 30px;
-  font-size: 30px;
-  padding: 4px;
+  font-size: 27px;
+  padding: 2px 6px;
   border-radius: 100px;
 }
 
@@ -56,6 +55,12 @@
 @media screen and (max-width: 575px) {
   .navList {
     padding: 8px;
+  }
+  .iconList:nth-child(1) {
+    padding-top: 16px;
+  }
+  .icon {
+    padding: 1px 5px;
   }
 }
 
