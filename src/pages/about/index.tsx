@@ -14,6 +14,15 @@ import VideoJs from '../../components/VideoJs';
 const useStyles = makeStyles({
   root: {
     maxWidth: '300px',
+    '@media(max-width: 959px)': {
+      maxWidth: '400px',
+    },
+    '@media(max-width: 749px)': {
+      maxWidth: '375px',
+    },
+    '@media(max-width: 435px)': {
+      maxWidth: '300px',
+    },
     flexGrow: 1,
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -27,6 +36,15 @@ const useStyles = makeStyles({
   },
   img: {
     height: '450px',
+    '@media(max-width: 959px)': {
+      height: '600px',
+    },
+    '@media(max-width: 749px)': {
+      height: '562.5px',
+    },
+    '@media(max-width: 435px)': {
+      height: '450px',
+    },
     maxWidth: '400px',
     overflow: 'hidden',
     display: 'block',
@@ -265,7 +283,7 @@ const About = () => {
               alt={allContentfulPhotoAlbum.edges[0].node.name}
             />
             <MobileStepper
-              variant="dots"
+              variant="progress"
               steps={maxSteps}
               position="static"
               activeStep={activeStep}
