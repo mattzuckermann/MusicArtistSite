@@ -40,7 +40,6 @@ const VideoJs = props => {
               float: 'left',
               marginLeft: '10px',
               fontSize: '13px',
-              backgroundColor: 'rgba(0,0,0,0.1)',
             }}
           >
             credits:{' '}

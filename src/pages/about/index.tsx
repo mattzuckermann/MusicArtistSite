@@ -196,7 +196,7 @@ const About = () => {
     },
     {
       url:
-        'https://stream.mux.com/7meQHJH001whheuTxXR6bs2RqcXVR1YI6ZeVpUZT7qXA.m3u8',
+        'https://stream.mux.com/q7qTYyNp23hSN01Z01EdnDyzsGrENLxpEKzJo502cnJHsE.m3u8',
       thumbnail:
         'https://res.cloudinary.com/dmgmf4lbz/image/upload/v1602073601/Video%20Files/Thumbnail%20Photos/Screen_Shot_2020-10-07_at_5.25.54_AM_fqqtxt.png',
       credits: [],
