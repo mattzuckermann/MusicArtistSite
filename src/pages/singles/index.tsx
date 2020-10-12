@@ -267,6 +267,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
               style={{
                 margin: '25px 0px 0px 0px',
                 width: '400px',
+                height: '400px',
                 marginRight: '12px',
                 display: 'flex',
                 alignItems: 'center',
