@@ -41,14 +41,14 @@
 }
 
 .icon {
-  background-color: rgba(75, 75, 75, 0.3);
+  background-color: rgba(195, 214, 213, 0.3);
   font-size: 27px;
   padding: 2px 6px;
   border-radius: 100px;
 }
 
 .iconHover:hover {
-  background-color: rgba(195, 214, 213, 0.3);
+  background-color: rgba(91, 91, 91, 0.3);
   transition: all 0.1s ease;
 }
 
