@@ -169,7 +169,7 @@ const About = () => {
   const muxVideoArray = [
     {
       url:
-        'https://stream.mux.com/QBlTqHrlNASrg5m202LmYBR01ckD7UoByzRwj8KEcnIqw.m3u8',
+        'https://stream.mux.com/Us00bwq8fn3m3jTDzC02gfolAM3XXOSdEK4X3wcHd001pc.m3u8',
       thumbnail:
         'https://res.cloudinary.com/dmgmf4lbz/image/upload/v1602074131/Video%20Files/Thumbnail%20Photos/Screen_Shot_2020-10-07_at_5.33.46_AM_lbp7gq.png',
       credits: [
@@ -183,7 +183,7 @@ const About = () => {
     },
     {
       url:
-        'https://stream.mux.com/6Sw5CWVPlXsO00KpxkTkLUA8WFYBEhMe4ucTBenNzoiM.m3u8',
+        'https://stream.mux.com/70201ZYW49sF01AH8qVidzxLvWuaeik4tGYf9F9E1kUmWM.m3u8',
       thumbnail:
         'https://res.cloudinary.com/dmgmf4lbz/image/upload/v1602073305/Video%20Files/Thumbnail%20Photos/Screen_Shot_2020-10-07_at_5.19.40_AM_uviw96.png',
       credits: [
