@@ -156,6 +156,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
         changeTrack(0);
         setPlaying(false);
         setShuffleIndex(0);
+        for (let i: string in allContentfulSingle.edges) myMap.set(i, i);
       }
     };
     // Run recursive "checkHash" function, thus changing the track index
@@ -351,15 +352,6 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
                 setPlaying(true);
               }
             }}
-            // onClick={() => {
-            //   if (currentTrack !== 0) {
-            //     changeTrack(currentTrack - 1);
-            //     setPlaying(true);
-            //   } else {
-            //     changeTrack(allContentfulSingle.edges.length - 1)
-            //     setPlaying(true);
-            //   }
-            // }}
             title='Previous'
             src={leftTrackIcons[leftTrackIndex].node.secure_url}
             style={{ width: "50px", margin: "12px 18px" }}
@@ -475,7 +467,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
           </div>
           <ReactPlayer
             ref={audioPlayerEl}
-            // style={{ display: "none" }}
+            style={{ display: "none" }}
             className={classes.audioPlayer}
             height="54px"
             padding="10px 0px"
