@@ -9,6 +9,7 @@ import ReactPlayer from 'react-player';
 import TrackLine from '../../components/TrackLine';
 import navigator from '../../js/navigator';
 import '../index.css';
+import '../../components/SpotifyAudioPlayer/input.css';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -56,33 +57,77 @@ const useStyles = makeStyles(() =>
     },
     lineDivide: {
       height: '5px',
-      // marginLeft: '2px',
-      // marginRight: '2px',
       backgroundColor: 'white',
     },
   })
 );
 
-const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
+const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
   index = '',
   boolean = false,
 }) => {
+  // GraphQL query to read all tracks from contentful and cloudinary.
+  const { allContentfulSingle, allCloudinaryMedia } = useStaticQuery(graphql`
+    query tracksQuery {
+      allContentfulSingle(sort: { order: ASC, fields: orderNumber }) {
+        edges {
+          node {
+            orderNumber
+            trackName
+            cloudinaryAudio {
+              secure_url
+              duration
+            }
+            cloudinaryImage {
+              secure_url
+            }
+          }
+        }
+      }
+      allCloudinaryMedia(
+        sort: { order: ASC, fields: created_at }
+        filter: { format: { eq: "png" } }
+      ) {
+        edges {
+          node {
+            id
+            secure_url
+          }
+        }
+      }
+    }
+  `);
+
   const classes = useStyles();
   const [on, toggle] = useState(boolean);
+  const [trackDuration, setTrackDuration] = useState("0:00");
   const [faded, changeFaded] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [currentTrack, changeTrack] = useState(0);
-  const [loopIndex, setLoopIndex] = useState(2);
-  const [shuffleIndex, setShuffleIndex] = useState(8);
-  const [shuffleIsHovered, setShuffleIsHovered] = useState(false);
-  const [repeatIsHovered, setRepeatIsHovered] = useState(false);
+  const [repeatIndex, setRepeatIndex] = useState(0);
+  const [previousRepeatIndex, setPreviousRepeatIndex] = useState(0);
+  const [shuffleIndex, setShuffleIndex] = useState(0);
+  const [previousShuffleIndex, setPreviousShuffleIndex] = useState(0);
+  const [playPauseIndex, setPlayPauseIndex] = useState(0);
+  const [leftTrackIndex, setLeftTrackIndex] = useState(0);
+  const [rightTrackIndex, setRightTrackIndex] = useState(0);
   const [myMap, setMyMap] = useState(new Map());
+
+  // ! DO NOT DISTURB ORDER OF SPLICING
+  const allIcons = [...allCloudinaryMedia.edges];
+  // const oldPlayPauseIcon = allIcons.splice(0,2);
+  const repeatIcons = allIcons.splice(2,8);
+  const shuffleIcons = allIcons.splice(2,5);
+  const playPauseIcons = allIcons.splice(2,6);
+  const leftTrackIcons = allIcons.splice(2,2);
+  const rightTrackIcons = allIcons.splice(2,2);
+
   const audioPlayerEl = useRef(null);
 
   const shuffleFunction = () => {
     myMap.delete(`${currentTrack}`);
     // if repeat all is selected, refresh "shuffle session" when myMap === 0
-    if (Array.from(myMap).length === 0 && loopIndex == 3) {
+    if (Array.from(myMap).length === 0 && repeatIndex == 1) {
       for (let i: string in allContentfulSingle.edges) myMap.set(i, i);
     }
     // recursive function that generates random number within singles array
@@ -106,6 +151,11 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
         } else {
           checkHash();
         }
+      } else {
+        setPlayPauseIndex(0);
+        changeTrack(0);
+        setPlaying(false);
+        setShuffleIndex(0);
       }
     };
     // Run recursive "checkHash" function, thus changing the track index
@@ -113,12 +163,71 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
     checkHash();
   };
 
+  const onEndedFunction = () => {
+    // Waits a period of time between songs (a tenth of a second)
+    setTimeout(() => {
+      // Case statement regarding what operation should be done when a song ends.
+      // This is dictated by the repeat and shuffle buttons which change repeatIndex and
+      // shuffleIndex respectively depending on what icons are shown in the UI.
+      switch (repeatIndex) {
+        // case 2 and case 5 is repeat one
+        case 2:
+        case 5:
+          changeTrack(currentTrack)
+          setPlaying(true);
+          break;
+        // case 0 and case 3 is repeat none
+        case 0:
+        case 3:
+          if (shuffleIndex === 1) {
+            shuffleFunction();
+            break;
+          }
+          if (currentTrack != allContentfulSingle.edges.length - 1) {
+            changeTrack(currentTrack + 1);
+            setPlaying(true);
+          } else {
+            setPlayPauseIndex(0);
+          }
+          break;
+        // case 1 and case 4 is repeat all
+        case 1:
+        case 4:
+          if (shuffleIndex === 1) {
+            shuffleFunction();
+            break;
+          }
+          if (currentTrack != allContentfulSingle.edges.length - 1) {
+            changeTrack(currentTrack + 1);
+            setPlaying(true);
+          } else {
+            changeTrack(0);
+            setPlaying(true);
+          }
+          break;
+      }
+    }, 100);
+  }
+
+  const formatTrackDuration = trackTime => {
+    const minutes = Math.floor(trackTime / 60);
+    const minutesFormatted = minutes < 10 ? `${minutes}` : minutes;
+    const seconds = Math.floor(trackTime % 60);
+    const secondsFormatted = seconds === 0 ? '00' : seconds;
+    const trackDurationFormatted = `${minutesFormatted}:${secondsFormatted}`;
+    setTrackDuration(trackDurationFormatted);
+  };
+
   // Effect to toggle "on" state to true and run animations
   useEffect((): void => {
     toggle(true);
     changeFaded(true);
-    for (let i: string in allContentfulSingle.edges) myMap.set(i, i);
+    for (let i in allContentfulSingle.edges) myMap.set(i, i);
   }, []);
+  
+  useEffect((): void => {
+    formatTrackDuration(allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration)
+  }, [currentTrack]);
 
   const fade = useSpring({
     opacity: faded ? 1 : 0,
@@ -130,48 +239,16 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
     setTimeout(() => changeTrack(index), 1000);
     setTimeout(() => changeFaded(true), 1000);
     setTimeout(() => setPlaying(true), 1000);
+    setTimeout(() => setPlayPauseIndex(3), 1000);
     // switching songs manually will in turn clear the myMap hash map containing
     // the track indices and then refill them to full, thus restarting the "shuffle session."
     myMap.clear();
-    for (let i: string in allContentfulSingle.edges) myMap.set(i, i);
+    for (let i in allContentfulSingle.edges) myMap.set(i, i);
 
     // switching songs manually will in turn set loopIndex back to loop all
     // if loop one is currently selected.
-    if (loopIndex === 4) setTimeout(() => setLoopIndex(3), 1000);
+    if (repeatIndex === 2) setTimeout(() => setRepeatIndex(1), 1000);
   };
-
-  // GraphQL query to read all tracks from contentful and cloudinary.
-  const { allContentfulSingle, allCloudinaryMedia } = useStaticQuery(graphql`
-    query tracksQuery {
-      allContentfulSingle(sort: { order: ASC, fields: orderNumber }) {
-        edges {
-          node {
-            orderNumber
-            trackName
-            cloudinaryAudio {
-              secure_url
-              duration
-            }
-            cloudinaryImage {
-              secure_url
-            }
-          }
-        }
-      }
-      allCloudinaryMedia(
-        sort: { order: ASC, fields: created_at }
-        filter: { format: { eq: "png" } }
-        limit: 15
-      ) {
-        edges {
-          node {
-            id
-            secure_url
-          }
-        }
-      }
-    }
-  `);
 
   // React Spring animations that run once component mounts
   const [trail, set, stop] = useTrail(allContentfulSingle.edges.length, () => ({
@@ -202,9 +279,203 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
       </Grid>
       <hr className={classes.lineDivide} />
       <Grid item>
-        <animated.div style={fade}>
+        <div>
+          <div style={{ textAlign: "center", userSelect: "none" }}>
+            {/* 
+                shuffleButton that changes shuffleIndex thus alters operations of
+                "onEnded" attribute on ReactPlayer component
+            */}
+          <img
+            onClick={() => {
+              if (shuffleIndex != shuffleIcons.length - 2) setShuffleIndex(shuffleIndex + 1);
+              else {
+                setShuffleIndex(2);
+                // setting shuffle back to off will in turn clear the myMap hash map containing
+                // the track indices and then refill them to full, thus restarting the "shuffle session."
+                myMap.clear();
+                for (let i: string in allContentfulSingle.edges)
+                  myMap.set(i, i);
+              }
+            }}
+            // onMouseEnter and onMouseLeave alters the shuffleIndex state
+            // which affects which source file is used in src attribute (see below);
+            // In addition, the imported navigator() function checks if the device is
+            // a phone or tablet and ends the process if so since there is no mouse to hover
+            // on a phone or tablet
+            onMouseEnter={() => {
+              if (!navigator() && shuffleIndex === 0) {
+                setShuffleIndex(2)
+              } else if (!navigator() && shuffleIndex === 1) {
+                setShuffleIndex(3)
+              }
+            }}
+            onMouseLeave={() => {
+              if (!navigator() && shuffleIndex === 2) {
+                setShuffleIndex(0)
+              } else if (!navigator() && shuffleIndex === 3) {
+                setShuffleIndex(1)
+              }
+            }}
+            onMouseDown={() => {
+              if (!navigator() && shuffleIndex === 2) {
+                setPreviousShuffleIndex(shuffleIndex);
+                setShuffleIndex(0);
+              } else if (!navigator() && shuffleIndex === 3) {
+                setPreviousShuffleIndex(shuffleIndex);
+                setShuffleIndex(4);
+              }
+            }}
+            onMouseUp={() => {
+              setShuffleIndex(previousShuffleIndex);
+            }}
+            title={shuffleIndex === 2 ? 'Shuffle' : 'Don\'t shuffle'}
+            src={shuffleIcons[shuffleIndex].node.secure_url}
+            style={{ width: '40px', marginBottom: '18px' }}
+            draggable={false}
+          />
+          <img 
+            onClick={() => {
+              if (repeatIndex === 2) setRepeatIndex(1);
+              if (shuffleIndex === 1) shuffleFunction();
+              else if (currentTrack === 0) {
+                if (repeatIndex === 1) {
+                  changeTrack(allContentfulSingle.edges.length - 1);
+                  setPlayPauseIndex(3);
+                } else if (repeatIndex === 0) {
+                  setPlaying(false);
+                  setPlayPauseIndex(0);
+                }
+              } else {
+                changeTrack(currentTrack - 1);
+                setPlayPauseIndex(3);
+                setPlaying(true);
+              }
+            }}
+            // onClick={() => {
+            //   if (currentTrack !== 0) {
+            //     changeTrack(currentTrack - 1);
+            //     setPlaying(true);
+            //   } else {
+            //     changeTrack(allContentfulSingle.edges.length - 1)
+            //     setPlaying(true);
+            //   }
+            // }}
+            title='Previous'
+            src={leftTrackIcons[leftTrackIndex].node.secure_url}
+            style={{ width: "50px", margin: "12px 18px" }}
+            draggable={false}
+            onMouseEnter={() => setLeftTrackIndex(1)}
+            onMouseLeave={() => setLeftTrackIndex(0)}
+            onMouseDown={()=> setLeftTrackIndex(0)}
+            onMouseUp={()=> setLeftTrackIndex(1)}
+          />
+          <img
+            title={playing ? 'Pause' : 'Play'}
+            style={{ width: "60px", margin: "0px" }}
+            src={playPauseIcons[playPauseIndex].node.secure_url}
+            onClick={() => {
+                setPlaying(!playing);
+              }
+            }
+            draggable={false}
+            onMouseEnter={() => playing ? setPlayPauseIndex(4) : setPlayPauseIndex(1)}
+            onMouseLeave={() => playing ? setPlayPauseIndex(3) : setPlayPauseIndex(0)}
+            onMouseDown={() => playing ? setPlayPauseIndex(5) : setPlayPauseIndex(2)}
+            onMouseUp={() => playing ? setPlayPauseIndex(1) : setPlayPauseIndex(4)}
+          />
+          <img 
+            onClick={() => {
+              if (repeatIndex === 2) setRepeatIndex(1);
+              if (shuffleIndex === 1) shuffleFunction();
+              else if (currentTrack === allContentfulSingle.edges.length - 1) {
+                changeTrack(0);
+                setPlayPauseIndex(3);
+                if (repeatIndex === 0) {
+                  setPlaying(false);
+                  setPlayPauseIndex(0);
+                }
+              } else {
+                changeTrack(currentTrack + 1);
+                setPlayPauseIndex(3);
+                setPlaying(true);
+              }
+            }}
+            title='Next'
+            src={rightTrackIcons[rightTrackIndex].node.secure_url}
+            style={{ width: "50px", margin: "12px 18px" }}
+            draggable={false}
+            onMouseEnter={() => setRightTrackIndex(1)}
+            onMouseLeave={() => setRightTrackIndex(0)}
+            onMouseDown={()=> setRightTrackIndex(0)}
+            onMouseUp={()=> setRightTrackIndex(1)}
+          />
+          {/* 
+              Loop button that is responsible for dictating behavior of
+              onEnded parameter for ReactPlayer component
+          */}
+          <img
+            onClick={() => {
+              if (repeatIndex != repeatIcons.length - 3) setRepeatIndex(repeatIndex + 1);
+              else setRepeatIndex(3);
+            }}
+            // onMouseEnter and onMouseLeave alters repeatIndex state
+            // which affects which source file is used in src attribute (see below)
+            // In addition, the imported navigator() function checks if the device is
+            // a phone or tablet and ends the process if so since there is no mouse to hover
+            // on a phone or tablet
+            onMouseEnter={() => {
+              if (!navigator() && repeatIndex === 0) {
+                setRepeatIndex(3);
+              } else if (!navigator() && repeatIndex === 1) {
+                setRepeatIndex(4);
+              } else if (!navigator() && repeatIndex === 2) {
+                setRepeatIndex(5);
+              }
+            }}
+            onMouseLeave={() => {
+              if (!navigator() && repeatIndex === 3) {
+                setRepeatIndex(0)
+              } else if (!navigator() && repeatIndex === 4) {
+                setRepeatIndex(1)
+              } else if (!navigator() && repeatIndex === 5) {
+                setRepeatIndex(2)
+              }
+            }}
+            onMouseDown={() => {
+              if (!navigator() && repeatIndex === 3) {
+                setPreviousRepeatIndex(repeatIndex);
+                setRepeatIndex(0);
+              } else if (!navigator() && repeatIndex === 4) {
+                setPreviousRepeatIndex(repeatIndex);
+                setRepeatIndex(6);
+              } else if (!navigator() && repeatIndex === 5) {
+                setPreviousRepeatIndex(repeatIndex);
+                setRepeatIndex(7);
+              }
+            }}
+            onMouseUp={() => {
+              setRepeatIndex(previousRepeatIndex);
+            }}
+            title={
+              repeatIndex === 3
+                ? 'Repeat'
+                : repeatIndex === 4
+                ? 'Repeat Track'
+                : "Don't repeat"
+            }
+            src={repeatIcons[repeatIndex].node.secure_url}
+            style={{ width: '40px', marginBottom: '18px' }}
+            draggable={false}
+          />
+          </div>
+          <div style={{ textAlign: "center"}}>
+            <span>0:00 </span>
+            <input type="range" min={1} max={1000} value={0}/>
+            <span> -{trackDuration}</span>
+          </div>
           <ReactPlayer
             ref={audioPlayerEl}
+            // style={{ display: "none" }}
             className={classes.audioPlayer}
             height="54px"
             padding="10px 0px"
@@ -212,45 +483,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
             volume={0.6}
             onPause={() => setPlaying(false)}
             onPlay={() => setPlaying(true)}
-            onEnded={() => {
-              // Waits a period of time between songs (a tenth of a second)
-              setTimeout(() => {
-                // Case statement regarding what operation should be done when a song ends.
-                // This is dictated by the loop and shuffle buttons which change the loop index and
-                // shuffle indices depending on what icons are shown in the UI.
-                switch (loopIndex) {
-                  // case 4 is repeat one
-                  case 4:
-                    setPlaying(true);
-                    break;
-                  // case 2 loop is repeat none
-                  case 2:
-                    if (shuffleIndex === 9) {
-                      shuffleFunction();
-                      break;
-                    }
-                    if (currentTrack != allContentfulSingle.edges.length - 1) {
-                      changeTrack(currentTrack + 1);
-                      setPlaying(true);
-                    }
-                    break;
-                  // case 3 is repeat all
-                  case 3:
-                    if (shuffleIndex === 9) {
-                      shuffleFunction();
-                      break;
-                    }
-                    if (currentTrack != allContentfulSingle.edges.length - 1) {
-                      changeTrack(currentTrack + 1);
-                      setPlaying(true);
-                    } else {
-                      changeTrack(0);
-                      setPlaying(true);
-                    }
-                    break;
-                }
-              }, 100);
-            }}
+            onEnded={() => onEndedFunction()}
             playing={playing}
             url={
               allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0]
@@ -258,7 +491,7 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
             }
             controls={true}
           />
-        </animated.div>
+        </div>
       </Grid>
       <Grid container>
         <Grid item>
@@ -282,100 +515,17 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
           </animated.div>
         </Grid>
         <Grid item style={{ margin: '25px 0px 0px 5px' }}>
-          {/* 
-              Loop button that is responsible for dictating behavior of
-              onEnded parameter for ReactPlayer component
-          */}
-          <img
-            onClick={() => {
-              if (loopIndex != 4) setLoopIndex(loopIndex + 1);
-              else setLoopIndex(2);
-            }}
-            // onMouseEnter and onMouseLeave alters repeatIsHovered state
-            // which affects which source file is used in src attribute (see below)
-            // In addition, the imported navigator() function checks if the device is
-            // a phone or tablet and ends the process if so since there is no mouse to hover
-            // on a phone or tablet
-            onMouseEnter={() => {
-              if (!navigator()) setRepeatIsHovered(true);
-            }}
-            onMouseLeave={() => {
-              if (!navigator()) setRepeatIsHovered(false);
-            }}
-            title={
-              loopIndex === 2
-                ? 'Repeat'
-                : loopIndex === 3
-                ? 'Repeat Track'
-                : "Don't repeat"
-            }
-            src={
-              // checks repeatIsHovered state as well as current loopIndex to alter
-              // src file to desired Cloudinary image
-              !repeatIsHovered
-                ? allCloudinaryMedia.edges[loopIndex].node.secure_url
-                : loopIndex === 2
-                ? allCloudinaryMedia.edges[5].node.secure_url
-                : loopIndex === 3
-                ? allCloudinaryMedia.edges[6].node.secure_url
-                : allCloudinaryMedia.edges[7].node.secure_url
-            }
-            style={{ width: '35px', marginBottom: '10px' }}
-            draggable={false}
-          />
-          {/* 
-                shuffleButton that changes shuffleIndex thus alters operations of
-                "onEnded" attribute on ReactPlayer component
-            */}
-          <img
-            onClick={() => {
-              if (shuffleIndex != 9) setShuffleIndex(shuffleIndex + 1);
-              else {
-                setShuffleIndex(8);
-                // setting shuffle back to off will in turn clear the myMap hash map containing
-                // the track indices and then refill them to full, thus restarting the "shuffle session."
-                myMap.clear();
-                for (let i: string in allContentfulSingle.edges)
-                  myMap.set(i, i);
-              }
-            }}
-            // onMouseEnter and onMouseLeave alters shuffleIsHovered state
-            // which affects which source file is used in src attribute (see below);
-            // In addition, the imported navigator() function checks if the device is
-            // a phone or tablet and ends the process if so since there is no mouse to hover
-            // on a phone or tablet
-            onMouseEnter={() => {
-              if (!navigator()) setShuffleIsHovered(true);
-            }}
-            onMouseLeave={() => {
-              if (!navigator()) setShuffleIsHovered(false);
-            }}
-            title={shuffleIndex === 9 ? "Don't shuffle" : 'Shuffle'}
-            src={
-              // checks shuffleIsHovered state as well as current shuffleIndex to alter
-              // src file to desired Cloudinary image
-              !shuffleIsHovered
-                ? allCloudinaryMedia.edges[shuffleIndex].node.secure_url
-                : shuffleIndex === 8
-                ? allCloudinaryMedia.edges[10].node.secure_url
-                : allCloudinaryMedia.edges[11].node.secure_url
-            }
-            style={{ width: '35px', marginBottom: '10px' }}
-            draggable={false}
-          />
           {/* Loops through tracks stored in Contentful and runs React Spring animation on them */}
           {trail.map((props: object, index: number) => {
             let { node: track } = allContentfulSingle.edges[index];
             return (
               <animated.div key={track.trackName} style={props}>
                 <TrackLine
-                  allContentfulSingle={allContentfulSingle}
-                  myMap={allContentfulSingle}
+                  setPlayPauseIndex={setPlayPauseIndex}
                   allCloudinaryMedia={allCloudinaryMedia}
                   classes={classes}
                   currentTrack={currentTrack}
                   setTrack={setTrack}
-                  setLoopIndex={setLoopIndex}
                   playing={playing}
                   setPlaying={setPlaying}
                   track={track}
@@ -390,4 +540,4 @@ const Album: FunctionComponent<{ index: number; boolean: boolean }> = ({
   );
 };
 
-export default Album;
+export default Singles;
