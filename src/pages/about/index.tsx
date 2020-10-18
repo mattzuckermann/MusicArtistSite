@@ -5,8 +5,6 @@ import { makeStyles } from '@material-ui/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
 import SEO from '../../components/SEO';
-import classnames from 'classnames';
-import navigator from '../../js/navigator';
 import './about.css';
 import { useSpring, animated } from 'react-spring';
 import VideoJs from '../../components/VideoJs';
