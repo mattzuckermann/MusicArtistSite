@@ -5,9 +5,8 @@ import { makeStyles } from '@material-ui/styles';
 import { useStaticQuery, graphql } from 'gatsby';
 import SEO from '../../components/SEO';
 import Grid from '@material-ui/core/Grid';
-import ReactPlayer from 'react-player';
 import TrackLine from '../../components/TrackLine';
-import navigator from '../../js/navigator';
+import navigator from '../../js/navigator.js';
 import '../index.css';
 import '../../components/SpotifyAudioPlayer/input.css';
 
@@ -18,6 +17,7 @@ const useStyles = makeStyles(() =>
       padding: '20px',
     },
     audioPlayer: {
+      width: "100%",
       marginBottom: '3px',
     },
     trackTitle: {
@@ -59,6 +59,24 @@ const useStyles = makeStyles(() =>
       height: '5px',
       backgroundColor: 'white',
     },
+    trackNameContainer: {
+      marginLeft: "150px",
+      '@media(max-width: 970px)': {
+        marginLeft: '105px',
+      },
+      '@media(max-width: 880px)': {
+        marginLeft: '75px',
+      },
+      '@media(max-width: 820px)': {
+        marginLeft: '50px',
+      },
+      '@media(max-width: 765px)': {
+        marginLeft: '35px',
+      },
+      '@media(max-width: 680px)': {
+        marginLeft: '0px',
+      },
+    }
   })
 );
 
@@ -66,7 +84,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
   index = '',
   boolean = false,
 }) => {
-  // GraphQL query to read all tracks from contentful and cloudinary.
+  // GraphQL query to read all audio and images from Contentful and Cloudinary.
   const { allContentfulSingle, allCloudinaryMedia } = useStaticQuery(graphql`
     query tracksQuery {
       allContentfulSingle(sort: { order: ASC, fields: orderNumber }) {
@@ -100,9 +118,12 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
 
   const classes = useStyles();
   const [on, toggle] = useState(boolean);
-  const [trackDuration, setTrackDuration] = useState("0:00");
+  const [previousPlayerStatePaused, setPreviousPlayerStatePaused] = useState(boolean)
+  const [inputValue, setInputValue] = useState(0);
+  const [timeFormat, setTimeFormat] = useState(true);
   const [faded, changeFaded] = useState(false);
   const [playing, setPlaying] = useState(false);
+
   const [currentTrack, changeTrack] = useState(0);
   const [repeatIndex, setRepeatIndex] = useState(0);
   const [previousRepeatIndex, setPreviousRepeatIndex] = useState(0);
@@ -113,7 +134,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
   const [rightTrackIndex, setRightTrackIndex] = useState(0);
   const [myMap, setMyMap] = useState(new Map());
 
-  // ! DO NOT DISTURB ORDER OF SPLICING
+  // ! DO NOT CHANGE ORDER OF SPLICING
   const allIcons = [...allCloudinaryMedia.edges];
   // const oldPlayPauseIcon = allIcons.splice(0,2);
   const repeatIcons = allIcons.splice(2,8);
@@ -122,13 +143,13 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
   const leftTrackIcons = allIcons.splice(2,2);
   const rightTrackIcons = allIcons.splice(2,2);
 
-  const audioPlayerEl = useRef(null);
+  const audioTag = useRef(null);
 
   const shuffleFunction = () => {
     myMap.delete(`${currentTrack}`);
     // if repeat all is selected, refresh "shuffle session" when myMap === 0
     if (Array.from(myMap).length === 0 && repeatIndex == 1) {
-      for (let i: string in allContentfulSingle.edges) myMap.set(i, i);
+      for (let i in allContentfulSingle.edges) myMap.set(i, i);
     }
     // recursive function that generates random number within singles array
     // and checks hash map containing remaining tracks that haven't played
@@ -148,6 +169,9 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
         if (myMap.has(`${tempIndex}`) && tempIndex !== currentTrack) {
           changeTrack(tempIndex);
           setPlaying(true);
+          audioTag.current.load();
+          audioTag.current.play();
+          setInputValue(0);
         } else {
           checkHash();
         }
@@ -155,8 +179,10 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
         setPlayPauseIndex(0);
         changeTrack(0);
         setPlaying(false);
+        audioTag.current.load();
+        setInputValue(0);
         setShuffleIndex(0);
-        for (let i: string in allContentfulSingle.edges) myMap.set(i, i);
+        for (let i in allContentfulSingle.edges) myMap.set(i, i);
       }
     };
     // Run recursive "checkHash" function, thus changing the track index
@@ -174,8 +200,11 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
         // case 2 and case 5 is repeat one
         case 2:
         case 5:
-          changeTrack(currentTrack)
+          changeTrack(currentTrack);
           setPlaying(true);
+          audioTag.current.load();
+          audioTag.current.play();
+          setInputValue(0);
           break;
         // case 0 and case 3 is repeat none
         case 0:
@@ -186,9 +215,14 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
           }
           if (currentTrack != allContentfulSingle.edges.length - 1) {
             changeTrack(currentTrack + 1);
-            setPlaying(true);
+            audioTag.current.load();
+            audioTag.current.play();
+            setInputValue(0);
           } else {
             setPlayPauseIndex(0);
+            changeTrack(0);
+            audioTag.current.load();
+            setInputValue(0);
           }
           break;
         // case 1 and case 4 is repeat all
@@ -200,34 +234,46 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
           }
           if (currentTrack != allContentfulSingle.edges.length - 1) {
             changeTrack(currentTrack + 1);
-            setPlaying(true);
+            audioTag.current.load();
+            audioTag.current.play();
+            setInputValue(0);
           } else {
             changeTrack(0);
-            setPlaying(true);
+            audioTag.current.load();
+            audioTag.current.play();
+            setInputValue(0);
           }
           break;
       }
     }, 100);
   }
 
+  const incrementInputValue = function() {
+    setInputValue(inputValue + 1);
+  }
+  
   const formatTrackDuration = trackTime => {
     const minutes = Math.floor(trackTime / 60);
     const minutesFormatted = minutes < 10 ? `${minutes}` : minutes;
     const seconds = Math.floor(trackTime % 60);
-    const secondsFormatted = seconds === 0 ? '00' : seconds;
+    const secondsFormatted = seconds < 10 ? '0' + seconds : seconds;
     const trackDurationFormatted = `${minutesFormatted}:${secondsFormatted}`;
-    setTrackDuration(trackDurationFormatted);
+    return trackDurationFormatted;
   };
 
   // Effect to toggle "on" state to true and run animations
   useEffect((): void => {
     toggle(true);
     changeFaded(true);
+    audioTag.current.volume = 0.6;
+    const checkTrackTime = setInterval(() => setInputValue(audioTag.current.currentTime),1000)
     for (let i in allContentfulSingle.edges) myMap.set(i, i);
+
+    return () => clearInterval(checkTrackTime);
   }, []);
   
   useEffect((): void => {
-    formatTrackDuration(allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration)
+    formatTrackDuration(allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration);
   }, [currentTrack]);
 
   const fade = useSpring({
@@ -239,7 +285,9 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
     changeFaded(false);
     setTimeout(() => changeTrack(index), 1000);
     setTimeout(() => changeFaded(true), 1000);
-    setTimeout(() => setPlaying(true), 1000);
+    setTimeout(() => audioTag.current.load(), 1000);
+    setTimeout(() => audioTag.current.play(), 1000);
+    setTimeout(() => setInputValue(0), 1000);
     setTimeout(() => setPlayPauseIndex(3), 1000);
     // switching songs manually will in turn clear the myMap hash map containing
     // the track indices and then refill them to full, thus restarting the "shuffle session."
@@ -281,10 +329,14 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
       <hr className={classes.lineDivide} />
       <Grid item>
         <div>
+          <br/>
+          <animated.div style={{ textAlign: "center", ...fade }}>
+            <h1>{allContentfulSingle.edges[currentTrack].node.trackName}</h1>
+          </animated.div>
           <div style={{ textAlign: "center", userSelect: "none" }}>
             {/* 
                 shuffleButton that changes shuffleIndex thus alters operations of
-                "onEnded" attribute on ReactPlayer component
+                "onEnded" attribute on audio player
             */}
           <img
             onClick={() => {
@@ -294,7 +346,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
                 // setting shuffle back to off will in turn clear the myMap hash map containing
                 // the track indices and then refill them to full, thus restarting the "shuffle session."
                 myMap.clear();
-                for (let i: string in allContentfulSingle.edges)
+                for (let i in allContentfulSingle.edges)
                   myMap.set(i, i);
               }
             }}
@@ -338,23 +390,31 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             onClick={() => {
               if (repeatIndex === 2) setRepeatIndex(1);
               if (shuffleIndex === 1) shuffleFunction();
-              else if (currentTrack === 0) {
+              else if (audioTag.current.currentTime >= 3) {
+                setInputValue(0);
+                audioTag.current.load();
+                audioTag.current.play();
+              } else if (currentTrack === 0) {
                 if (repeatIndex === 1) {
                   changeTrack(allContentfulSingle.edges.length - 1);
                   setPlayPauseIndex(3);
+                  audioTag.current.load();
+                  audioTag.current.play();
                 } else if (repeatIndex === 0) {
-                  setPlaying(false);
-                  setPlayPauseIndex(0);
+                  setInputValue(0);
+                  audioTag.current.load();
+                  audioTag.current.play();
                 }
               } else {
                 changeTrack(currentTrack - 1);
                 setPlayPauseIndex(3);
-                setPlaying(true);
+                audioTag.current.load();
+                audioTag.current.play()
               }
             }}
             title='Previous'
             src={leftTrackIcons[leftTrackIndex].node.secure_url}
-            style={{ width: "50px", margin: "12px 18px" }}
+            style={{ width: "50px", margin: "12px 20px" }}
             draggable={false}
             onMouseEnter={() => setLeftTrackIndex(1)}
             onMouseLeave={() => setLeftTrackIndex(0)}
@@ -366,9 +426,12 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             style={{ width: "60px", margin: "0px" }}
             src={playPauseIcons[playPauseIndex].node.secure_url}
             onClick={() => {
-                setPlaying(!playing);
+              if (audioTag.current.paused) {
+                audioTag.current.play();
+              } else {
+                audioTag.current.pause();
               }
-            }
+            }}
             draggable={false}
             onMouseEnter={() => playing ? setPlayPauseIndex(4) : setPlayPauseIndex(1)}
             onMouseLeave={() => playing ? setPlayPauseIndex(3) : setPlayPauseIndex(0)}
@@ -381,20 +444,23 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
               if (shuffleIndex === 1) shuffleFunction();
               else if (currentTrack === allContentfulSingle.edges.length - 1) {
                 changeTrack(0);
-                setPlayPauseIndex(3);
+                audioTag.current.load();
+                audioTag.current.play();
+                setInputValue(0);
                 if (repeatIndex === 0) {
-                  setPlaying(false);
+                  audioTag.current.pause();
                   setPlayPauseIndex(0);
                 }
               } else {
                 changeTrack(currentTrack + 1);
-                setPlayPauseIndex(3);
-                setPlaying(true);
+                audioTag.current.load();
+                audioTag.current.play();
+                setInputValue(0);
               }
             }}
             title='Next'
             src={rightTrackIcons[rightTrackIndex].node.secure_url}
-            style={{ width: "50px", margin: "12px 18px" }}
+            style={{ width: "50px", margin: "12px 20px" }}
             draggable={false}
             onMouseEnter={() => setRightTrackIndex(1)}
             onMouseLeave={() => setRightTrackIndex(0)}
@@ -403,7 +469,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
           />
           {/* 
               Loop button that is responsible for dictating behavior of
-              onEnded parameter for ReactPlayer component
+              onEnded parameter for audio player
           */}
           <img
             onClick={() => {
@@ -461,31 +527,51 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
           />
           </div>
           <div style={{ textAlign: "center"}}>
-            <span>0:00 </span>
-            <input type="range" min={1} max={1000} value={0}/>
-            <span> -{trackDuration}</span>
+            <span style={{ userSelect: "none" }}>{formatTrackDuration(inputValue)} </span>
+            <input 
+              type="range"
+              min={0}
+              max={allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration}
+              onMouseDown={() => {
+                setPreviousPlayerStatePaused(audioTag.current.paused);
+              }}
+              onMouseUp={() => {
+                if (!previousPlayerStatePaused) {
+                  audioTag.current.play();
+                  setPlayPauseIndex(3);
+                }
+              }}
+              onChange={e => {
+                audioTag.current.pause();
+                setInputValue(parseInt(e.target.value));
+                audioTag.current.currentTime = e.target.value;
+              }}
+              value={inputValue}/>
+            <span onClick={() => setTimeFormat(!timeFormat)} style={{ userSelect: "none" }}> {!timeFormat ? (formatTrackDuration(allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration)) : allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration - inputValue <= 0 ? "-0:00" : ("-" + formatTrackDuration(allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration - inputValue))}</span>
           </div>
-          <ReactPlayer
-            ref={audioPlayerEl}
-            style={{ display: "none" }}
+          <audio
+            ref={audioTag}
             className={classes.audioPlayer}
-            height="54px"
-            padding="10px 0px"
-            width="100%"
-            volume={0.6}
-            onPause={() => setPlaying(false)}
-            onPlay={() => setPlaying(true)}
+            style={{ display: "none" }}
+            onPlay={() => {
+              setPlaying(true);
+            }}
+            onPause={() => {
+              setPlaying(false);
+            }}
             onEnded={() => onEndedFunction()}
-            playing={playing}
-            url={
-              allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0]
-                .secure_url
-            }
-            controls={true}
-          />
+            controls
+          >
+            <source
+              src={allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0]
+                .secure_url}
+              type="audio/mp3"
+            />
+            Your browser does not support the audio element.
+          </audio>
         </div>
       </Grid>
-      <Grid container>
+      <Grid container className={classes.trackNameContainer}>
         <Grid item>
           <animated.div style={fade}>
             <img
@@ -513,6 +599,8 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             return (
               <animated.div key={track.trackName} style={props}>
                 <TrackLine
+                  audioTagRef={audioTag}
+                  setInputValue={setInputValue}
                   setPlayPauseIndex={setPlayPauseIndex}
                   allCloudinaryMedia={allCloudinaryMedia}
                   classes={classes}

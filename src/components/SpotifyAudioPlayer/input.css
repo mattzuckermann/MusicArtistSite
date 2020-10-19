@@ -30,12 +30,7 @@ input[type='range']:hover::-webkit-progress-value {
   background: #1db954;
 }
 
-input[type='range']:hover::-webkit-slider-thumb {
-  display: block;
-}
-
 input[type='range']::-webkit-slider-thumb {
-  display: none;
   height: 18px;
   width: 18px;
   border-radius: 25px;
