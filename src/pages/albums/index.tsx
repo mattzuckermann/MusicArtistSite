@@ -59,9 +59,9 @@ const Album = () => {
       <h1 className={classes.bioTitle}>Discography</h1>
       <hr className={classes.lineDivide} />
       {allContentfulAlbum.edges.map((album, index) => (
-        <a href="/albums/awakening" rel="noreferrer noopener">
+        // <a href="/albums/awakening" rel="noreferrer noopener">
           <AlbumCover contentfulAlbum={album.node} key={index} fade={fade} />
-        </a>
+        // </a>
       ))}
     </animated.div>
   );
