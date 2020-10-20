@@ -51,6 +51,7 @@ const useStyles = makeStyles(() =>
     },
     buttonPlaying: {
       backgroundColor: '#a1bbb5',
+      visibility: 'hidden',
     },
     trackGreen: {
       color: '#1ED760',
@@ -143,7 +144,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
   const playPauseIcons = allIcons.splice(2,6);
   const leftTrackIcons = allIcons.splice(2,2);
   const rightTrackIcons = allIcons.splice(2,2);
-
+  
   const audioTag = useRef(null);
 
   const shuffleFunction = () => {
@@ -606,14 +607,11 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             return (
               <animated.div key={track.trackName} style={props}>
                 <TrackLine
-                  audioTag={audioTag}
-                  setPlayPauseIndex={setPlayPauseIndex}
                   allCloudinaryMedia={allCloudinaryMedia}
                   classes={classes}
                   currentTrack={currentTrack}
                   setTrack={setTrack}
                   playing={playing}
-                  setPlaying={setPlaying}
                   track={track}
                   index={index}
                 />

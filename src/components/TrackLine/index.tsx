@@ -2,14 +2,11 @@ import React from 'react';
 import classNames from 'classnames';
 
 const TrackLine = ({
-  audioTag,
-  setPlayPauseIndex,
   allCloudinaryMedia,
   classes,
   currentTrack,
   setTrack,
   playing,
-  setPlaying,
   track,
   index,
 }) => {
@@ -25,21 +22,12 @@ const TrackLine = ({
         className={classNames(
           `${classes.buttonGeneral} ${classes.buttonPaused}`,
           {
-            [classes.buttonPlaying]: currentTrack === index && playing,
+            [classes.buttonPlaying]: currentTrack === index,
           }
         )}
         onClick={() => {
           if (currentTrack !== index) {
             setTrack(index);
-          } else {
-            setPlaying(!playing);
-            if (audioTag.current.paused) {
-              audioTag.current.play();
-              setPlayPauseIndex(3);
-            } else {
-              audioTag.current.pause();
-              setPlayPauseIndex(0);
-            }
           }
         }}
       >
