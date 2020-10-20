@@ -606,8 +606,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             return (
               <animated.div key={track.trackName} style={props}>
                 <TrackLine
-                  audioTagRef={audioTag}
-                  setInputValue={setInputValue}
+                  audioTag={audioTag}
                   setPlayPauseIndex={setPlayPauseIndex}
                   allCloudinaryMedia={allCloudinaryMedia}
                   classes={classes}
