@@ -2,8 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 const TrackLine = ({
-  audioTagRef,
-  setInputValue,
+  audioTag,
   setPlayPauseIndex,
   allCloudinaryMedia,
   classes,
@@ -34,10 +33,12 @@ const TrackLine = ({
             setTrack(index);
           } else if (currentTrack === index) {
             setPlaying(!playing);
-            if (audioTagRef.current.paused) {
-              audioTagRef.current.play();
+            if (audioTag.current.paused) {
+              audioTag.current.play();
+              setPlayPauseIndex(3);
             } else {
-              audioTagRef.current.pause();
+              audioTag.current.pause();
+              setPlayPauseIndex(0);
             }
           }
         }}
