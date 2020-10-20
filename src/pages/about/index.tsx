@@ -161,9 +161,6 @@ const About = () => {
     }
   `);
 
-  const [activeStep, setActiveStep] = useState(0);
-  const maxSteps = allContentfulPhotoAlbum.edges[0].node.carouselImage.length;
-
   const muxVideoArray = [
     {
       url:
@@ -200,6 +197,10 @@ const About = () => {
       credits: [],
     },
   ];
+
+  const [videoIndex, setVideoIndex] = useState(muxVideoArray.length);
+  const [activeStep, setActiveStep] = useState(0);
+  const maxSteps = allContentfulPhotoAlbum.edges[0].node.carouselImage.length;
 
   const fade = useSpring({
     from: { opacity: 0 },
@@ -248,7 +249,7 @@ const About = () => {
               dangerouslySetInnerHTML={{ __html: markdownRemark.html }}
             />
           </Grid>
-          {muxVideoArray.map(video => (
+          {muxVideoArray.map((video, index) => (
             <Grid item lg={12} md={12} sm={12} xs={12}>
               <div className={classes.videoPlaybackWrapper}>
                 <VideoJs
@@ -256,6 +257,10 @@ const About = () => {
                     src: video.url,
                     type: 'application/x-mpegURL',
                   }}
+                  muxVideoArray={muxVideoArray}
+                  index={index}
+                  videoIndex={videoIndex}
+                  setVideoIndex={setVideoIndex}
                   videoPoster={video.thumbnail}
                   videoCredits={video.credits}
                 />
