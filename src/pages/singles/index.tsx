@@ -122,6 +122,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
   const [inputValue, setInputValue] = useState(0);
   const [timeFormat, setTimeFormat] = useState(true);
   const [faded, changeFaded] = useState(false);
+  const [initialFaded, changeInitialFaded] = useState(false);
   const [playing, setPlaying] = useState(false);
 
   const [currentTrack, changeTrack] = useState(0);
@@ -265,6 +266,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
   useEffect((): void => {
     toggle(true);
     changeFaded(true);
+    changeInitialFaded(true);
     audioTag.current.volume = 0.6;
     const checkTrackTime = setInterval(() => setInputValue(audioTag.current.currentTime),1000)
     for (let i in allContentfulSingle.edges) myMap.set(i, i);
@@ -278,6 +280,11 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
 
   const fade = useSpring({
     opacity: faded ? 1 : 0,
+    config: { duration: 1000 },
+  });
+  
+  const initialFade = useSpring({
+    opacity: initialFaded ? 1 : 0,
     config: { duration: 1000 },
   });
 
@@ -321,19 +328,19 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
       />
       <Grid container>
         <Grid item>
-          <h1 className={classes.singlesHeader} style={{ color: 'white' }}>
+          <animated.h1 className={classes.singlesHeader} style={{ color: 'white', ...initialFade }}>
             Singles
-          </h1>
+          </animated.h1>
         </Grid>
       </Grid>
-      <hr className={classes.lineDivide} />
+      <animated.hr className={classes.lineDivide} style={initialFade} />
       <Grid item>
         <div>
           <br/>
           <animated.div style={{ textAlign: "center", ...fade }}>
             <h1>{allContentfulSingle.edges[currentTrack].node.trackName}</h1>
           </animated.div>
-          <div style={{ textAlign: "center", userSelect: "none" }}>
+          <animated.div style={{ textAlign: "center", userSelect: "none", ...initialFade }}>
             {/* 
                 shuffleButton that changes shuffleIndex thus alters operations of
                 "onEnded" attribute on audio player
@@ -525,8 +532,8 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             style={{ width: '40px', marginBottom: '18px' }}
             draggable={false}
           />
-          </div>
-          <div style={{ textAlign: "center"}}>
+          </animated.div>
+          <animated.div style={{ textAlign: "center", ...initialFade }}>
             <span style={{ userSelect: "none" }}>{formatTrackDuration(inputValue)} </span>
             <input 
               type="range"
@@ -548,7 +555,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
               }}
               value={inputValue}/>
             <span onClick={() => setTimeFormat(!timeFormat)} style={{ userSelect: "none" }}> {!timeFormat ? (formatTrackDuration(allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration)) : allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration - inputValue <= 0 ? "-0:00" : ("-" + formatTrackDuration(allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration - inputValue))}</span>
-          </div>
+          </animated.div>
           <audio
             ref={audioTag}
             className={classes.audioPlayer}
