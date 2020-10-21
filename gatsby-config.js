@@ -50,7 +50,7 @@ module.exports = {
         cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
         apiKey: `${process.env.CLOUDINARY_API_KEY}`,
         apiSecret: `${process.env.CLOUDINARY_API_SECRET}`,
-        maxResults: 27,
+        maxResults: 30,
       },
     },
     {
@@ -59,6 +59,7 @@ module.exports = {
         trackingId: 'UA-179162368-1',
       },
     },
+    'gatsby-plugin-remove-trailing-slashes',
     'gatsby-transformer-remark',
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
