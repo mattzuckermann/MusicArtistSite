@@ -40,7 +40,7 @@ const VideoJs = props => {
           setVideoIndex(index);
         }}
       />
-      <div style={{ marginTop: '3px', padding: 'auto 0px auto 0px' }}>
+      <div style={{ marginTop: '3px', padding: 'auto 0px auto 0px', pointerEvents: 'none' }}>
         {videoCredits.length != 0 && (
           <caption
             style={{
