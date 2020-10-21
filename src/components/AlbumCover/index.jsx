@@ -39,7 +39,7 @@ const useStyles = makeStyles({
     backgroundColor: 'black',
     border: 'white solid 2px',
     color: 'white',
-    opacity: '0.6',
+    opacity: '0.8',
   },
 });
 
