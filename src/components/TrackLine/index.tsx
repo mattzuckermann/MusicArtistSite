@@ -2,7 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 
 const TrackLine = ({
-  allCloudinaryMedia,
+  playPauseIcons,
+  soundIcons,
   classes,
   currentTrack,
   setTrack,
@@ -17,35 +18,28 @@ const TrackLine = ({
   const secondsFormatted = seconds === 0 ? '00' : seconds;
   const trackDuration = `${minutesFormatted}:${secondsFormatted}`;
   return (
-    <div>
-      <button
-        className={classNames(
-          `${classes.buttonGeneral} ${classes.buttonPaused}`,
-          {
-            [classes.buttonPlaying]: currentTrack === index,
-          }
-        )}
-        onClick={() => {
-          if (currentTrack !== index) {
-            setTrack(index);
-          }
-        }}
-      >
+    <div style={{ margin: "5px 0px"}}>
         <img
           src={
             currentTrack === index && playing
-              ? allCloudinaryMedia.edges[1].node.secure_url
-              : allCloudinaryMedia.edges[0].node.secure_url
+            ? soundIcons[1].node.secure_url
+            : currentTrack === index
+              ? soundIcons[0].node.secure_url
+              : playPauseIcons[0].node.secure_url
           }
           style={{
-            width: '10px',
-            height: '10px',
+            width: '25x',
+            height: '25px',
             margin: '0px',
+          }}
+          onClick={() => {
+            if (currentTrack !== index) {
+              setTrack(index);
+            }
           }}
           draggable={false}
           alt="play-button"
         />
-      </button>
       <span
         // Checking if track is currently in queue, and responding with altered css
         className={classNames(`${classes.trackButton}`, {

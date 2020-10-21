@@ -144,6 +144,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
   const playPauseIcons = allIcons.splice(2,6);
   const leftTrackIcons = allIcons.splice(2,2);
   const rightTrackIcons = allIcons.splice(2,2);
+  const soundIcons = allIcons.splice(2,2);
   
   const audioTag = useRef(null);
 
@@ -607,7 +608,8 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             return (
               <animated.div key={track.trackName} style={props}>
                 <TrackLine
-                  allCloudinaryMedia={allCloudinaryMedia}
+                  playPauseIcons={playPauseIcons}
+                  soundIcons={soundIcons}
                   classes={classes}
                   currentTrack={currentTrack}
                   setTrack={setTrack}
