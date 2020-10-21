@@ -15,6 +15,9 @@ const useStyles = makeStyles(() =>
     singlesBackgroundColor: {
       backgroundColor: `#1a1a1a`,
       padding: '20px',
+      '@media(min-width: 680px)': {
+        marginBottom: '25px',
+      },
     },
     audioPlayer: {
       width: "100%",
@@ -74,8 +77,52 @@ const useStyles = makeStyles(() =>
       '@media(max-width: 765px)': {
         marginLeft: '35px',
       },
-      '@media(max-width: 680px)': {
+      '@media(max-width: 679px)': {
+        marginLeft: '115px',
+      },
+      '@media(max-width: 640px)': {
+        marginLeft: '95px',
+      },
+      '@media(max-width: 600px)': {
+        marginLeft: '75px',
+      },
+      '@media(max-width: 560px)': {
+        marginLeft: '50px',
+      },
+      '@media(max-width: 520px)': {
+        marginLeft: '25px',
+      },
+      '@media(max-width: 499px)': {
         marginLeft: '0px',
+      },
+    },
+    trackLines: {
+      margin: '25px 0px 0px 5px',
+      '@media(max-width: 679px)': {
+        marginLeft: '35px',
+      },
+      '@media(max-width: 340px)': {
+        marginLeft: '25px',
+      },
+    },
+    singleCover: {
+      margin: '25px 0px 0px 0px',
+      width: '400px',
+      height: '400px',
+      marginRight: '12px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      border: '2px solid #FFFFFF',
+      '@media(max-width: 400px)': {
+        height: 'auto',
+      },
+    },
+    trackChange: {
+      width: "50px",
+      margin: "12px 20px",
+      '@media(max-width: 350px)': {
+        margin: "12px 8px",
       },
     }
   })
@@ -272,6 +319,13 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
     const checkTrackTime = setInterval(() => setInputValue(audioTag.current.currentTime),1000)
     for (let i in allContentfulSingle.edges) myMap.set(i, i);
 
+    if (navigator()) {
+      setShuffleIndex(2);
+      setLeftTrackIndex(1);
+      setRightTrackIndex(1);
+      setRepeatIndex(3);
+    }
+
     return () => clearInterval(checkTrackTime);
   }, []);
   
@@ -348,14 +402,16 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             */}
           <img
             onClick={() => {
-              if (shuffleIndex != shuffleIcons.length - 2) setShuffleIndex(shuffleIndex + 1);
-              else {
-                setShuffleIndex(2);
-                // setting shuffle back to off will in turn clear the myMap hash map containing
-                // the track indices and then refill them to full, thus restarting the "shuffle session."
-                myMap.clear();
-                for (let i in allContentfulSingle.edges)
-                  myMap.set(i, i);
+              if (!navigator()) {
+                if (shuffleIndex != shuffleIcons.length - 2) setShuffleIndex(shuffleIndex + 1);
+                else {
+                  setShuffleIndex(2);
+                  // setting shuffle back to off will in turn clear the myMap hash map containing
+                  // the track indices and then refill them to full, thus restarting the "shuffle session."
+                  myMap.clear();
+                  for (let i in allContentfulSingle.edges)
+                    myMap.set(i, i);
+                }
               }
             }}
             // onMouseEnter and onMouseLeave alters the shuffleIndex state
@@ -364,30 +420,44 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             // a phone or tablet and ends the process if so since there is no mouse to hover
             // on a phone or tablet
             onMouseEnter={() => {
-              if (!navigator() && shuffleIndex === 0) {
-                setShuffleIndex(2)
-              } else if (!navigator() && shuffleIndex === 1) {
-                setShuffleIndex(3)
+              if (!navigator()) {
+                if (shuffleIndex === 0) {
+                  setShuffleIndex(2)
+                } else if (shuffleIndex === 1) {
+                  setShuffleIndex(3)
+                }
               }
             }}
             onMouseLeave={() => {
-              if (!navigator() && shuffleIndex === 2) {
-                setShuffleIndex(0)
-              } else if (!navigator() && shuffleIndex === 3) {
-                setShuffleIndex(1)
+              if (!navigator()) {
+                if (shuffleIndex === 2) {
+                  setShuffleIndex(0)
+                } else if (shuffleIndex === 3) {
+                  setShuffleIndex(1)
+                }
               }
             }}
             onMouseDown={() => {
-              if (!navigator() && shuffleIndex === 2) {
-                setPreviousShuffleIndex(shuffleIndex);
-                setShuffleIndex(0);
-              } else if (!navigator() && shuffleIndex === 3) {
-                setPreviousShuffleIndex(shuffleIndex);
-                setShuffleIndex(4);
+              if (!navigator()) {
+                if (shuffleIndex === 2) {
+                  setPreviousShuffleIndex(shuffleIndex);
+                  setShuffleIndex(0);
+                } else if (shuffleIndex === 3) {
+                  setPreviousShuffleIndex(shuffleIndex);
+                  setShuffleIndex(4);
+                }
               }
             }}
             onMouseUp={() => {
-              setShuffleIndex(previousShuffleIndex);
+              if (!navigator()) setShuffleIndex(previousShuffleIndex);
+            }}
+            onTouchStart={() => {
+              if (shuffleIndex === 2) setShuffleIndex(0);
+              else if (shuffleIndex === 1) setShuffleIndex(4);
+            }}
+            onTouchEnd={() => {
+              if (shuffleIndex === 0) setShuffleIndex(1);
+              else if (shuffleIndex === 4) setShuffleIndex(2);
             }}
             title={shuffleIndex === 2 ? 'Shuffle' : 'Don\'t shuffle'}
             src={shuffleIcons[shuffleIndex].node.secure_url}
@@ -396,13 +466,20 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
           />
           <img 
             onClick={() => {
-              if (repeatIndex === 2) setRepeatIndex(1);
-              if (shuffleIndex === 1) shuffleFunction();
-              else if (audioTag.current.currentTime >= 3) {
-                setInputValue(0);
-                audioTag.current.load();
-                audioTag.current.play();
+              if (audioTag.current.currentTime >= 3) {
+                if (!audioTag.current.paused) {
+                  setInputValue(0);
+                  audioTag.current.load();
+                  audioTag.current.play();
+                } else {
+                  setInputValue(0);
+                  audioTag.current.load();
+                }
+              } else if (shuffleIndex === 1) {
+                if (repeatIndex === 2) setRepeatIndex(1);
+                shuffleFunction();
               } else if (currentTrack === 0) {
+                if (repeatIndex === 2) setRepeatIndex(1);
                 if (repeatIndex === 1) {
                   changeTrack(allContentfulSingle.edges.length - 1);
                   setPlayPauseIndex(3);
@@ -414,6 +491,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
                   audioTag.current.play();
                 }
               } else {
+                if (repeatIndex === 2) setRepeatIndex(1);
                 changeTrack(currentTrack - 1);
                 setPlayPauseIndex(3);
                 audioTag.current.load();
@@ -422,12 +500,14 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             }}
             title='Previous'
             src={leftTrackIcons[leftTrackIndex].node.secure_url}
-            style={{ width: "50px", margin: "12px 20px" }}
+            className={classes.trackChange}
             draggable={false}
-            onMouseEnter={() => setLeftTrackIndex(1)}
-            onMouseLeave={() => setLeftTrackIndex(0)}
-            onMouseDown={()=> setLeftTrackIndex(0)}
-            onMouseUp={()=> setLeftTrackIndex(1)}
+            onMouseEnter={() => !navigator() && setLeftTrackIndex(1)}
+            onMouseLeave={() => !navigator() && setLeftTrackIndex(0)}
+            onMouseDown={() => !navigator() && setLeftTrackIndex(0)}
+            onMouseUp={()=> !navigator() && setLeftTrackIndex(1)}
+            onTouchStart={() => setLeftTrackIndex(0)}
+            onTouchEnd={() => setLeftTrackIndex(1)}
           />
           <img
             title={playing ? 'Pause' : 'Play'}
@@ -441,10 +521,26 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
               }
             }}
             draggable={false}
-            onMouseEnter={() => playing ? setPlayPauseIndex(4) : setPlayPauseIndex(1)}
-            onMouseLeave={() => playing ? setPlayPauseIndex(3) : setPlayPauseIndex(0)}
-            onMouseDown={() => playing ? setPlayPauseIndex(5) : setPlayPauseIndex(2)}
-            onMouseUp={() => playing ? setPlayPauseIndex(1) : setPlayPauseIndex(4)}
+            onMouseEnter={() => {
+              if (!navigator()) playing ? setPlayPauseIndex(4) : setPlayPauseIndex(1)
+            }}
+            onMouseLeave={() => {
+              if (!navigator()) playing ? setPlayPauseIndex(3) : setPlayPauseIndex(0)
+            }}
+            onMouseDown={() => {
+              if (!navigator()) playing ? setPlayPauseIndex(5) : setPlayPauseIndex(2)
+            }}
+            onMouseUp={() => {
+              if (!navigator()) playing ? setPlayPauseIndex(1) : setPlayPauseIndex(4)
+            }}
+            onTouchStart={() => {
+              if (playPauseIndex === 0) setPlayPauseIndex(2);
+              if (playPauseIndex === 3) setPlayPauseIndex(5);
+            }}
+            onTouchEnd={() => {
+              if (playPauseIndex === 2) setPlayPauseIndex(3);
+              if (playPauseIndex === 5) setPlayPauseIndex(0);
+            }}
           />
           <img 
             onClick={() => {
@@ -468,12 +564,14 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             }}
             title='Next'
             src={rightTrackIcons[rightTrackIndex].node.secure_url}
-            style={{ width: "50px", margin: "12px 20px" }}
+            className={classes.trackChange}
             draggable={false}
-            onMouseEnter={() => setRightTrackIndex(1)}
-            onMouseLeave={() => setRightTrackIndex(0)}
-            onMouseDown={()=> setRightTrackIndex(0)}
-            onMouseUp={()=> setRightTrackIndex(1)}
+            onMouseEnter={() => !navigator() && setRightTrackIndex(1)}
+            onMouseLeave={() => !navigator() && setRightTrackIndex(0)}
+            onMouseDown={()=> !navigator() && setRightTrackIndex(0)}
+            onMouseUp={()=> !navigator() && setRightTrackIndex(1)}
+            onTouchStart={() => setRightTrackIndex(0)}
+            onTouchEnd={() => setRightTrackIndex(1)}
           />
           {/* 
               Loop button that is responsible for dictating behavior of
@@ -481,8 +579,10 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
           */}
           <img
             onClick={() => {
-              if (repeatIndex != repeatIcons.length - 3) setRepeatIndex(repeatIndex + 1);
-              else setRepeatIndex(3);
+              if (!navigator()) {
+                if (repeatIndex != repeatIcons.length - 3) setRepeatIndex(repeatIndex + 1);
+                else setRepeatIndex(3);
+              }
             }}
             // onMouseEnter and onMouseLeave alters repeatIndex state
             // which affects which source file is used in src attribute (see below)
@@ -490,37 +590,53 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             // a phone or tablet and ends the process if so since there is no mouse to hover
             // on a phone or tablet
             onMouseEnter={() => {
-              if (!navigator() && repeatIndex === 0) {
-                setRepeatIndex(3);
-              } else if (!navigator() && repeatIndex === 1) {
-                setRepeatIndex(4);
-              } else if (!navigator() && repeatIndex === 2) {
-                setRepeatIndex(5);
+              if (!navigator()) {
+                if (repeatIndex === 0) {
+                  setRepeatIndex(3);
+                } else if (repeatIndex === 1) {
+                  setRepeatIndex(4);
+                } else if (repeatIndex === 2) {
+                  setRepeatIndex(5);
+                }
               }
             }}
             onMouseLeave={() => {
-              if (!navigator() && repeatIndex === 3) {
-                setRepeatIndex(0)
-              } else if (!navigator() && repeatIndex === 4) {
-                setRepeatIndex(1)
-              } else if (!navigator() && repeatIndex === 5) {
-                setRepeatIndex(2)
+              if (!navigator()) {
+                if (repeatIndex === 3) {
+                  setRepeatIndex(0)
+                } else if (repeatIndex === 4) {
+                  setRepeatIndex(1)
+                } else if (repeatIndex === 5) {
+                  setRepeatIndex(2)
+                }
               }
             }}
             onMouseDown={() => {
-              if (!navigator() && repeatIndex === 3) {
-                setPreviousRepeatIndex(repeatIndex);
-                setRepeatIndex(0);
-              } else if (!navigator() && repeatIndex === 4) {
-                setPreviousRepeatIndex(repeatIndex);
-                setRepeatIndex(6);
-              } else if (!navigator() && repeatIndex === 5) {
-                setPreviousRepeatIndex(repeatIndex);
-                setRepeatIndex(7);
+              if (!navigator()) {
+                if (repeatIndex === 3) {
+                  setPreviousRepeatIndex(repeatIndex);
+                  setRepeatIndex(0);
+                } else if (repeatIndex === 4) {
+                  setPreviousRepeatIndex(repeatIndex);
+                  setRepeatIndex(6);
+                } else if (repeatIndex === 5) {
+                  setPreviousRepeatIndex(repeatIndex);
+                  setRepeatIndex(7);
+                }
               }
             }}
             onMouseUp={() => {
-              setRepeatIndex(previousRepeatIndex);
+              if (!navigator()) setRepeatIndex(previousRepeatIndex);
+            }}
+            onTouchStart={() => {
+              if (repeatIndex === 3) setRepeatIndex(0);
+              else if (repeatIndex === 1) setRepeatIndex(6);
+              else if (repeatIndex === 2) setRepeatIndex(7);
+            }}
+            onTouchEnd={() => {
+              if (repeatIndex === 0) setRepeatIndex(1);
+              else if (repeatIndex === 6) setRepeatIndex(2);
+              else if (repeatIndex === 7) setRepeatIndex(3);
             }}
             title={
               repeatIndex === 3
@@ -541,9 +657,20 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
               min={0}
               max={allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration}
               onMouseDown={() => {
-                setPreviousPlayerStatePaused(audioTag.current.paused);
+                if (!navigator()) setPreviousPlayerStatePaused(audioTag.current.paused);
               }}
               onMouseUp={() => {
+                if (!navigator()) {
+                  if (!previousPlayerStatePaused) {
+                    audioTag.current.play();
+                    setPlayPauseIndex(3);
+                  }
+                }
+              }}
+              onTouchStart={() => {
+                setPreviousPlayerStatePaused(audioTag.current.paused);
+              }}
+              onTouchEnd={() => {
                 if (!previousPlayerStatePaused) {
                   audioTag.current.play();
                   setPlayPauseIndex(3);
@@ -583,16 +710,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
         <Grid item>
           <animated.div style={fade}>
             <img
-              style={{
-                margin: '25px 0px 0px 0px',
-                width: '400px',
-                height: '400px',
-                marginRight: '12px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                border: '2px solid #FFFFFF',
-              }}
+              className={classes.singleCover}
               src={
                 allContentfulSingle.edges[currentTrack].node.cloudinaryImage[0]
                   .secure_url
@@ -600,7 +718,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             />
           </animated.div>
         </Grid>
-        <Grid item style={{ margin: '25px 0px 0px 5px' }}>
+        <Grid item className={classes.trackLines}>
           {/* Loops through tracks stored in Contentful and runs React Spring animation on them */}
           {trail.map((props: object, index: number) => {
             let { node: track } = allContentfulSingle.edges[index];
