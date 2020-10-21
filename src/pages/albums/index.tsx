@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import SEO from '../../components/SEO';
 import AlbumCover from '../../components/AlbumCover';
 import { graphql, useStaticQuery } from 'gatsby';
@@ -27,6 +27,16 @@ const useStyles = makeStyles({
 
 const Album = () => {
   const classes = useStyles();
+  const [width, setWidth] = useState(window.innerWidth);
+  
+  const updateWidth = () => {
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
 
   const { allContentfulAlbum } = useStaticQuery(graphql`
     {
@@ -56,7 +66,7 @@ const Album = () => {
   return (
     <animated.div style={fade}>
       <SEO title="Albums" keywords={[`music`, `album`, `react`]} />
-      <h1 className={classes.bioTitle}>Discography</h1>
+  <h1 className={classes.bioTitle}>{ width <= 406 ? 'Discog' : 'Discography'}</h1>
       <hr className={classes.lineDivide} />
       {allContentfulAlbum.edges.map((album, index) => (
           <AlbumCover contentfulAlbum={album.node} key={index} fade={fade} />
