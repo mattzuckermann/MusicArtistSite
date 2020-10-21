@@ -138,13 +138,12 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
 
   // ! DO NOT CHANGE ORDER OF SPLICING
   const allIcons = [...allCloudinaryMedia.edges];
-  // const oldPlayPauseIcon = allIcons.splice(0,2);
-  const repeatIcons = allIcons.splice(2,8);
-  const shuffleIcons = allIcons.splice(2,5);
-  const playPauseIcons = allIcons.splice(2,6);
-  const leftTrackIcons = allIcons.splice(2,2);
-  const rightTrackIcons = allIcons.splice(2,2);
-  const soundIcons = allIcons.splice(2,2);
+  const repeatIcons = allIcons.splice(0,8);
+  const shuffleIcons = allIcons.splice(0,5);
+  const playPauseIcons = allIcons.splice(0,6);
+  const leftTrackIcons = allIcons.splice(0,2);
+  const rightTrackIcons = allIcons.splice(0,2);
+  const soundIcons = allIcons.splice(0,2);
   
   const audioTag = useRef(null);
 
