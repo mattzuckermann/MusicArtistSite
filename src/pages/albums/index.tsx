@@ -27,7 +27,7 @@ const useStyles = makeStyles({
 
 const Album = () => {
   const classes = useStyles();
-  const [width, setWidth] = useState(window.innerWidth);
+  const [width, setWidth] = useState(null);
   
   const updateWidth = () => {
     setWidth(window.innerWidth);
