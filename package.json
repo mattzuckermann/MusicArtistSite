@@ -25,6 +25,7 @@
     "gatsby-plugin-manifest": "^2.2.26",
     "gatsby-plugin-offline": "^3.0.18",
     "gatsby-plugin-react-helmet": "^3.1.13",
+    "gatsby-plugin-remove-trailing-slashes": "^2.3.13",
     "gatsby-plugin-sharp": "^2.2.36",
     "gatsby-plugin-typescript": "^2.1.15",
     "gatsby-source-cloudinary": "^0.1.8",
