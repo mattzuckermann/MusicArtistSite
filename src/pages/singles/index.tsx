@@ -697,7 +697,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             <span>
               <img
                 className={classNames(`${classes.loadingWheelGeneral}`, {
-                  [classes.loadingWheelVisible]: !audioTag.current.paused && !dataFullyLoaded && loadTakingTooLong,
+                  [classes.loadingWheelVisible]: !audioTag?.current?.paused && !dataFullyLoaded && loadTakingTooLong,
                 })}
                 src="https://media3.giphy.com/media/3o7TKtnuHOHHUjR38Y/source.gif"
               />
