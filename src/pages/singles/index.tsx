@@ -3,6 +3,7 @@ import { useTrail, useSpring, animated } from 'react-spring';
 import { createStyles } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
 import { useStaticQuery, graphql } from 'gatsby';
+import classNames from 'classnames';
 import SEO from '../../components/SEO';
 import Grid from '@material-ui/core/Grid';
 import TrackLine from '../../components/TrackLine';
@@ -29,17 +30,17 @@ const useStyles = makeStyles(() =>
     },
     singlesHeader: {
       fontSize: '45px',
-      fontFamily: 'futura',
+      fontFamily: 'futura, sans-serif',
       margin: '-5px 0px 22px 15px',
     },
     trackButton: {
-      fontFamily: 'futura',
+      fontFamily: 'futura, sans-serif',
       marginLeft: '9px',
       color: '#ffffff',
       width: '200px',
     },
     trackDuration: {
-      fontFamily: 'futura',
+      fontFamily: 'futura, sans-serif',
       marginLeft: '9px',
       color: '#FFFFFF',
       width: '200px',
@@ -124,7 +125,15 @@ const useStyles = makeStyles(() =>
       '@media(max-width: 350px)': {
         margin: "12px 8px",
       },
-    }
+    },
+    loadingWheelGeneral: {
+      width: "20px",
+      margin: "0px 1px",
+      visibility: 'hidden',
+    },
+    loadingWheelVisible: {
+      visibility: 'visible',
+    },
   })
 );
 
@@ -165,6 +174,8 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
   `);
 
   const classes = useStyles();
+  const [dataFullyLoaded, setDataFullyLoaded] = useState(false);
+  const [loadTakingTooLong, setLoadTakingTooLong] = useState(false);
   const [on, toggle] = useState(boolean);
   const [previousPlayerStatePaused, setPreviousPlayerStatePaused] = useState(boolean)
   const [inputValue, setInputValue] = useState(0);
@@ -183,11 +194,11 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
   const [rightTrackIndex, setRightTrackIndex] = useState(0);
   const [myMap, setMyMap] = useState(new Map());
 
-  // ! DO NOT CHANGE ORDER OF SPLICING
   const allIcons = [...allCloudinaryMedia.edges];
+  // ! DO NOT CHANGE ORDER OF SPLICING
   const repeatIcons = allIcons.splice(0,8);
   const shuffleIcons = allIcons.splice(0,5);
-  const playPauseIcons = allIcons.splice(0,6);
+  const playPauseIcons = allIcons.splice(0,8);
   const leftTrackIcons = allIcons.splice(0,2);
   const rightTrackIcons = allIcons.splice(0,2);
   const soundIcons = allIcons.splice(0,2);
@@ -215,22 +226,28 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
         // check that tempIndex isn't current track for edge case when
         // repeat all is true and refreshing hash map (i.e. myMap) so
         // same track doesn't play twice in a row (due to refresh of myMap)
-        if (myMap.has(`${tempIndex}`) && tempIndex !== currentTrack) {
+        if (myMap.has(`${tempIndex}`) && tempIndex !== currentTrack && tempIndex !== currentTrack + 1) {
+          if (!navigator()) setPlayPauseIndex(3);
+          else setPlayPauseIndex(7);
           changeTrack(tempIndex);
           setPlaying(true);
           audioTag.current.load();
           audioTag.current.play();
-          setInputValue(0);
         } else {
           checkHash();
         }
       } else {
-        setPlayPauseIndex(0);
+        if (!navigator()) {
+          setPlayPauseIndex(0);
+          setShuffleIndex(0);
+        } else {
+          setPlayPauseIndex(6);
+          setShuffleIndex(2);
+        }
         changeTrack(0);
+        setInputValue(0);
         setPlaying(false);
         audioTag.current.load();
-        setInputValue(0);
-        setShuffleIndex(0);
         for (let i in allContentfulSingle.edges) myMap.set(i, i);
       }
     };
@@ -261,14 +278,16 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
           if (shuffleIndex === 1) {
             shuffleFunction();
             break;
-          }
-          if (currentTrack != allContentfulSingle.edges.length - 1) {
+          } else if (currentTrack != allContentfulSingle.edges.length - 1) {
             changeTrack(currentTrack + 1);
             audioTag.current.load();
             audioTag.current.play();
             setInputValue(0);
+            if (!navigator()) setPlayPauseIndex(0);
+            else setPlayPauseIndex(6);
           } else {
-            setPlayPauseIndex(0);
+            if (!navigator()) setPlayPauseIndex(0);
+            else setPlayPauseIndex(6);
             changeTrack(0);
             audioTag.current.load();
             setInputValue(0);
@@ -316,12 +335,13 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
     changeFaded(true);
     changeInitialFaded(true);
     audioTag.current.volume = 0.6;
-    const checkTrackTime = setInterval(() => setInputValue(audioTag.current.currentTime),1000)
+    const checkTrackTime = setInterval(() => setInputValue(audioTag.current.currentTime), 1000)
     for (let i in allContentfulSingle.edges) myMap.set(i, i);
 
     if (navigator()) {
       setShuffleIndex(2);
       setLeftTrackIndex(1);
+      setPlayPauseIndex(6);
       setRightTrackIndex(1);
       setRepeatIndex(3);
     }
@@ -330,7 +350,12 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
   }, []);
   
   useEffect((): void => {
+    setLoadTakingTooLong(false);
+    const checkLoadTime = setTimeout(() => setLoadTakingTooLong(true), 2500)
+    setDataFullyLoaded(false);
     formatTrackDuration(allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration);
+
+    return () => clearInterval(checkLoadTime);
   }, [currentTrack]);
 
   const fade = useSpring({
@@ -343,14 +368,15 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
     config: { duration: 1000 },
   });
 
-  const setTrack = async index => {
+  const setTrack = index => {
     changeFaded(false);
     setTimeout(() => changeTrack(index), 1000);
     setTimeout(() => changeFaded(true), 1000);
     setTimeout(() => audioTag.current.load(), 1000);
     setTimeout(() => audioTag.current.play(), 1000);
     setTimeout(() => setInputValue(0), 1000);
-    setTimeout(() => setPlayPauseIndex(3), 1000);
+    if (!navigator()) setTimeout(() => setPlayPauseIndex(3), 1000);
+    else setTimeout(() => setPlayPauseIndex(7), 1000);
     // switching songs manually will in turn clear the myMap hash map containing
     // the track indices and then refill them to full, thus restarting the "shuffle session."
     myMap.clear();
@@ -482,10 +508,14 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
                 if (repeatIndex === 2) setRepeatIndex(1);
                 if (repeatIndex === 1) {
                   changeTrack(allContentfulSingle.edges.length - 1);
-                  setPlayPauseIndex(3);
                   audioTag.current.load();
                   audioTag.current.play();
-                } else if (repeatIndex === 0) {
+                  if (!navigator()) {
+                    setPlayPauseIndex(3)
+                  } else {
+                    setPlayPauseIndex(7);
+                  }
+                } else if (repeatIndex === 0 || repeatIndex === 3) {
                   setInputValue(0);
                   audioTag.current.load();
                   audioTag.current.play();
@@ -493,9 +523,13 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
               } else {
                 if (repeatIndex === 2) setRepeatIndex(1);
                 changeTrack(currentTrack - 1);
-                setPlayPauseIndex(3);
                 audioTag.current.load();
                 audioTag.current.play()
+                if (!navigator()) {
+                  setPlayPauseIndex(3)
+                } else {
+                  setPlayPauseIndex(7);
+                }
               }
             }}
             title='Previous'
@@ -534,32 +568,39 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
               if (!navigator()) playing ? setPlayPauseIndex(1) : setPlayPauseIndex(4)
             }}
             onTouchStart={() => {
-              if (playPauseIndex === 0) setPlayPauseIndex(2);
-              if (playPauseIndex === 3) setPlayPauseIndex(5);
+              if (playPauseIndex === 6) setPlayPauseIndex(2);
+              if (playPauseIndex === 7) setPlayPauseIndex(5);
             }}
             onTouchEnd={() => {
-              if (playPauseIndex === 2) setPlayPauseIndex(3);
-              if (playPauseIndex === 5) setPlayPauseIndex(0);
+              if (playPauseIndex === 2) setPlayPauseIndex(7);
+              if (playPauseIndex === 5) setPlayPauseIndex(6);
             }}
           />
           <img 
             onClick={() => {
               if (repeatIndex === 2) setRepeatIndex(1);
-              if (shuffleIndex === 1) shuffleFunction();
-              else if (currentTrack === allContentfulSingle.edges.length - 1) {
+
+              if (shuffleIndex === 1) {
+                shuffleFunction() 
+              } else if (currentTrack === allContentfulSingle.edges.length - 1) {
                 changeTrack(0);
-                audioTag.current.load();
-                audioTag.current.play();
-                setInputValue(0);
-                if (repeatIndex === 0) {
+                if (repeatIndex === 0 || repeatIndex === 3) {
                   audioTag.current.pause();
-                  setPlayPauseIndex(0);
+                  if (!navigator()) setPlayPauseIndex(0);
+                  else setPlayPauseIndex(6)
+                } else {
+                  audioTag.current.load();
+                  audioTag.current.play();
+                  if (!navigator()) setPlayPauseIndex(3);
+                  else setPlayPauseIndex(7)
                 }
               } else {
                 changeTrack(currentTrack + 1);
                 audioTag.current.load();
                 audioTag.current.play();
                 setInputValue(0);
+                if (!navigator()) setPlayPauseIndex(3);
+                else setPlayPauseIndex(7);
               }
             }}
             title='Next'
@@ -651,7 +692,15 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
           />
           </animated.div>
           <animated.div style={{ textAlign: "center", ...initialFade }}>
-            <span style={{ userSelect: "none" }}>{formatTrackDuration(inputValue)} </span>
+            <span style={{ userSelect: "none" }}>{formatTrackDuration(inputValue)}</span>
+            <span>
+              <img
+                className={classNames(`${classes.loadingWheelGeneral}`, {
+                  [classes.loadingWheelVisible]: !dataFullyLoaded && loadTakingTooLong,
+                })}
+                src="https://media3.giphy.com/media/3o7TKtnuHOHHUjR38Y/source.gif"
+              />
+            </span>
             <input 
               type="range"
               min={0}
@@ -673,7 +722,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
               onTouchEnd={() => {
                 if (!previousPlayerStatePaused) {
                   audioTag.current.play();
-                  setPlayPauseIndex(3);
+                  setPlayPauseIndex(7);
                 }
               }}
               onChange={e => {
@@ -682,9 +731,10 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
                 audioTag.current.currentTime = e.target.value;
               }}
               value={inputValue}/>
-            <span onClick={() => setTimeFormat(!timeFormat)} style={{ userSelect: "none" }}> {!timeFormat ? (formatTrackDuration(allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration)) : allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration - inputValue <= 0 ? "-0:00" : ("-" + formatTrackDuration(allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration - inputValue))}</span>
+            <span onClick={() => setTimeFormat(!timeFormat)} style={{ userSelect: "none", marginLeft: "22px" }}>{!timeFormat ? ` ${(formatTrackDuration(allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration))}` : allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration - inputValue <= 0 ? "-0:00" : ("-" + formatTrackDuration(allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration - inputValue))}</span>
           </animated.div>
           <audio
+            onLoadedData={() => setDataFullyLoaded(true)}
             ref={audioTag}
             className={classes.audioPlayer}
             style={{ display: "none" }}
