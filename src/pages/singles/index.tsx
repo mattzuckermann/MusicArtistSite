@@ -506,6 +506,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
                 shuffleFunction();
               } else if (currentTrack === 0) {
                 if (repeatIndex === 2) setRepeatIndex(1);
+                
                 if (repeatIndex === 1) {
                   changeTrack(allContentfulSingle.edges.length - 1);
                   audioTag.current.load();
