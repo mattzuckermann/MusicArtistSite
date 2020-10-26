@@ -130,10 +130,10 @@ const useStyles = makeStyles({
 const AlbumCoverRotated = ({ track, index, zIndex, albumCoverIsHovered, setAlbumCoverIsHovered, currentTrack, setTrack, audio }) => {
     const classes = useStyles();
     const transition = useSpring({
-      opacity: currentTrack === index && !audio.paused ? 1 : 0.95,
-      zIndex: currentTrack === index && !audio.paused ? 20 : zIndex,
-      transform: currentTrack === index && !audio.paused ? `rotateY(0deg) translateY(0px) rotate(0deg)` : `rotateY(60deg) translateY(${-index * 8}px) rotate(8deg)`,
-      boxShadow: currentTrack === index && !audio.paused ? `10px 6px rgba(0, 0, 0, 0.6)` : `40px 4px rgba(0, 0, 0, 0.6)`,
+      opacity: currentTrack === index && !audio?.paused ? 1 : 0.95,
+      zIndex: currentTrack === index && !audio?.paused ? 20 : zIndex,
+      transform: currentTrack === index && !audio?.paused ? `rotateY(0deg) translateY(0px) rotate(0deg)` : `rotateY(60deg) translateY(${-index * 8}px) rotate(8deg)`,
+      boxShadow: currentTrack === index && !audio?.paused ? `10px 6px rgba(0, 0, 0, 0.6)` : `40px 4px rgba(0, 0, 0, 0.6)`,
       config: { duration: 150 },
     });
 
