@@ -347,9 +347,28 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
       setRepeatIndex(3);
     }
 
-    // const myRanges = new WebkitInputRangeFillLower({selectors: ['your-custom-id', 'your-custom-id2'], angle: 90, gradient: 'rgba(238,174,202,1) 0%, rgba(198,180,216,1) 74%, rgba(148,187,233,1) 100%'})
+    const spaceBarPlayPause = e => {
+      if (e.code === "Space") {
+        if (audioTag.current.paused) {
+          if (!navigator()) setPlayPauseIndex(3)
+          else setPlayPauseIndex(6);
+          audioTag.current.play();
+          setPlaying(true);
+        } else {
+          if (!navigator()) setPlayPauseIndex(0)
+          else setPlayPauseIndex(7);
+          audioTag.current.pause();
+          setPlaying(false);
+        };
+      }
+    }
 
-    return () => clearInterval(checkTrackTime);
+    window.addEventListener('keypress', spaceBarPlayPause);
+
+    return () => {
+      clearInterval(checkTrackTime);
+      window.removeEventListener('keypress', spaceBarPlayPause);
+    }
   }, []);
   
   useEffect((): void => {
