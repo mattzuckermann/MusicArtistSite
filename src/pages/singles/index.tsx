@@ -554,8 +554,10 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             onClick={() => {
               if (audioTag.current.paused) {
                 audioTag.current.play();
+                setPlaying(true);
               } else {
                 audioTag.current.pause();
+                setPlaying(false);
               }
             }}
             draggable={false}
@@ -708,8 +710,8 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
                 src="https://media3.giphy.com/media/3o7TKtnuHOHHUjR38Y/source.gif"
               />
             </span>
-            <input 
-              type="range"
+            <input
+              type='range'
               min={0}
               max={allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration}
               onMouseDown={() => {
@@ -771,7 +773,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             return (
               <animated.span
                 key={track.trackName}
-                style={{ zIndex, ...props }}
+                style={{ ...props }}
               >
                 <AlbumCoverRotated
                   track={track}
