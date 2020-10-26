@@ -13,7 +13,6 @@ const useStyles = makeStyles({
     borderBottom: '2px solid white',
     borderLeft: '2px solid white',
     margin: '0px -380px 0px 0px',
-    boxShadow: '40px 4px rgba(0, 0, 0, 0.6)',
     width: '450px',
     height: '450px',
     '@media(max-width: 979px)': {
@@ -125,23 +124,23 @@ const useStyles = makeStyles({
   },
   albumCoverOnPlay: {
     border: "5px solid white",
-    transform: `rotateY(0deg) translateY(0px) rotate(0deg) !important`,
-    zIndex: `${100} !important`,
-    boxShadow: '10px 6px rgba(0, 0, 0, 0.6)',
   },
 });
 
 const AlbumCoverRotated = ({ track, index, zIndex, albumCoverIsHovered, setAlbumCoverIsHovered, currentTrack, setTrack, audio }) => {
     const classes = useStyles();
     const transition = useSpring({
-      zIndex: currentTrack === index ? 100 : 0,
-      config: { duration: 2000 },
+      opacity: currentTrack === index && !audio.paused ? 1 : 0.95,
+      zIndex: currentTrack === index && !audio.paused ? 20 : zIndex,
+      transform: currentTrack === index && !audio.paused ? `rotateY(0deg) translateY(0px) rotate(0deg)` : `rotateY(60deg) translateY(${-index * 8}px) rotate(8deg)`,
+      boxShadow: currentTrack === index && !audio.paused ? `10px 6px rgba(0, 0, 0, 0.6)` : `40px 4px rgba(0, 0, 0, 0.6)`,
+      config: { duration: 150 },
     });
 
     return (
         <Fragment>
-          <animated.span style={transition}>
-            <img
+            <animated.img
+                style={transition}
                 alt={track.trackName}
                 title={track.trackName}
                 className={classNames(`${classes.albumCoverGeneral}`, {
@@ -159,16 +158,13 @@ const AlbumCoverRotated = ({ track, index, zIndex, albumCoverIsHovered, setAlbum
                     setTrack(index);
                   }
                 }}
-                style={{
-                  zIndex,
-                  transform: `rotateY(60deg) translateY(${-index * 8}px) rotate(8deg)`,
-                  // transform: `rotateY(60deg)translateY(${-index * 8}px) rotate(-8deg)`,
-
-                }}
+                // style={{
+                //   zIndex,
+                //   transform: `rotateY(60deg) translateY(${-index * 8}px) rotate(8deg)`,
+                // }}
                 draggable={false}
                 src={track.cloudinaryImage[0].secure_url}
             />
-          </animated.span>
         </Fragment>
     )
 }
