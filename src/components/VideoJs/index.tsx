@@ -1,12 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import videojs from 'video.js';
-import { faYoutube } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../../../node_modules/video.js/dist/video-js.css';
 import '@videojs/themes/dist/forest/index.css';
 
-const VideoJs = props => {
-  const { videoSrc, index, videoIndex, setVideoIndex, videoPoster, videoCredits } = props;
+const VideoJs = ({ videoSrc, index, videoIndex, setVideoIndex, videoPoster }) => {
   const playerRef = useRef(null);
 
   useEffect(() => {
@@ -40,42 +37,6 @@ const VideoJs = props => {
           setVideoIndex(index);
         }}
       />
-      <div style={{ marginTop: '3px', padding: 'auto 0px auto 0px', pointerEvents: 'none' }}>
-        {videoCredits.length != 0 && (
-          <caption
-            style={{
-              float: 'left',
-              marginLeft: '10px',
-              fontSize: '13px',
-            }}
-          >
-            credits:{' '}
-            <a
-              rel="noopener noreferrer"
-              target="_blank"
-              href={videoCredits[0].portfolio}
-              title="Portfolio"
-            >
-              {videoCredits[0].name}
-            </a>{' '}
-            <a
-              rel="noopener noreferrer"
-              target="_blank"
-              href={videoCredits[0].youtube}
-              title="YouTube Channel"
-              >
-              <FontAwesomeIcon
-                style={{
-                  fontSize: '18px',
-                  color: '#f70103',
-                  padding: '2px 0px 0px 0px',
-                }}
-                icon={faYoutube}
-              />
-            </a>
-          </caption>
-        )}
-      </div>
     </div>
   );
 };

@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
 import SEO from '../../components/SEO';
+import { faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSpring, animated } from 'react-spring';
 import VideoJs from '../../components/VideoJs';
 
@@ -65,7 +67,7 @@ const useStyles = makeStyles({
   },
   bioTitle: {
     fontSize: '45px',
-    fontFamily: 'futura',
+    fontFamily: 'futura, sans-serif',
     padding: '0px 25px',
     '@media(max-width: 959px)': {
       padding: '0px 45px',
@@ -73,7 +75,7 @@ const useStyles = makeStyles({
   },
   bioParagraphs: {
     padding: '0px 20px',
-    fontFamily: 'futura',
+    fontFamily: 'futura, sans-serif',
     '@media(max-width: 959px)': {
       padding: '0px 60px',
     },
@@ -96,7 +98,7 @@ const useStyles = makeStyles({
     },
   },
   carouselGridWrapper: {
-    marginTop: '14px',
+    marginTop: '40px',
     '@media(max-width: 959px)': {
       marginTop: '-10px',
     },
@@ -261,8 +263,46 @@ const About = () => {
                   videoIndex={videoIndex}
                   setVideoIndex={setVideoIndex}
                   videoPoster={video.thumbnail}
-                  videoCredits={video.credits}
+                  // videoCredits={video.credits}
                 />
+                <div>
+                  {video.credits.length != 0 && (
+                    <div
+                      style={{
+                        fontFamily: 'futura, sans-serif',
+                        marginTop: '-40px',
+                        marginBottom: '14.5px',
+                        textAlign: 'left',
+                        fontSize: '13px',
+                      }}
+                    >
+                      credits:{' '}
+                      <a
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        href={video.credits[0].portfolio}
+                        title="Portfolio"
+                      >
+                        {video.credits[0].name}
+                      </a>{' '}
+                      <a
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        href={video.credits[0].youtube}
+                        title="YouTube Channel"
+                        >
+                        <FontAwesomeIcon
+                          style={{
+                            fontSize: '18px',
+                            color: '#f70103',
+                            padding: '2px 0px 0px 0px',
+                          }}
+                          icon={faYoutube}
+                        />
+                      </a>
+                    </div>
+                  )}
+                </div>
               </div>
             </Grid>
           ))}
