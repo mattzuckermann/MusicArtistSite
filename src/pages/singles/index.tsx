@@ -7,9 +7,11 @@ import classNames from 'classnames';
 import SEO from '../../components/SEO';
 import Grid from '@material-ui/core/Grid';
 import TrackLine from '../../components/TrackLine';
+import AlbumCoverRotated from '../../components/AlbumCoverRotated'
 import navigator from '../../js/navigator.js';
 import '../index.css';
 import '../../components/SpotifyAudioPlayer/input.css';
+import './index.css'
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -42,7 +44,7 @@ const useStyles = makeStyles(() =>
     trackDuration: {
       fontFamily: 'futura, sans-serif',
       marginLeft: '9px',
-      color: '#FFFFFF',
+      color: '#ffffff',
       width: '200px',
       fontSize: '11px',
     },
@@ -183,6 +185,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
   const [faded, changeFaded] = useState(false);
   const [initialFaded, changeInitialFaded] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const [albumCoverIsHovered, setAlbumCoverIsHovered] = useState(null);
 
   const [currentTrack, changeTrack] = useState(0);
   const [repeatIndex, setRepeatIndex] = useState(0);
@@ -283,8 +286,6 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
             audioTag.current.load();
             audioTag.current.play();
             setInputValue(0);
-            if (!navigator()) setPlayPauseIndex(0);
-            else setPlayPauseIndex(6);
           } else {
             if (!navigator()) setPlayPauseIndex(0);
             else setPlayPauseIndex(6);
@@ -346,6 +347,8 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
       setRepeatIndex(3);
     }
 
+    // const myRanges = new WebkitInputRangeFillLower({selectors: ['your-custom-id', 'your-custom-id2'], angle: 90, gradient: 'rgba(238,174,202,1) 0%, rgba(198,180,216,1) 74%, rgba(148,187,233,1) 100%'})
+
     return () => clearInterval(checkTrackTime);
   }, []);
   
@@ -397,7 +400,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
     transform: on
       ? 'scale(1, 1), translate3d(0,0,0,)'
       : 'scale(0.8,0.8), translate3d(-8%,0,0)',
-    config: { duration: 3500 / 4 },
+    config: { duration: 20000 / 8 },
   });
   stop();
 
@@ -586,9 +589,12 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
               } else if (currentTrack === allContentfulSingle.edges.length - 1) {
                 changeTrack(0);
                 if (repeatIndex === 0 || repeatIndex === 3) {
+                  audioTag.current.load();
                   audioTag.current.pause();
+                  setPlaying(false);
+                  setInputValue(0);
                   if (!navigator()) setPlayPauseIndex(0);
-                  else setPlayPauseIndex(6)
+                  else setPlayPauseIndex(6);
                 } else {
                   audioTag.current.load();
                   audioTag.current.play();
@@ -757,38 +763,30 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
           </audio>
         </div>
       </Grid>
-      <Grid container className={classes.trackNameContainer}>
-        <Grid item>
-          <animated.div style={fade}>
-            <img
-              className={classes.singleCover}
-              src={
-                allContentfulSingle.edges[currentTrack].node.cloudinaryImage[0]
-                  .secure_url
-              }
-            />
-          </animated.div>
-        </Grid>
-        <Grid item className={classes.trackLines}>
-          {/* Loops through tracks stored in Contentful and runs React Spring animation on them */}
-          {trail.map((props: object, index: number) => {
+      <Grid container style={{ marginTop: '120px', paddingBottom: '80px' }}>
+        <section id="special">
+        {trail.map((props: object, index: number) => {
             let { node: track } = allContentfulSingle.edges[index];
+            let zIndex = allContentfulSingle.edges.length - index;
             return (
-              <animated.div key={track.trackName} style={props}>
-                <TrackLine
-                  playPauseIcons={playPauseIcons}
-                  soundIcons={soundIcons}
-                  classes={classes}
-                  currentTrack={currentTrack}
-                  setTrack={setTrack}
-                  playing={playing}
+              <animated.span
+                key={track.trackName}
+                style={{ zIndex, ...props }}
+              >
+                <AlbumCoverRotated
                   track={track}
                   index={index}
+                  zIndex={zIndex}
+                  albumCoverIsHovered={albumCoverIsHovered}
+                  setAlbumCoverIsHovered={setAlbumCoverIsHovered}
+                  currentTrack={currentTrack}
+                  setTrack={setTrack}
+                  audio={audioTag.current}
                 />
-              </animated.div>
-            );
+              </animated.span>
+            )
           })}
-        </Grid>
+        </section>
       </Grid>
     </main>
   );

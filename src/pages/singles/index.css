@@ -1,0 +1,7 @@
+#special > span:nth-child(1) {
+  margin-left: -20px !important;
+}
+
+#special > img:focus {
+  border: '20px solid blue' !important;
+}
