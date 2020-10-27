@@ -1,85 +1,84 @@
 import React, { useState, useEffect } from 'react';
 import { useSpring, animated, config } from 'react-spring';
-import {
-  faInstagram,
-  faSpotify,
-  faFacebook,
-} from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useStaticQuery, graphql } from 'gatsby';
+import { makeStyles } from '@material-ui/styles';
+import FooterIcon from '../FooterIcon'
 import './footer.css';
 
+const useStyles = makeStyles({
+  mediaIconWrapper: {
+    height: '130px',
+    '@media(max-width: 614px)': {
+      height: '150px',
+    },
+  },
+  copyright: {
+    paddingTop: '9px',
+    color: '#555555',
+    '@media(max-width: 420px)': {
+      fontSize: '12px',
+    },
+    '@media(max-width: 330px)': {
+      fontSize: '11px',
+  },
+  }
+});
+
 const Footer = () => {
+  const classes = useStyles();
   const [on, toggle] = useState(false);
   const fadeIn = useSpring({
     opacity: on ? 1 : 0,
     config: config.molasses,
   });
 
+  const links = [
+    "https://open.spotify.com/artist/0hRWyQpSxQ8DxcTTCPC33J?si=rOVcTrdtQVy5yfaTQ7IkkA",
+    "https://twitter.com/ZuckermannJosh",
+    "https://www.instagram.com/joshzuckermann/",
+    "https://www.tiktok.com/@joshzuckermann",
+    "https://www.facebook.com/profile.php?id=1330928786",
+    "https://soundcloud.com/josh-zuckermann-867378017",
+  ];
+
   useEffect(() => {
     toggle(true);
   }, []);
 
+  const { allCloudinaryMedia } = useStaticQuery(graphql`
+    query iconsQuery {
+      allCloudinaryMedia(
+        sort: { order: ASC, fields: created_at }
+        filter: { format: { eq: "png" } }
+        skip: 27
+        limit: 12
+      ) {
+        edges {
+          node {
+            id
+            secure_url
+          }
+        }
+      }
+    }
+  `);
+
   return (
     <animated.footer className="footerBody">
       <div style={fadeIn}>
-        <div style={{ height: '130px' }}>
-          <a
-            className="footerLinks"
-            href="https://open.spotify.com/artist/0hRWyQpSxQ8DxcTTCPC33J?si=rOVcTrdtQVy5yfaTQ7IkkA"
-            style={{ color: '#b3b3b3' }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FontAwesomeIcon
-              icon={faSpotify}
-              style={{
-                border: '1px solid #807474',
-                fontSize: '50px',
-                margin: '45px 20px',
-                borderRadius: '100px',
-                padding: '7px',
-              }}
+        <div className={classes.mediaIconWrapper}>
+          {links.map((link, index) => (
+            <FooterIcon
+              key={link}
+              allCloudinaryMedia={allCloudinaryMedia}
+              link={link}
+              unhighlightedIndex={index + index}
+              highlightedIndex={index + index + 1}
             />
-          </a>
-          <a
-            className="footerLinks"
-            href="https://www.instagram.com/joshzuckermann/"
-            style={{ color: '#b3b3b3' }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FontAwesomeIcon
-              icon={faInstagram}
-              style={{
-                border: '1px solid #807474',
-                fontSize: '50px',
-                margin: '45px 20px',
-                borderRadius: '100px',
-                padding: '7px',
-              }}
-            />
-          </a>
-          <a
-            className="footerLinks"
-            href="https://www.facebook.com/profile.php?id=1330928786"
-            style={{ color: '#b3b3b3' }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FontAwesomeIcon
-              icon={faFacebook}
-              style={{
-                border: '1px solid #807474',
-                fontSize: '50px',
-                margin: '45px 20px',
-                borderRadius: '100px',
-                padding: '7px',
-              }}
-            />
-          </a>
+          ))}
         </div>
         <hr className="hrLine" />
-        <div className="copyright">
+        <div className={classes.copyright}>
           Copyright ©{new Date().getFullYear()} Josh Zuckermann. All Rights Reserved.
         </div>
       </div>
