@@ -1,0 +1,22 @@
+.hrLine {
+  background-color: #585858;
+  width: 100%;
+  opacity: 0.3;
+  margin: 0;
+}
+
+footer {
+  background-color: #1b1b1b;
+  height: 220px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.copyright {
+  padding-top: 7px;
+  color: #555555;
+}
+
+.footerLinks {
+  width: '15px';
+}
