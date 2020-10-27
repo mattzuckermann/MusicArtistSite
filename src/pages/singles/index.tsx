@@ -6,7 +6,6 @@ import { useStaticQuery, graphql } from 'gatsby';
 import classNames from 'classnames';
 import SEO from '../../components/SEO';
 import Grid from '@material-ui/core/Grid';
-import TrackLine from '../../components/TrackLine';
 import AlbumCoverRotated from '../../components/AlbumCoverRotated'
 import navigator from '../../js/navigator.js';
 import '../index.css';
@@ -18,9 +17,7 @@ const useStyles = makeStyles(() =>
     singlesBackgroundColor: {
       backgroundColor: `#1a1a1a`,
       padding: '20px',
-      '@media(min-width: 680px)': {
-        marginBottom: '25px',
-      },
+      marginBottom: '25px',
     },
     audioPlayer: {
       width: "100%",
@@ -164,6 +161,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
       allCloudinaryMedia(
         sort: { order: ASC, fields: created_at }
         filter: { format: { eq: "png" } }
+        limit: 27
       ) {
         edges {
           node {
