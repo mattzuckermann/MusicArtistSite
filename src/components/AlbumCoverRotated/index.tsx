@@ -122,6 +122,9 @@ const useStyles = makeStyles({
     borderBottom: '2px solid #2d38c5',
     borderLeft: '2px solid #2d38c5',
   },
+  albumCoverOnQueue: {
+    cursor: 'default',
+  },
   albumCoverOnPlay: {
     border: "5px solid white",
   },
@@ -144,6 +147,7 @@ const AlbumCoverRotated = ({ track, index, zIndex, albumCoverIsHovered, setAlbum
                 alt={track.trackName}
                 title={track.trackName}
                 className={classNames(`${classes.albumCoverGeneral}`, {
+                  [classes.albumCoverOnQueue]: currentTrack === index,
                   [classes.albumCoverOnHover]: albumCoverIsHovered === index && currentTrack !== index,
                   [classes.albumCoverOnPlay]: currentTrack === index && !audio?.paused,
                 })}
@@ -158,10 +162,6 @@ const AlbumCoverRotated = ({ track, index, zIndex, albumCoverIsHovered, setAlbum
                     setTrack(index);
                   }
                 }}
-                // style={{
-                //   zIndex,
-                //   transform: `rotateY(60deg) translateY(${-index * 8}px) rotate(8deg)`,
-                // }}
                 draggable={false}
                 src={track.cloudinaryImage[0].secure_url}
             />
