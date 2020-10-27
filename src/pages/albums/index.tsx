@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/styles';
 const useStyles = makeStyles({
   bioTitle: {
     fontSize: '45px',
-    fontFamily: 'futura',
+    fontFamily: 'futura, sans-serif',
     padding: '0px 25px',
     '@media(max-width: 959px)': {
       padding: '0px 45px',
@@ -28,12 +28,14 @@ const useStyles = makeStyles({
 const Album = () => {
   const classes = useStyles();
   const [width, setWidth] = useState(null);
-  
+  const [componentLoaded, setComponentLoaded] = useState(false);
+
   const updateWidth = () => {
     setWidth(window.innerWidth);
   };
 
   useEffect(() => {
+    updateWidth();
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
@@ -66,11 +68,13 @@ const Album = () => {
   return (
     <animated.div style={fade}>
       <SEO title="Albums" keywords={[`music`, `album`, `react`]} />
-  <h1 className={classes.bioTitle}>{ width <= 406 ? 'Discog' : 'Discography'}</h1>
+  <h1 className={classes.bioTitle}>{ width > 406 ? 'Discography' : 'Discog'}</h1>
       <hr className={classes.lineDivide} />
-      {allContentfulAlbum.edges.map((album, index) => (
-          <AlbumCover contentfulAlbum={album.node} key={index} fade={fade} />
-      ))}
+      <div style={{ height: !componentLoaded ? '55vh' : '100%' }}>
+        {allContentfulAlbum.edges.map((album, index) => (
+            <AlbumCover key={index} contentfulAlbum={album.node} setComponentLoaded={setComponentLoaded} fade={fade} />
+        ))}
+      </div>
     </animated.div>
   );
 };

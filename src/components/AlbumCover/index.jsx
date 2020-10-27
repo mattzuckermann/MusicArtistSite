@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import navigator from '../../js/navigator';
 import SlideAnimation from '../SlideAnimation';
@@ -43,13 +43,18 @@ const useStyles = makeStyles({
   },
 });
 
-const AlbumCover = ({ contentfulAlbum, fade }) => {
+const AlbumCover = ({ contentfulAlbum, setComponentLoaded, fade }) => {
   const classes = useStyles();
   const [mouseIn, hoverChange] = useState(false);
   const hoverAnimation = useSpring({
     opacity: mouseIn ? 0.9 : 0,
     transform: mouseIn ? 'scale(1, 1)' : 'scale(0.2,0.2)',
   });
+
+  useEffect(() => {
+    setComponentLoaded(true);
+  });
+
   return (
     <animated.div style={fade}>
       <div className={classes.albumImageWrapper}>
@@ -68,7 +73,7 @@ const AlbumCover = ({ contentfulAlbum, fade }) => {
           />
         ) : (
           <div className={classes.slideInDesc}>
-            <div style={{ fontFamily: 'futura' }}>
+            <div style={{ fontFamily: 'futura, sans-serif' }}>
               Debut album coming November 2020
             </div>
           </div>
