@@ -15,7 +15,7 @@ const TrackLine = ({
   const minutes = Math.floor(track.cloudinaryAudio[0].duration / 60);
   const minutesFormatted = minutes < 10 ? `${minutes}` : minutes;
   const seconds = Math.floor(track.cloudinaryAudio[0].duration % 60);
-  const secondsFormatted = seconds === 0 ? '00' : seconds;
+  const secondsFormatted = seconds === 0 ? '00' : seconds < 10 ? `0${seconds}` : seconds;
   const trackDuration = `${minutesFormatted}:${secondsFormatted}`;
   return (
     <div style={{ margin: "5px 0px"}}>
