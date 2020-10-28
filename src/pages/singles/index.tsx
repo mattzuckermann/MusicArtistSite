@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import SEO from '../../components/SEO';
 import Grid from '@material-ui/core/Grid';
 import AlbumCoverRotated from '../../components/AlbumCoverRotated'
-import TrackLine from '../../components/Trackline'
+import TrackLine from '../../components/TrackLine'
 import navigator from '../../js/navigator.js';
 import '../index.css';
 import '../../components/SpotifyAudioPlayer/input.css';
