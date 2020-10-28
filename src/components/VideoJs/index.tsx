@@ -11,7 +11,9 @@ const VideoJs = ({ videoSrc, index, videoIndex, setVideoIndex, videoPoster }) =>
       player.src(videoSrc);
       player.on('ended', () => {
         player.hasStarted(false);
-        if((window.fullScreen) || (window.innerWidth == screen.width && window.innerHeight == screen.height)) {
+        if(window.fullScreen || window.innerHeight == screen.height) {
+          player.exitFullscreen();
+        } else if ((screen.availHeight || screen.height - 30) <= window.innerHeight) {
           player.exitFullscreen();
         }
         player.handleTechLoadStart_();
