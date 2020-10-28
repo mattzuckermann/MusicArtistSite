@@ -14,9 +14,14 @@ const NavTab = ({ children, link, location }) => {
         to={link}
         className={classNames('navList', {
           navListHover: !navigator(),
+          navTabCursor: 
+            pathName === `${link}` ||
+            pathName === `${link}/` ||
+            pathName === `${link}/awakening`||
+            pathName === `${link}/awakening/`,
         })}
         style={
-          (pathName === `${link}` || pathName === `${link}/` || pathName === `${link}/awakening`) ? { color: 'white' } : {}
+          (pathName === `${link}` || pathName === `${link}/` || pathName === `${link}/awakening` || pathName === `${link}/awakening/`) ? { color: 'white' } : {}
         }
       >
         {children}
