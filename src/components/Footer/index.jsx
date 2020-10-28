@@ -34,10 +34,10 @@ const Footer = () => {
 
   const links = [
     "https://open.spotify.com/artist/0hRWyQpSxQ8DxcTTCPC33J?si=rOVcTrdtQVy5yfaTQ7IkkA",
-    "https://twitter.com/ZuckermannJosh",
     "https://www.instagram.com/joshzuckermann/",
     "https://www.tiktok.com/@joshzuckermann",
     "https://www.facebook.com/profile.php?id=1330928786",
+    "https://twitter.com/ZuckermannJosh",
     "https://soundcloud.com/josh-zuckermann-867378017",
   ];
 
