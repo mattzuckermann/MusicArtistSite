@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import SEO from '../../components/SEO';
 import Grid from '@material-ui/core/Grid';
 import AlbumCoverRotated from '../../components/AlbumCoverRotated'
+import TrackLine from '../../components/Trackline'
 import navigator from '../../js/navigator.js';
 import '../index.css';
 import '../../components/SpotifyAudioPlayer/input.css';
@@ -782,31 +783,68 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
           </audio>
         </div>
       </Grid>
-      <Grid container style={{ marginTop: '120px', paddingBottom: '80px' }}>
-        <section id="special">
-        {trail.map((props: object, index: number) => {
-            let { node: track } = allContentfulSingle.edges[index];
-            let zIndex = allContentfulSingle.edges.length - index;
-            return (
-              <animated.span
-                key={track.trackName}
-                style={{ ...props }}
-              >
-                <AlbumCoverRotated
-                  track={track}
-                  index={index}
-                  zIndex={zIndex}
-                  albumCoverIsHovered={albumCoverIsHovered}
-                  setAlbumCoverIsHovered={setAlbumCoverIsHovered}
-                  currentTrack={currentTrack}
-                  setTrack={setTrack}
-                  audio={audioTag.current}
-                />
-              </animated.span>
-            )
-          })}
-        </section>
-      </Grid>
+      {!navigator() ? (
+        <Grid container style={{ marginTop: '120px', paddingBottom: '80px' }}>
+          <section id="special">
+          {trail.map((props: object, index: number) => {
+              let { node: track } = allContentfulSingle.edges[index];
+              let zIndex = allContentfulSingle.edges.length - index;
+              return (
+                <animated.span
+                  key={track.trackName}
+                  style={{ ...props }}
+                >
+                  <AlbumCoverRotated
+                    track={track}
+                    index={index}
+                    zIndex={zIndex}
+                    albumCoverIsHovered={albumCoverIsHovered}
+                    setAlbumCoverIsHovered={setAlbumCoverIsHovered}
+                    currentTrack={currentTrack}
+                    setTrack={setTrack}
+                    audio={audioTag.current}
+                  />
+                </animated.span>
+              )
+            })}
+          </section>
+        </Grid>
+      ) : (
+        <Grid container className={classes.trackNameContainer}>
+          <Grid item>
+            <animated.div style={fade}>
+              <img
+                className={classes.singleCover}
+                src={
+                  allContentfulSingle.edges[currentTrack].node.cloudinaryImage[0]
+                    .secure_url
+                }
+              />
+            </animated.div>
+          </Grid>
+          <Grid item className={classes.trackLines}>
+           {/* Loops through tracks stored in Contentful and runs React Spring animation on them */}
+           {trail.map((props: object, index: number) => {
+             let { node: track } = allContentfulSingle.edges[index];
+             return (
+               <animated.div key={track.trackName} style={props}>
+                 <TrackLine
+                   playPauseIcons={playPauseIcons}
+                   soundIcons={soundIcons}
+                   classes={classes}
+                   currentTrack={currentTrack}
+                   setTrack={setTrack}
+                   playing={playing}
+                   track={track}
+                   index={index}
+                 />
+               </animated.div>
+             );
+           })}
+          </Grid>
+        </Grid>
+      )
+    }
     </main>
   );
 };
