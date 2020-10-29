@@ -17,6 +17,7 @@ const useStyles = makeStyles(() =>
   createStyles({
     singlesBackgroundColor: {
       backgroundColor: `#1a1a1a`,
+      borderRadius: '35px',
       padding: '20px',
       marginBottom: '25px',
     },
