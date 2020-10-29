@@ -20,6 +20,9 @@ const useStyles = makeStyles(() =>
       borderRadius: '35px',
       padding: '20px',
       marginBottom: '25px',
+      '@media(max-width: 975px)': {
+        borderRadius: '0px',
+      },
     },
     audioPlayer: {
       width: "100%",
