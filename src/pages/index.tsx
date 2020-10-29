@@ -26,7 +26,7 @@ const IndexPage = () => {
   const fade = useSpring({
     from: { opacity: 0 },
     opacity: 1,
-    config: { duration: 600 },
+    config: { duration: 700 },
   });
 
   const [trail, set, stop] = useTrail(nameArray.length, () => ({

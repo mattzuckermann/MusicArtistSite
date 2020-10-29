@@ -206,7 +206,7 @@ const About = () => {
   const fade = useSpring({
     from: { opacity: 0 },
     opacity: 1,
-    config: { duration: 300 },
+    config: { duration: 700 },
   });
 
   function handleNext() {
