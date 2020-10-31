@@ -182,6 +182,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
   const [dataFullyLoaded, setDataFullyLoaded] = useState(false);
   const [loadTakingTooLong, setLoadTakingTooLong] = useState(false);
   const [on, toggle] = useState(boolean);
+  const [inputMouseIsDown, setInputMouseIsDown] = useState(false);
   const [previousPlayerStatePaused, setPreviousPlayerStatePaused] = useState(boolean)
   const [inputValue, setInputValue] = useState(0);
   const [timeFormat, setTimeFormat] = useState(true);
@@ -210,6 +211,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
   const soundIcons = allIcons.splice(0,2);
   
   const audioTag = useRef(null);
+  const albumCover = useRef(null);
 
   const shuffleFunction = () => {
     myMap.delete(`${currentTrack}`);
@@ -351,6 +353,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
     }
 
     const spaceBarPlayPause = e => {
+      e.preventDefault();
       if (e.code === "Space") {
         if (audioTag.current.paused) {
           if (!navigator()) setPlayPauseIndex(3)
@@ -365,7 +368,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
         };
       }
     }
-
+    
     window.addEventListener('keypress', spaceBarPlayPause);
 
     return () => {
@@ -412,6 +415,8 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
     if (repeatIndex === 2) setTimeout(() => setRepeatIndex(1), 1000);
   };
 
+  useSpring
+
   // React Spring animations that run once component mounts
   const [trail, set, stop] = useTrail(allContentfulSingle.edges.length, () => ({
     transform: 'scale(0.8, 0.8), translate3d(-8%,0,0)',
@@ -422,7 +427,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
     transform: on
       ? 'scale(1, 1), translate3d(0,0,0,)'
       : 'scale(0.8,0.8), translate3d(-8%,0,0)',
-    config: { duration: 20000 / 8 },
+    config: { duration: 100 / 8 },
   });
   stop();
 
@@ -737,10 +742,14 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
               min={0}
               max={allContentfulSingle.edges[currentTrack].node.cloudinaryAudio[0].duration}
               onMouseDown={() => {
-                if (!navigator()) setPreviousPlayerStatePaused(audioTag.current.paused);
+                if (!navigator()) {
+                  setInputMouseIsDown(true);
+                  setPreviousPlayerStatePaused(audioTag.current.paused);
+                }
               }}
               onMouseUp={() => {
                 if (!navigator()) {
+                  setInputMouseIsDown(false);
                   if (!previousPlayerStatePaused) {
                     audioTag.current.play();
                     setPlayPauseIndex(3);
@@ -748,9 +757,11 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
                 }
               }}
               onTouchStart={() => {
+                setInputMouseIsDown(true);
                 setPreviousPlayerStatePaused(audioTag.current.paused);
               }}
               onTouchEnd={() => {
+                setInputMouseIsDown(false);
                 if (!previousPlayerStatePaused) {
                   audioTag.current.play();
                   setPlayPauseIndex(7);
@@ -789,19 +800,19 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
       </Grid>
       {!navigator() ? (
         <Grid container style={{ marginTop: '120px', paddingBottom: '80px' }}>
-          <section id="special">
-          {trail.map((props: object, index: number) => {
+          <animated.section id="special" style={{ ...initialFade }}>
+          {allContentfulSingle.edges.map((props: object, index: number) => {
               let { node: track } = allContentfulSingle.edges[index];
               let zIndex = allContentfulSingle.edges.length - index;
               return (
-                <animated.span
-                  key={track.trackName}
-                  style={{ ...props }}
-                >
+                <animated.span key={track.trackName}>
                   <AlbumCoverRotated
+                    albumCoverRef={albumCover}
                     track={track}
                     index={index}
                     zIndex={zIndex}
+                    inputMouseIsDown={inputMouseIsDown}
+                    previousPlayerStatePaused={previousPlayerStatePaused}
                     albumCoverIsHovered={albumCoverIsHovered}
                     setAlbumCoverIsHovered={setAlbumCoverIsHovered}
                     currentTrack={currentTrack}
@@ -811,7 +822,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
                 </animated.span>
               )
             })}
-          </section>
+          </animated.section>
         </Grid>
       ) : (
         <Grid container className={classes.trackNameContainer}>

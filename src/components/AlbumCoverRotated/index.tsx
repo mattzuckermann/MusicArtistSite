@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { useEffect, useState, Fragment } from 'react'
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/styles';
 import { useSpring, animated } from 'react-spring';
@@ -12,9 +12,9 @@ const useStyles = makeStyles({
     borderRight: '8px solid white',
     borderBottom: '2px solid white',
     borderLeft: '2px solid white',
-    margin: '0px -380px 0px 0px',
-    width: '450px',
-    height: '450px',
+    margin: '0px -350px 0px 0px',
+    width: '420px',
+    height: '420px',
     '@media(max-width: 979px)': {
       margin: '0px -220px 0px 0px',
       width: '300px',
@@ -130,26 +130,59 @@ const useStyles = makeStyles({
   },
 });
 
-const AlbumCoverRotated = ({ track, index, zIndex, albumCoverIsHovered, setAlbumCoverIsHovered, currentTrack, setTrack, audio }) => {
+const AlbumCoverRotated = ({ albumCoverRef, track, index, zIndex, inputMouseIsDown, previousPlayerStatePaused, albumCoverIsHovered, setAlbumCoverIsHovered, currentTrack, setTrack, audio }) => {
     const classes = useStyles();
+    const [width, setWidth] = useState(window.innerWidth);
+    const [offsetValue, setOffsetValue] = useState(`${30}vw`);
+    
+    useEffect(() => {
+      setWidth(window.innerWidth);
+      window.addEventListener('resize', () => {
+        setWidth(window.innerWidth);
+      });
+    }, []);
+    
+    useEffect(() => {
+      if (width >= 1550) {
+        setOffsetValue('38vw');
+      } else if (width >= 1400) {
+        setOffsetValue('36vw');
+      } else if (width >= 1150) {
+        setOffsetValue('31vw');
+      } else if (width >= 980) {
+        setOffsetValue('30vw');
+      } else if (width >= 900) {
+        setOffsetValue('33vw');
+      } else if (width >= 750) {
+        setOffsetValue('31vw');
+      } else if (width >= 600) {
+        setOffsetValue('28vw');
+      } else if (width >= 450 ) {
+        setOffsetValue('26vw');
+      }
+    }, [width]);
+
     const transition = useSpring({
-      opacity: currentTrack === index && !audio?.paused ? 1 : 0.95,
-      zIndex: currentTrack === index && !audio?.paused ? 20 : zIndex,
-      transform: currentTrack === index && !audio?.paused ? `rotateY(0deg) translateY(0px) rotate(0deg)` : `rotateY(60deg) translateY(${-index * 8}px) rotate(8deg)`,
-      boxShadow: currentTrack === index && !audio?.paused ? `10px 6px rgba(0, 0, 0, 0.6)` : `40px 4px rgba(0, 0, 0, 0.6)`,
-      config: { duration: 150 },
+      opacity: (currentTrack === index && !audio?.paused) || (currentTrack === index && previousPlayerStatePaused === false && inputMouseIsDown) ? 1 : 0.95,
+      zIndex: (currentTrack === index && !audio?.paused) || (currentTrack === index && previousPlayerStatePaused === false && inputMouseIsDown) ? 20 : zIndex,
+      transform: (currentTrack === index && !audio?.paused) || (currentTrack === index && previousPlayerStatePaused === false && inputMouseIsDown) ? `rotateY(0deg) translateY(${80}px) rotate(0deg)` : `rotateY(60deg) translateY(${-index * 8}px) rotate(8deg)`,
+      boxShadow: (currentTrack === index && !audio?.paused) || (currentTrack === index && previousPlayerStatePaused === false && inputMouseIsDown) ? `10px 6px rgba(0, 0, 0, 0.6)` : `40px 4px rgba(0, 0, 0, 0.6)`,
+      left: (currentTrack === index && !audio?.paused) || (currentTrack === index && previousPlayerStatePaused === false && inputMouseIsDown) ? `${offsetValue}` : `0%`,
+      position: (currentTrack === index && !audio?.paused) || (currentTrack === index && previousPlayerStatePaused === false && inputMouseIsDown) ? `absolute` : `relative`,
+      config: { duration: 250 },
     });
 
     return (
         <Fragment>
             <animated.img
+                ref={albumCoverRef}
                 style={transition}
                 alt={track.trackName}
                 title={track.trackName}
                 className={classNames(`${classes.albumCoverGeneral}`, {
                   [classes.albumCoverOnQueue]: currentTrack === index,
                   [classes.albumCoverOnHover]: albumCoverIsHovered === index && currentTrack !== index,
-                  [classes.albumCoverOnPlay]: currentTrack === index && !audio?.paused,
+                  [classes.albumCoverOnPlay]: (currentTrack === index && !audio?.paused) || (currentTrack === index && previousPlayerStatePaused === false && inputMouseIsDown),
                 })}
                 onMouseEnter={() => {
                     setAlbumCoverIsHovered(index)
