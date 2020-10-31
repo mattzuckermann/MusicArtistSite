@@ -132,7 +132,7 @@ const useStyles = makeStyles({
 
 const AlbumCoverRotated = ({ albumCoverRef, track, index, zIndex, inputMouseIsDown, previousPlayerStatePaused, albumCoverIsHovered, setAlbumCoverIsHovered, currentTrack, setTrack, audio }) => {
     const classes = useStyles();
-    const [width, setWidth] = useState(window.innerWidth);
+    const [width, setWidth] = useState(null);
     const [offsetValue, setOffsetValue] = useState(`${30}vw`);
     
     useEffect(() => {
