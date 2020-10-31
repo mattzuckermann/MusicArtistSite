@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     marginLeft: 'auto',
     marginRight: 'auto',
     display: 'block',
-    boxShadow: '8px 8px 3px 0px rgba(0, 0, 0, 0.75)',
+    border: '2px solid #1b1b1b',
   },
   albumImageWrapper: {
     position: 'relative',
