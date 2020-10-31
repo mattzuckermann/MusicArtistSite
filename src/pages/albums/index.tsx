@@ -68,7 +68,7 @@ const Album = () => {
   return (
     <animated.div style={fade}>
       <SEO title="Albums" keywords={[`music`, `album`, `react`]} />
-  <h1 className={classes.bioTitle}>{ width > 406 ? 'Discography' : 'Discog'}</h1>
+      <h1 className={classes.bioTitle}>{ width > 406 ? 'Discography' : 'Discog'}</h1>
       <hr className={classes.lineDivide} />
       <div style={{ height: !componentLoaded ? '55vh' : '100%' }}>
         {allContentfulAlbum.edges.map((album, index) => (
