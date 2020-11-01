@@ -35,8 +35,8 @@ const FooterIcon = ({ link, allCloudinaryMedia, unhighlightedIndex, highlightedI
             >
                 <img 
                     src={!isHovered
-                            ? allCloudinaryMedia.edges[unhighlightedIndex]?.node.secure_url
-                            : allCloudinaryMedia.edges[highlightedIndex]?.node.secure_url}
+                        ? allCloudinaryMedia.edges[unhighlightedIndex]?.node.secure_url
+                        : allCloudinaryMedia.edges[highlightedIndex]?.node.secure_url}
                     className={classes.mediaIcons}
                     onMouseEnter={() => {
                         if (!navigator()) setIsHovered(true)
