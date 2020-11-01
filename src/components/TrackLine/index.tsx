@@ -40,7 +40,7 @@ const TrackLine = ({
   }, [currentTrack, playing, isHovered, isTouched, isMouseDown]);
 
   return (
-    <div style={{ margin: "0px 0px"}}>
+    <div style={{ margin: "7px 0px"}}>
         <img
           src={sourceObject.node.secure_url}
           onMouseEnter={() => {
@@ -61,9 +61,8 @@ const TrackLine = ({
           onTouchStart={() => setIsTouched(true)}
           onTouchEnd={() => setIsTouched(false)}
           style={{
-            width: '25x',
             height: '25px',
-            margin: '0px',
+            margin: '-7px 0px -7px 5px'
           }}
           onClick={() => {
             if (currentTrack !== index) {
