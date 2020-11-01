@@ -16,7 +16,7 @@ import './index.css'
 const useStyles = makeStyles(() =>
   createStyles({
     singlesBackgroundColor: {
-      backgroundColor: `#1a1a1a`,
+      backgroundColor: `#1b1b1b`,
       borderRadius: '35px',
       padding: '20px',
       marginBottom: '25px',
@@ -811,6 +811,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
                     track={track}
                     index={index}
                     zIndex={zIndex}
+                    playing={playing}
                     inputMouseIsDown={inputMouseIsDown}
                     previousPlayerStatePaused={previousPlayerStatePaused}
                     albumCoverIsHovered={albumCoverIsHovered}
