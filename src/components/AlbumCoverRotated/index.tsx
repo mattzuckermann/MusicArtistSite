@@ -130,12 +130,15 @@ const useStyles = makeStyles({
   },
 });
 
-const AlbumCoverRotated = ({ albumCoverRef, track, index, zIndex, inputMouseIsDown, previousPlayerStatePaused, albumCoverIsHovered, setAlbumCoverIsHovered, currentTrack, setTrack, audio }) => {
+const AlbumCoverRotated = ({ albumCoverRef, track, index, zIndex, playing, inputMouseIsDown, previousPlayerStatePaused, albumCoverIsHovered, setAlbumCoverIsHovered, currentTrack, setTrack, audio }) => {
     const classes = useStyles();
+    const [componentHasRendered, setComponentHasRendered] = useState(false);
     const [width, setWidth] = useState(null);
     const [offsetValue, setOffsetValue] = useState(`${30}vw`);
-    
+
     useEffect(() => {
+      setComponentHasRendered(true);
+
       setWidth(window.innerWidth);
       window.addEventListener('resize', () => {
         setWidth(window.innerWidth);
@@ -165,10 +168,10 @@ const AlbumCoverRotated = ({ albumCoverRef, track, index, zIndex, inputMouseIsDo
     const transition = useSpring({
       opacity: (currentTrack === index && !audio?.paused) || (currentTrack === index && previousPlayerStatePaused === false && inputMouseIsDown) ? 1 : 0.95,
       zIndex: (currentTrack === index && !audio?.paused) || (currentTrack === index && previousPlayerStatePaused === false && inputMouseIsDown) ? 20 : zIndex,
-      transform: (currentTrack === index && !audio?.paused) || (currentTrack === index && previousPlayerStatePaused === false && inputMouseIsDown) ? `rotateY(0deg) translateY(${80}px) rotate(0deg)` : `rotateY(60deg) translateY(${-index * 8}px) rotate(8deg)`,
+      transform: (currentTrack === index && !audio?.paused && componentHasRendered) || (currentTrack === index && previousPlayerStatePaused === false && inputMouseIsDown) ? `rotateY(0deg) translateY(${80}px) rotate(0deg)` : `rotateY(60deg) translateY(${-index * 8}px) rotate(8deg)`,
       boxShadow: (currentTrack === index && !audio?.paused) || (currentTrack === index && previousPlayerStatePaused === false && inputMouseIsDown) ? `10px 6px rgba(0, 0, 0, 0.6)` : `40px 4px rgba(0, 0, 0, 0.6)`,
-      left: (currentTrack === index && !audio?.paused) || (currentTrack === index && previousPlayerStatePaused === false && inputMouseIsDown) ? `${offsetValue}` : `0%`,
-      position: (currentTrack === index && !audio?.paused) || (currentTrack === index && previousPlayerStatePaused === false && inputMouseIsDown) ? `absolute` : `relative`,
+      left: (currentTrack === index && !audio?.paused && componentHasRendered) || (currentTrack === index && previousPlayerStatePaused === false && inputMouseIsDown) ? `${offsetValue}` : `0%`,
+      position: (currentTrack === index && !audio?.paused && componentHasRendered) || (currentTrack === index && previousPlayerStatePaused === false && inputMouseIsDown) ? `absolute` : `relative`,
       config: { duration: 250 },
     });
 
