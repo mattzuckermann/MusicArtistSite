@@ -3,6 +3,7 @@ import { useSpring, animated, config } from 'react-spring';
 import { useStaticQuery, graphql } from 'gatsby';
 import { makeStyles } from '@material-ui/styles';
 import FooterIcon from '../FooterIcon'
+import navigator from '../../js/navigator'
 import './footer.css';
 
 const useStyles = makeStyles({
@@ -14,7 +15,7 @@ const useStyles = makeStyles({
   },
   copyright: {
     paddingTop: '9px',
-    color: '#555555',
+    color: '#585858',
     '@media(max-width: 420px)': {
       fontSize: '12px',
     },
@@ -72,8 +73,8 @@ const Footer = () => {
               key={link}
               allCloudinaryMedia={allCloudinaryMedia}
               link={link}
-              unhighlightedIndex={index + index}
-              highlightedIndex={index + index + 1}
+              unhighlightedIndex={!navigator() ? index + index : index + index + 1}
+              highlightedIndex={!navigator() ? index + index + 1 : index + index}
             />
           ))}
         </div>
