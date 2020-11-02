@@ -37,19 +37,6 @@ const useStyles = makeStyles(() =>
       fontFamily: 'futura, sans-serif',
       margin: '-5px 0px 22px 15px',
     },
-    trackButton: {
-      fontFamily: 'futura, sans-serif',
-      marginLeft: '9px',
-      color: '#ffffff',
-      width: '200px',
-    },
-    trackDuration: {
-      fontFamily: 'futura, sans-serif',
-      marginLeft: '9px',
-      color: '#ffffff',
-      width: '200px',
-      fontSize: '11px',
-    },
     buttonGeneral: {
       border: '2px solid black',
       borderRadius: '5px',
@@ -60,9 +47,6 @@ const useStyles = makeStyles(() =>
     buttonPlaying: {
       backgroundColor: '#a1bbb5',
       visibility: 'hidden',
-    },
-    trackGreen: {
-      color: '#1ED760',
     },
     lineDivide: {
       height: '5px',
@@ -106,8 +90,11 @@ const useStyles = makeStyles(() =>
       '@media(max-width: 679px)': {
         marginLeft: '35px',
       },
-      '@media(max-width: 340px)': {
+      '@media(max-width: 500px)': {
         marginLeft: '25px',
+      },
+      '@media(max-width: 340px)': {
+        marginLeft: '9px',
       },
     },
     singleCover: {
@@ -179,6 +166,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
   `);
 
   const classes = useStyles();
+  
   const [dataFullyLoaded, setDataFullyLoaded] = useState(false);
   const [loadTakingTooLong, setLoadTakingTooLong] = useState(false);
   const [on, toggle] = useState(boolean);
@@ -415,8 +403,6 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
     if (repeatIndex === 2) setTimeout(() => setRepeatIndex(1), 1000);
   };
 
-  useSpring
-
   // React Spring animations that run once component mounts
   const [trail, set, stop] = useTrail(allContentfulSingle.edges.length, () => ({
     transform: 'scale(0.8, 0.8), translate3d(-8%,0,0)',
@@ -427,7 +413,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
     transform: on
       ? 'scale(1, 1), translate3d(0,0,0,)'
       : 'scale(0.8,0.8), translate3d(-8%,0,0)',
-    config: { duration: 100 / 8 },
+    config: { duration: 14500 / allContentfulSingle.edges.length },
   });
   stop();
 
@@ -811,7 +797,6 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
                     track={track}
                     index={index}
                     zIndex={zIndex}
-                    playing={playing}
                     inputMouseIsDown={inputMouseIsDown}
                     previousPlayerStatePaused={previousPlayerStatePaused}
                     albumCoverIsHovered={albumCoverIsHovered}
@@ -847,7 +832,6 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
                  <TrackLine
                    playPauseIcons={playPauseIcons}
                    soundIcons={soundIcons}
-                   classes={classes}
                    currentTrack={currentTrack}
                    setTrack={setTrack}
                    playing={playing}
