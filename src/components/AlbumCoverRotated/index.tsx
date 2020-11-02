@@ -65,11 +65,6 @@ const useStyles = makeStyles({
       width: '240px',
       height: '240px',
     },
-    '@media(max-width: 605px)': {
-      margin: '0px -195px 0px 0px',
-      width: '240px',
-      height: '240px',
-    },
     '@media(max-width: 585px)': {
       margin: '0px -198px 0px 0px',
       width: '240px',
@@ -79,11 +74,6 @@ const useStyles = makeStyles({
       margin: '0px -200px 0px 0px',
       width: '240px',
       height: '240px',
-    },
-    '@media(max-width: 565px)': {
-      margin: '0px -180px 0px 0px',
-      width: '220px',
-      height: '220px',
     },
     '@media(max-width: 525px)': {
       margin: '0px -183px 0px 0px',
@@ -130,7 +120,7 @@ const useStyles = makeStyles({
   },
 });
 
-const AlbumCoverRotated = ({ albumCoverRef, track, index, zIndex, playing, inputMouseIsDown, previousPlayerStatePaused, albumCoverIsHovered, setAlbumCoverIsHovered, currentTrack, setTrack, audio }) => {
+const AlbumCoverRotated = ({ albumCoverRef, track, index, zIndex, inputMouseIsDown, previousPlayerStatePaused, albumCoverIsHovered, setAlbumCoverIsHovered, currentTrack, setTrack, audio }) => {
     const classes = useStyles();
     const [componentHasRendered, setComponentHasRendered] = useState(false);
     const [width, setWidth] = useState(null);
