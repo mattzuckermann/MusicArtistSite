@@ -61,6 +61,9 @@ const Album = () => {
     }
   `);
 
+  const awaitedTime = new Date(2020, 10, 19, 22);
+  awaitedTime.setSeconds(awaitedTime.getSeconds() + 1);
+
   const fade = useSpring({
     from: { opacity: 0 },
     opacity: 1,
@@ -72,8 +75,8 @@ const Album = () => {
       <SEO title="Albums" keywords={[`music`, `album`, `react`]} />
       <h1 className={classes.bioTitle}>{ width > 406 ? 'Discography' : 'Discog'}</h1>
       <hr className={classes.lineDivide} />
-      <CountdownTimer />
-      <div style={{ height: !componentLoaded ? '55vh' : '100%' }}>
+      {new Date() <= awaitedTime ? <CountdownTimer awaitedTime={awaitedTime} /> : <div/>}
+      <div style={{ height: !componentLoaded ? '55vh' : '100%', marginTop: '25px' }}>
         {allContentfulAlbum.edges.map((album, index) => (
             <AlbumCover key={index} contentfulAlbum={album.node} setComponentLoaded={setComponentLoaded} fade={fade} />
         ))}

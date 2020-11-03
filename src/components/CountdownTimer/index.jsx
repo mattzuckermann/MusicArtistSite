@@ -7,6 +7,7 @@ const useStyles = makeStyles({
     backgroundColor: 'black',
     borderRadius: '5px',
     margin: '3px',
+    padding: '3px 0px',
     textAlign: 'center',
     '@media(max-width: 400px)': {
       fontSize: '14px',
@@ -15,11 +16,18 @@ const useStyles = makeStyles({
       fontSize: '12px',
     },
   },
+  lineDivide: {
+    height: '5px',
+    margin: '5px 25px',
+    backgroundColor: 'white',
+    '@media(max-width: 600px)': {
+      margin: '5px 8px',
+    },
+  },
 });
 
-const CountdownTimer = () => {
+const CountdownTimer = ({ awaitedTime }) => {
   const classes = useStyles();
-  const albumReleaseDate = new Date(2020, 10, 19, 22);
   const [currentTime, setCurrentTime] = useState(null);
   const [days, setDays] = useState(null);
   const [hours, setHours] = useState(null);
@@ -32,7 +40,7 @@ const CountdownTimer = () => {
   }, []);
 
   useEffect(() => {
-    const timeDifference = albumReleaseDate.getTime() - currentTime;
+    const timeDifference = awaitedTime.getTime() - currentTime;
 
     const daysTemp = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     const daysRemainder = timeDifference % (1000 * 60 * 60 * 24);
@@ -46,9 +54,13 @@ const CountdownTimer = () => {
     const minutesRemainder = hoursRemainder % (1000 * 60);
     setMinutes(minutesTemp);
 
-    const secondsTemp = Math.floor((minutesRemainder) / 1000) + 1;
-    const secondsFormatted = secondsTemp === 60 ? 0 : secondsTemp;
-    setSeconds(secondsFormatted);
+    const secondsTemp = Math.floor(minutesRemainder / 1000);
+    setSeconds(secondsTemp);
+
+    if (timeDifference <= 0) {
+      window.location.reload();
+      clearInterval(checkCurrentTime);
+    }
   }, [currentTime]);
 
   return (
@@ -56,24 +68,28 @@ const CountdownTimer = () => {
       <Grid item md={2} sm={2} xs={2}>
         <div className={classes.timeBubble}>
           <div>Days</div>
+          <hr className={classes.lineDivide} />
           <div>{days}</div>
         </div>
       </Grid>
       <Grid item md={2} sm={2} xs={2}>
         <div className={classes.timeBubble}>
           <div>Hours</div>
+          <hr className={classes.lineDivide} />
           <div>{hours}</div>
         </div>
       </Grid>
       <Grid item md={2} sm={2} xs={2}>
         <div className={classes.timeBubble}>
           <div>Minutes</div>
+          <hr className={classes.lineDivide} />
           <div>{minutes}</div>
         </div>
       </Grid>
       <Grid item md={2} sm={2} xs={2}>
         <div className={classes.timeBubble}>
           <div>Seconds</div>
+          <hr className={classes.lineDivide} />
           <div>{seconds}</div>
         </div>
       </Grid>
