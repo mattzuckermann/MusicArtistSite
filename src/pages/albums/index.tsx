@@ -61,7 +61,7 @@ const Album = () => {
     }
   `);
 
-  const awaitedTime = new Date(2020, 10, 19, 22);
+  const awaitedTime = new Date(2020, 10, 20);
   awaitedTime.setSeconds(awaitedTime.getSeconds() + 1);
 
   const fade = useSpring({
