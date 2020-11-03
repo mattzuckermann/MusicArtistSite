@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
   timeBubble: {
-    backgroundColor: 'black',
+    backgroundColor: '#1b1b1b',
     borderRadius: '5px',
     margin: '3px',
     padding: '3px 0px',
