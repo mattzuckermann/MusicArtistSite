@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import SEO from '../../components/SEO';
 import AlbumCover from '../../components/AlbumCover';
+import CountdownTimer from '../../components/CountdownTimer'
 import { graphql, useStaticQuery } from 'gatsby';
 import { useSpring, animated } from 'react-spring';
 import { makeStyles } from '@material-ui/styles';
+
 const useStyles = makeStyles({
   bioTitle: {
     fontSize: '45px',
@@ -70,6 +72,7 @@ const Album = () => {
       <SEO title="Albums" keywords={[`music`, `album`, `react`]} />
       <h1 className={classes.bioTitle}>{ width > 406 ? 'Discography' : 'Discog'}</h1>
       <hr className={classes.lineDivide} />
+      <CountdownTimer />
       <div style={{ height: !componentLoaded ? '55vh' : '100%' }}>
         {allContentfulAlbum.edges.map((album, index) => (
             <AlbumCover key={index} contentfulAlbum={album.node} setComponentLoaded={setComponentLoaded} fade={fade} />
