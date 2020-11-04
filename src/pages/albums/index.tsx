@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SEO from '../../components/SEO';
 import AlbumCover from '../../components/AlbumCover';
 import CountdownTimer from '../../components/CountdownTimer'
+import moment from 'moment-timezone'
 import { graphql, useStaticQuery } from 'gatsby';
 import { useSpring, animated } from 'react-spring';
 import { makeStyles } from '@material-ui/styles';
@@ -61,8 +62,7 @@ const Album = () => {
     }
   `);
 
-  const awaitedTime = new Date(2020, 10, 20);
-  awaitedTime.setSeconds(awaitedTime.getSeconds() + 1);
+  const awaitedTime = moment.tz("2020-11-20 00:00", "America/New_York").add(1, 'seconds');
 
   const fade = useSpring({
     from: { opacity: 0 },
@@ -75,7 +75,7 @@ const Album = () => {
       <SEO title="Albums" keywords={[`music`, `album`, `react`]} />
       <h1 className={classes.bioTitle}>{ width > 406 ? 'Discography' : 'Discog'}</h1>
       <hr className={classes.lineDivide} />
-      {new Date() <= awaitedTime ? <CountdownTimer awaitedTime={awaitedTime} /> : <div/>}
+      {moment().isBefore(awaitedTime) ? <CountdownTimer awaitedTime={awaitedTime} /> : <div/>}
       <div style={{ height: !componentLoaded ? '55vh' : '100%', marginTop: '25px' }}>
         {allContentfulAlbum.edges.map((album, index) => (
             <AlbumCover key={index} contentfulAlbum={album.node} setComponentLoaded={setComponentLoaded} fade={fade} />

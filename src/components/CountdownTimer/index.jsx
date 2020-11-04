@@ -40,7 +40,7 @@ const CountdownTimer = ({ awaitedTime }) => {
   }, []);
 
   useEffect(() => {
-    const timeDifference = awaitedTime.getTime() - currentTime;
+    const timeDifference = awaitedTime.valueOf() - currentTime;
 
     const daysTemp = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     const daysRemainder = timeDifference % (1000 * 60 * 60 * 24);
