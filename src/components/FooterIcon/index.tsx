@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import navigator from '../../navigator';
+import navigator from '../../js/navigator';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({

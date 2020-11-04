@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'gatsby';
 import classNames from 'classnames';
-import navigator from '../../navigator';
+import navigator from '../../js/navigator';
 
 const NavTab = ({ children, link, location }) => {
   const [pathName, setPathName] = useState({});
