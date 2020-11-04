@@ -10,7 +10,6 @@ import { makeStyles } from '@material-ui/styles';
 const useStyles = makeStyles({
   bioTitle: {
     fontSize: '45px',
-    fontFamily: 'futura, sans-serif',
     padding: '0px 25px',
     '@media(max-width: 959px)': {
       padding: '0px 45px',

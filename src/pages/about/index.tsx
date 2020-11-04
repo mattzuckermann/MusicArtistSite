@@ -67,7 +67,6 @@ const useStyles = makeStyles({
   },
   bioTitle: {
     fontSize: '45px',
-    fontFamily: 'futura, sans-serif',
     padding: '0px 25px',
     '@media(max-width: 959px)': {
       padding: '0px 45px',
@@ -75,7 +74,6 @@ const useStyles = makeStyles({
   },
   bioParagraphs: {
     padding: '0px 20px',
-    fontFamily: 'futura, sans-serif',
     '@media(max-width: 959px)': {
       padding: '0px 60px',
     },
@@ -269,7 +267,6 @@ const About = () => {
                   {video.credits.length != 0 && (
                     <div
                       style={{
-                        fontFamily: 'futura, sans-serif',
                         marginTop: '-40px',
                         marginBottom: '14.5px',
                         textAlign: 'left',

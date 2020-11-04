@@ -30,11 +30,9 @@ const useStyles = makeStyles(() =>
     },
     trackTitle: {
       padding: '25px 0px',
-      fontFamily: 'futura',
     },
     singlesHeader: {
       fontSize: '45px',
-      fontFamily: 'futura, sans-serif',
       margin: '-5px 0px 22px 15px',
     },
     buttonGeneral: {

@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=ABeeZee');
-
 * {
   box-sizing: border-box !important;
 }
@@ -33,7 +31,6 @@ body {
   background-color: rgba(178, 184, 143, 0.687);
   border-radius: 8px;
   padding: 1px 4px 1px 4px;
-  font-family: 'futura';
   color: white;
   font-size: 25px;
   writing-mode: vertical-rl;

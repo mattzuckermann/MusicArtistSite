@@ -19,7 +19,6 @@ const useStyles = makeStyles(() =>
       },
     },
     trackLineIndex: {
-      fontFamily: 'futura, sans-serif',
       marginLeft: '1em',
       fontSize: '1em',
     },
@@ -29,12 +28,10 @@ const useStyles = makeStyles(() =>
     },
     trackLineName: {
       margin: '-0.58em 0em -0.58em 0.41em',
-      fontFamily: 'futura, sans-serif',
       marginLeft: '0.33em',
       fontSize: '1.5em',
     },
     trackLineDuration: {
-      fontFamily: 'futura, sans-serif',
       marginLeft: '0.75em',
       fontSize: '0.91em',
     },
