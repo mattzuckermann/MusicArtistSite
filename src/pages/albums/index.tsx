@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import SEO from '../../components/SEO';
 import AlbumCover from '../../components/AlbumCover';
-import CountdownTimer from '../../components/CountdownTimer'
-import moment from 'moment-timezone'
+import CountdownTimer from '../../components/CountdownTimer';
+import moment from 'moment-timezone';
 import { graphql, useStaticQuery } from 'gatsby';
 import { useSpring, animated } from 'react-spring';
 import { makeStyles } from '@material-ui/styles';
@@ -38,8 +38,8 @@ const Album = () => {
 
   useEffect(() => {
     updateWidth();
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
   }, []);
 
   const { allContentfulAlbum } = useStaticQuery(graphql`
@@ -61,7 +61,9 @@ const Album = () => {
     }
   `);
 
-  const awaitedTime = moment.tz("2020-11-20 00:00", "America/New_York").add(1, 'seconds');
+  const awaitedTime = moment
+    .tz('2020-11-20 00:00', 'America/New_York')
+    .add(1, 'seconds');
 
   const fade = useSpring({
     from: { opacity: 0 },
@@ -72,12 +74,28 @@ const Album = () => {
   return (
     <animated.div style={fade}>
       <SEO title="Albums" keywords={[`music`, `album`, `react`]} />
-      <h1 className={classes.bioTitle}>{ width > 406 ? 'Discography' : 'Discog'}</h1>
+      <h1 className={classes.bioTitle}>
+        {width > 406 ? 'Discography' : 'Discog'}
+      </h1>
       <hr className={classes.lineDivide} />
-      {moment().isBefore(awaitedTime) ? <CountdownTimer awaitedTime={awaitedTime} /> : <div/>}
-      <div style={{ height: !componentLoaded ? '55vh' : '100%', marginTop: '25px' }}>
+      {moment().isBefore(awaitedTime) ? (
+        <CountdownTimer awaitedTime={awaitedTime} />
+      ) : (
+        <div />
+      )}
+      <div
+        style={{
+          height: !componentLoaded ? '55vh' : '100%',
+          marginTop: '25px',
+        }}
+      >
         {allContentfulAlbum.edges.map((album, index) => (
-            <AlbumCover key={index} contentfulAlbum={album.node} setComponentLoaded={setComponentLoaded} fade={fade} />
+          <AlbumCover
+            key={index}
+            contentfulAlbum={album.node}
+            setComponentLoaded={setComponentLoaded}
+            fade={fade}
+          />
         ))}
       </div>
     </animated.div>
