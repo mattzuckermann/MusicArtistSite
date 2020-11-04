@@ -34,8 +34,17 @@ const CountdownTimer = ({ awaitedTime }) => {
   const [minutes, setMinutes] = useState(null);
   const [seconds, setSeconds] = useState(null);
 
+  const timeArray = [
+    { Days: days },
+    { Hours: hours },
+    { Minutes: minutes },
+    { Seconds: seconds },
+  ];
+
   useEffect(() => {
-    const checkCurrentTime = setInterval(() => setCurrentTime(new Date().getTime()), 10);
+    const checkCurrentTime = setInterval(() => {
+      setCurrentTime(new Date().getTime(), 10);
+    });
     return () => clearInterval(checkCurrentTime);
   }, []);
 
@@ -65,36 +74,17 @@ const CountdownTimer = ({ awaitedTime }) => {
 
   return (
     <Grid container justify="center">
-      <Grid item md={2} sm={2} xs={2}>
-        <div className={classes.timeBubble}>
-          <div>Days</div>
-          <hr className={classes.lineDivide} />
-          <div>{days}</div>
-        </div>
-      </Grid>
-      <Grid item md={2} sm={2} xs={2}>
-        <div className={classes.timeBubble}>
-          <div>Hours</div>
-          <hr className={classes.lineDivide} />
-          <div>{hours}</div>
-        </div>
-      </Grid>
-      <Grid item md={2} sm={2} xs={2}>
-        <div className={classes.timeBubble}>
-          <div>Minutes</div>
-          <hr className={classes.lineDivide} />
-          <div>{minutes}</div>
-        </div>
-      </Grid>
-      <Grid item md={2} sm={2} xs={2}>
-        <div className={classes.timeBubble}>
-          <div>Seconds</div>
-          <hr className={classes.lineDivide} />
-          <div>{seconds}</div>
-        </div>
-      </Grid>
+      {timeArray.map(value => (
+        <Grid key={`bubble-${value}`} item md={2} sm={2} xs={2}>
+          <div className={classes.timeBubble}>
+            <div>{Object.keys(value)}</div>
+            <hr className={classes.lineDivide} />
+            <div>{Object.values(value)}</div>
+          </div>
+        </Grid>
+      ))}
     </Grid>
-  )
-}
+  );
+};
 
 export default CountdownTimer
