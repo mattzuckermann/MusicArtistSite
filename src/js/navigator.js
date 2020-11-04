@@ -10,8 +10,8 @@ export default function userAgentIsMobile() {
       navigator.userAgent.match(/BlackBerry/i) ||
       navigator.userAgent.match(/Windows Phone/i))
   ) {
-    return true
+    return true;
   }
 
-  return false
+  return false;
 }

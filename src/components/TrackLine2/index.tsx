@@ -7,9 +7,9 @@ import navigator from '../../js/navigator';
 const useStyles = makeStyles(() =>
   createStyles({
     trackLineRow: {
-      margin: '9px 0px',
+      margin: '7px 0px',
       fontSize: '12px',
-      '@media(max-width: 500px)': {
+      '@media(max-width: 690px)': {
         margin: '12px 0px',
         fontSize: '15px',
       },
@@ -41,7 +41,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const TrackLine = ({
+const TrackLine2 = ({
   playPauseIcons,
   soundIcons,
   currentTrack,
@@ -52,9 +52,9 @@ const TrackLine = ({
 }) => {
   const classes = useStyles();
 
-  const minutes = Math.floor(track.cloudinaryAudio[0].duration / 60);
+  const minutes = Math.floor(track.duration / 60);
   const minutesFormatted = minutes < 10 ? `${minutes}` : minutes;
-  const seconds = Math.floor(track.cloudinaryAudio[0].duration % 60);
+  const seconds = Math.floor(track.duration % 60);
   const secondsFormatted =
     seconds === 0 ? '00' : seconds < 10 ? `0${seconds}` : seconds;
   const trackDuration = `${minutesFormatted}:${secondsFormatted}`;
@@ -125,7 +125,7 @@ const TrackLine = ({
           [classes.trackLineGreen]: currentTrack === index,
         })}
       >
-        {track.trackName} -
+        {track.public_id.substring(12)} -
       </span>
       <span
         // Checking if track is currently in queue, and responding with altered css
@@ -139,4 +139,4 @@ const TrackLine = ({
   );
 };
 
-export default TrackLine;
+export default TrackLine2;

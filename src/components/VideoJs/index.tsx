@@ -3,7 +3,13 @@ import videojs from 'video.js';
 import '../../../node_modules/video.js/dist/video-js.css';
 import '@videojs/themes/dist/forest/index.css';
 
-const VideoJs = ({ videoSrc, index, videoIndex, setVideoIndex, videoPoster }) => {
+const VideoJs = ({
+  videoSrc,
+  index,
+  videoIndex,
+  setVideoIndex,
+  videoPoster,
+}) => {
   const playerRef = useRef(null);
 
   useEffect(() => {
@@ -11,9 +17,11 @@ const VideoJs = ({ videoSrc, index, videoIndex, setVideoIndex, videoPoster }) =>
       player.src(videoSrc);
       player.on('ended', () => {
         player.hasStarted(false);
-        if(window.fullScreen || window.innerHeight == screen.height) {
+        if (window.fullScreen || window.innerHeight == screen.height) {
           player.exitFullscreen();
-        } else if ((screen.availHeight || screen.height - 30) <= window.innerHeight) {
+        } else if (
+          (screen.availHeight || screen.height - 30) <= window.innerHeight
+        ) {
           player.exitFullscreen();
         }
         player.handleTechLoadStart_();
@@ -23,7 +31,7 @@ const VideoJs = ({ videoSrc, index, videoIndex, setVideoIndex, videoPoster }) =>
       player.dispose();
     };
   }, []);
-  
+
   useEffect(() => {
     if (index !== videoIndex) playerRef.current.pause();
   }, [videoIndex]);

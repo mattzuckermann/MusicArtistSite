@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSpring, animated, config } from 'react-spring';
 import { useStaticQuery, graphql } from 'gatsby';
 import { makeStyles } from '@material-ui/styles';
-import FooterIcon from '../FooterIcon'
-import navigator from '../../js/navigator'
+import FooterIcon from '../FooterIcon';
+import navigator from '../../js/navigator';
 import './footer.css';
 
 const useStyles = makeStyles({
@@ -21,8 +21,8 @@ const useStyles = makeStyles({
     },
     '@media(max-width: 330px)': {
       fontSize: '11px',
+    },
   },
-  }
 });
 
 const Footer = () => {
@@ -34,12 +34,12 @@ const Footer = () => {
   });
 
   const links = [
-    "https://open.spotify.com/artist/0hRWyQpSxQ8DxcTTCPC33J?si=rOVcTrdtQVy5yfaTQ7IkkA",
-    "https://www.instagram.com/joshzuckermann/",
-    "https://www.tiktok.com/@joshzuckermann",
-    "https://www.facebook.com/profile.php?id=1330928786",
-    "https://twitter.com/ZuckermannJosh",
-    "https://soundcloud.com/josh-zuckermann-867378017",
+    'https://open.spotify.com/artist/0hRWyQpSxQ8DxcTTCPC33J?si=rOVcTrdtQVy5yfaTQ7IkkA',
+    'https://www.instagram.com/joshzuckermann/',
+    'https://www.tiktok.com/@joshzuckermann',
+    'https://www.facebook.com/profile.php?id=1330928786',
+    'https://twitter.com/ZuckermannJosh',
+    'https://soundcloud.com/josh-zuckermann-867378017',
   ];
 
   useEffect(() => {
@@ -73,18 +73,23 @@ const Footer = () => {
               key={link}
               allCloudinaryMedia={allCloudinaryMedia}
               link={link}
-              unhighlightedIndex={!navigator() ? index + index : index + index + 1}
-              highlightedIndex={!navigator() ? index + index + 1 : index + index}
+              unhighlightedIndex={
+                !navigator() ? index + index : index + index + 1
+              }
+              highlightedIndex={
+                !navigator() ? index + index + 1 : index + index
+              }
             />
           ))}
         </div>
         <hr className="hrLine" />
         <div className={classes.copyright}>
-          Copyright ©{new Date().getFullYear()} Josh Zuckermann. All Rights Reserved.
+          Copyright ©{new Date().getFullYear()} Josh Zuckermann. All Rights
+          Reserved.
         </div>
       </div>
     </animated.footer>
-  )
-}
+  );
+};
 
 export default Footer;
