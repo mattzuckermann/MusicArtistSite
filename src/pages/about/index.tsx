@@ -9,6 +9,7 @@ import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSpring, animated } from 'react-spring';
 import VideoJs from '../../components/VideoJs';
+import IFrame from '../../components/IFrame';
 
 const useStyles = makeStyles({
   root: {
@@ -96,7 +97,7 @@ const useStyles = makeStyles({
     },
   },
   carouselGridWrapper: {
-    marginTop: '92px',
+    marginTop: '85px',
     '@media(max-width: 959px)': {
       marginTop: '-10px',
     },
@@ -169,7 +170,8 @@ const About = () => {
       credits: [
         {
           name: 'Luis Lopez',
-          portfolio: 'https://www.instagram.com/luisisnotthatstupid/?igshid=ujfxxuoqv5c',
+          portfolio:
+            'https://www.instagram.com/luisisnotthatstupid/?igshid=ujfxxuoqv5c',
           youtube:
             'https://www.youtube.com/channel/UCVmf-xFdzgARk144QxP-lRg/videos',
         },
@@ -194,6 +196,23 @@ const About = () => {
       thumbnail:
         'https://res.cloudinary.com/dmgmf4lbz/image/upload/v1602073601/Video%20Files/Thumbnail%20Photos/Screen_Shot_2020-10-07_at_5.25.54_AM_fqqtxt.png',
       credits: [],
+    },
+  ];
+
+  const iframeArray = [
+    {
+      styles: classes.topIframe,
+      iframeLink:
+        'https://bandcamp.com/EmbeddedPlayer/album=3135504522/size=large/bgcol=333333/linkcol=0f91ff/tracklist=false/transparent=true/',
+      aLink: 'https://kassiusband.bandcamp.com/album/ep',
+      aDesc: 'EP by Kassius',
+    },
+    {
+      styles: classes.bottomIframe,
+      iframeLink:
+        'https://bandcamp.com/EmbeddedPlayer/album=2293224677/size=large/bgcol=333333/linkcol=0f91ff/tracklist=false/transparent=true/',
+      aLink: 'https://johnnycilantro6tet.bandcamp.com/album/kitchen-cooked',
+      aDesc: 'Kitchen Cooked by Johnny Cilantro and the Well Seasoned Sextet',
     },
   ];
 
@@ -287,7 +306,7 @@ const About = () => {
                         target="_blank"
                         href={video.credits[0].youtube}
                         title="YouTube Channel"
-                        >
+                      >
                         <FontAwesomeIcon
                           style={{
                             fontSize: '18px',
@@ -353,24 +372,14 @@ const About = () => {
               textAlign: 'center',
             }}
           >
-            <iframe
-              className={classes.topIframe}
-              src="https://bandcamp.com/EmbeddedPlayer/album=3135504522/size=large/bgcol=333333/linkcol=0f91ff/tracklist=false/transparent=true/"
-              seamless
-            >
-              <a href="https://kassiusband.bandcamp.com/album/ep">
-                EP by Kassius
-              </a>
-            </iframe>
-            <iframe
-              className={classes.bottomIframe}
-              src="https://bandcamp.com/EmbeddedPlayer/album=2293224677/size=large/bgcol=333333/linkcol=0f91ff/tracklist=false/transparent=true/"
-              seamless
-            >
-              <a href="https://johnnycilantro6tet.bandcamp.com/album/kitchen-cooked">
-                Kitchen Cooked by Johnny Cilantro and the Well Seasoned Sextet
-              </a>
-            </iframe>
+            {iframeArray.map(value => (
+              <IFrame
+                styles={value.styles}
+                iframeLink={value.iframeLink}
+                aLink={value.aLink}
+                aDesc={value.aDesc}
+              />
+            ))}
           </div>
         </Grid>
       </Grid>
