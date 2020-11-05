@@ -827,7 +827,8 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
              let { node: track } = allContentfulSingle.edges[index];
              return (
                <animated.div key={track.trackName} style={props}>
-                 <TrackLine
+                <TrackLine
+                   audioTag={audioTag}
                    playPauseIcons={playPauseIcons}
                    soundIcons={soundIcons}
                    currentTrack={currentTrack}

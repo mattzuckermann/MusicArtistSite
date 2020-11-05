@@ -42,6 +42,7 @@ const useStyles = makeStyles(() =>
 );
 
 const TrackLine = ({
+  audioTag,
   playPauseIcons,
   soundIcons,
   currentTrack,
@@ -106,6 +107,7 @@ const TrackLine = ({
         onClick={() => {
           if (currentTrack !== index) {
             setTrack(index);
+            audioTag.current.load();
           }
         }}
         draggable={false}
