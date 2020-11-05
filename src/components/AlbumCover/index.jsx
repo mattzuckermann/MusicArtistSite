@@ -72,11 +72,7 @@ const AlbumCover = ({ contentfulAlbum, setComponentLoaded, fade }) => {
             animated={animated}
           />
         ) : (
-          <div className={classes.slideInDesc}>
-            <div style={{ fontFamily: 'futura, sans-serif' }}>
-              Debut album coming November 2020
-            </div>
-          </div>
+          <div className={classes.slideInDesc}>Debut album coming soon</div>
         )}
       </div>
     </animated.div>
