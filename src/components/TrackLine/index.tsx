@@ -13,9 +13,9 @@ const useStyles = makeStyles(() =>
         margin: '12px 0px',
         fontSize: '15px',
       },
-      '@media(max-width: 340px)': {
+      '@media(max-width: 400px)': {
         margin: '11px 0px',
-        fontSize: '14px',
+        fontSize: '13px',
       },
     },
     trackLineIndex: {

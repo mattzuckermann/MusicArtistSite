@@ -110,6 +110,6 @@ input[type='range']:focus::-ms-fill-upper {
 
 @media screen and (max-width: 330px) {
   input[type='range'] {
-    width: 160px;
+    width: 145px;
   }
 }

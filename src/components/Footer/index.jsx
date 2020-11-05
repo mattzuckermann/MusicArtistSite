@@ -17,10 +17,10 @@ const useStyles = makeStyles({
     paddingTop: '9px',
     color: '#585858',
     '@media(max-width: 420px)': {
-      fontSize: '12px',
+      fontSize: '11px',
     },
     '@media(max-width: 330px)': {
-      fontSize: '11px',
+      fontSize: '10px',
     },
   },
 });
