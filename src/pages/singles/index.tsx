@@ -828,6 +828,7 @@ const Singles: FunctionComponent<{ index: number; boolean: boolean }> = ({
              return (
                <animated.div key={track.trackName} style={props}>
                  <TrackLine
+                   audioTag={audioTag}
                    playPauseIcons={playPauseIcons}
                    soundIcons={soundIcons}
                    currentTrack={currentTrack}
