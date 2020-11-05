@@ -26,7 +26,7 @@ const SlideAnimation = ({ hoverChange, hoverAnimation, animated }) => {
         className={classes.slideInDesc}
         style={hoverAnimation}
       >
-        Debut album coming November 2020
+        Debut album coming soon
       </animated.div>
     </div>
   );
