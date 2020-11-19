@@ -843,7 +843,7 @@ const Albums: FC = ({ boolean = false, pageContext }: Props) => {
           {trail.map((props: object, index: number) => {
             let track = albumNode.tracks[index];
             return (
-              <animated.div key={track} style={props}>
+              <animated.div key={track.id} style={props}>
                 <TrackLine2
                   playPauseIcons={playPauseIcons}
                   soundIcons={soundIcons}

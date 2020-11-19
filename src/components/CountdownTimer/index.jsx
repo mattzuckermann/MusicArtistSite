@@ -78,8 +78,8 @@ const CountdownTimer = ({ awaitedTime }) => {
       justify="center"
       style={{ marginBottom: '-60px', position: 'relative', zIndex: 100 }}
     >
-      {timeArray.map(value => (
-        <Grid key={`bubble-${value}`} item md={2} sm={2} xs={3}>
+      {timeArray.map((value, index) => (
+        <Grid key={`bubble-${index}`} item md={2} sm={2} xs={3}>
           <div className={classes.timeBubble}>
             <div>{Object.keys(value)}</div>
             <hr className={classes.lineDivide} />
