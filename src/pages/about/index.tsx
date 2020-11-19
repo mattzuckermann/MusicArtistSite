@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/styles';
@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import SEO from '../../components/SEO';
 import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import moment from 'moment-timezone';
 import { useSpring, animated } from 'react-spring';
 import VideoJs from '../../components/VideoJs';
 import IFrame from '../../components/IFrame';
@@ -138,8 +139,8 @@ const useStyles = makeStyles({
 
 const About = () => {
   const classes = useStyles();
-  const { allContentfulPhotoAlbum, markdownRemark } = useStaticQuery(graphql`
-    query bioQuery($slug: String) {
+  const { allContentfulPhotoAlbum, allMarkdownRemark } = useStaticQuery(graphql`
+    query bioQuery {
       allContentfulPhotoAlbum {
         edges {
           node {
@@ -150,12 +151,17 @@ const About = () => {
           }
         }
       }
-      markdownRemark(frontmatter: { slug: { eq: $slug } }) {
-        html
-        frontmatter {
-          title
-          date
-          slug
+      allMarkdownRemark {
+        edges {
+          node {
+            id
+            html
+            frontmatter {
+              title
+              date
+              slug
+            }
+          }
         }
       }
     }
@@ -216,9 +222,17 @@ const About = () => {
     },
   ];
 
+  const [markdownIndex, setMarkdownIndex] = useState(0);
   const [videoIndex, setVideoIndex] = useState(muxVideoArray.length);
   const [activeStep, setActiveStep] = useState(0);
   const maxSteps = allContentfulPhotoAlbum.edges[0].node.carouselImage.length;
+
+  useEffect(() => {
+    const awaitedTime = moment
+      .tz('2020-11-20 00:00', 'America/New_York')
+      .add(1, 'seconds');
+    moment().isBefore(awaitedTime) ? setMarkdownIndex(0) : setMarkdownIndex(1);
+  });
 
   const fade = useSpring({
     from: { opacity: 0 },
@@ -259,12 +273,14 @@ const About = () => {
         >
           <Grid item lg={12} md={12} sm={12} xs={12}>
             <h1 className={classes.bioTitle}>
-              {markdownRemark.frontmatter.title}
+              {allMarkdownRemark.edges[markdownIndex].node.frontmatter.title}
             </h1>
             <hr className={classes.lineDivide} />
             <div
               className={classes.bioParagraphs}
-              dangerouslySetInnerHTML={{ __html: markdownRemark.html }}
+              dangerouslySetInnerHTML={{
+                __html: allMarkdownRemark.edges[markdownIndex].node.html,
+              }}
             />
           </Grid>
           {muxVideoArray.map((video, index) => (
