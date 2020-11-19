@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SEO from '../../components/SEO';
 import AlbumCover from '../../components/AlbumCover';
+import AlbumCoverOutNow from '../../components/AlbumCoverOutNow';
 import CountdownTimer from '../../components/CountdownTimer';
 import moment from 'moment-timezone';
 import { graphql, useStaticQuery } from 'gatsby';
@@ -42,15 +43,14 @@ const Album = () => {
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
 
-  const { allContentfulAlbum } = useStaticQuery(graphql`
+  const { allContentfulAlbumHome } = useStaticQuery(graphql`
     {
-      allContentfulAlbum {
+      allContentfulAlbumHome {
         edges {
           node {
-            id
             albumTitle
+            releaseDate
             coverArt {
-              id
               file {
                 url
               }
@@ -61,8 +61,12 @@ const Album = () => {
     }
   `);
 
+  const massagedReleaseDateTime = allContentfulAlbumHome.edges[0].node.releaseDate
+    .substring(0, 16)
+    .replace('T', ' ');
+
   const awaitedTime = moment
-    .tz('2020-11-20 00:00', 'America/New_York')
+    .tz(massagedReleaseDateTime, 'America/New_York')
     .add(1, 'seconds');
 
   const fade = useSpring({
@@ -89,13 +93,26 @@ const Album = () => {
           marginTop: '25px',
         }}
       >
-        {allContentfulAlbum.edges.map((album, index) => (
-          <AlbumCover
-            key={index}
-            contentfulAlbum={album.node}
-            setComponentLoaded={setComponentLoaded}
-            fade={fade}
-          />
+        {allContentfulAlbumHome.edges.map((album, index) => (
+          <div>
+            {moment().isBefore(awaitedTime) ? (
+              <AlbumCover
+                key={index}
+                contentfulAlbum={album.node}
+                setComponentLoaded={setComponentLoaded}
+                awaitedTime={awaitedTime}
+                fade={fade}
+              />
+            ) : (
+              <AlbumCoverOutNow
+                key={index}
+                contentfulAlbum={album.node}
+                setComponentLoaded={setComponentLoaded}
+                awaitedTime={awaitedTime}
+                fade={fade}
+              />
+            )}
+          </div>
         ))}
       </div>
     </animated.div>
