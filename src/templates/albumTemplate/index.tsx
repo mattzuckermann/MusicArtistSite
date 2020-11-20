@@ -845,9 +845,9 @@ const Albums: FC = ({ boolean = false, pageContext }: Props) => {
             return (
               <animated.div key={track.id} style={props}>
                 <TrackLine2
+                  audioTag={audioTag}
                   playPauseIcons={playPauseIcons}
                   soundIcons={soundIcons}
-                  classes={classes}
                   currentTrack={currentTrack}
                   setTrack={setTrack}
                   playing={playing}

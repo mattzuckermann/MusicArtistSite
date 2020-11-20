@@ -42,6 +42,7 @@ const useStyles = makeStyles(() =>
 );
 
 const TrackLine2 = ({
+  audioTag
   playPauseIcons,
   soundIcons,
   currentTrack,
