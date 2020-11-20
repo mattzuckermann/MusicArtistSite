@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 
 const defaultValues = {
-  boolean: 'this works',
+  playerIsOpen: false,
 };
 
 export const SiteContext = createContext(defaultValues);
