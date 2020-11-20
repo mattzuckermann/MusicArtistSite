@@ -106,6 +106,7 @@ const TrackLine2 = ({
         onClick={() => {
           if (currentTrack !== index) {
             setTrack(index);
+            audioTag.current.load();
           }
         }}
         draggable={false}
