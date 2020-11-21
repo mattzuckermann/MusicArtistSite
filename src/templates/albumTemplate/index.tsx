@@ -472,15 +472,13 @@ const Albums: FC = ({ boolean = false, pageContext }: Props) => {
     config: { duration: 700 },
   });
 
-  const setTrack = index => {
-    changeFaded(false);
-    setTimeout(() => changeTrack(index), 1000);
-    setTimeout(() => changeFaded(true), 1000);
-    setTimeout(() => audioTag.current.load(), 1000);
-    setTimeout(() => audioTag.current.play(), 1000);
-    setTimeout(() => setInputValue(0), 1000);
-    if (!myNavigator()) setTimeout(() => setPlayPauseIndex(3), 1000);
-    else setTimeout(() => setPlayPauseIndex(7), 1000);
+  const setTrack = async index => {
+    await changeTrack(index);
+    await audioTag.current.load();
+    await audioTag.current.play();
+    await setInputValue(0);
+    if (!myNavigator()) setPlayPauseIndex(3);
+    else setPlayPauseIndex(7);
     // switching songs manually will in turn clear the myMap hash map containing
     // the track indices and then refill them to full, thus restarting the "shuffle session."
     myMap.clear();
@@ -502,7 +500,7 @@ const Albums: FC = ({ boolean = false, pageContext }: Props) => {
       ? 'scale(1, 1), translate3d(0,0,0,)'
       : 'scale(0.8,0.8), translate3d(-8%,0,0)',
     config: {
-      duration: 20000 / albumNode.tracks.length,
+      duration: 10000 / albumNode.tracks.length,
     },
   });
   stop();
