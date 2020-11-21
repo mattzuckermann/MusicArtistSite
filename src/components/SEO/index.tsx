@@ -46,7 +46,7 @@ function SEO({ description, lang, meta, keywords, title }) {
         },
         {
           property: `og:image`,
-          content: `https://res.cloudinary.com/dmgmf4lbz/image/upload/v1602345667/Meta%20Tag%20Photos/Meta_Image.png`,
+          content: `https://res.cloudinary.com/dmgmf4lbz/image/upload/v1602345667/Meta%20Tag%20Photos/Brand_Logo_2_ca48sc.jpg`,
         },
         {
           name: `twitter:card`,
