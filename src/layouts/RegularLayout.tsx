@@ -18,16 +18,10 @@ const Layout = ({ children, location }) => {
     }
   `);
   return (
-    <div>
-      <Header siteTitle={data.site.siteMetadata.title} location={location} />
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0px`,
-        }}
-      >
-        <main>{children}</main>
+    <div className="pageContainer">
+      <div>
+        <Header siteTitle={data.site.siteMetadata.title} location={location} />
+        <main className="contentWrapper">{children}</main>
       </div>
       <Footer />
     </div>

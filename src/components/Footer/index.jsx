@@ -65,7 +65,7 @@ const Footer = () => {
   `);
 
   return (
-    <animated.footer className="footerBody">
+    <animated.footer>
       <div style={fadeIn}>
         <div className={classes.mediaIconWrapper}>
           {links.map((link, index) => (
