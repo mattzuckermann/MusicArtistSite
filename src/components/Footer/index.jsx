@@ -30,7 +30,7 @@ const Footer = () => {
   const [on, toggle] = useState(false);
   const fadeIn = useSpring({
     opacity: on ? 1 : 0,
-    config: config.molasses,
+    config: { duration: 300 },
   });
 
   const links = [
@@ -65,8 +65,8 @@ const Footer = () => {
   `);
 
   return (
-    <animated.footer>
-      <div style={fadeIn}>
+    <animated.footer style={fadeIn}>
+      <div>
         <div className={classes.mediaIconWrapper}>
           {links.map((link, index) => (
             <FooterIcon
