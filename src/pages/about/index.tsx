@@ -166,7 +166,7 @@ const About = () => {
       url:
         'https://stream.mux.com/Us00bwq8fn3m3jTDzC02gfolAM3XXOSdEK4X3wcHd001pc.m3u8',
       thumbnail:
-        'https://res.cloudinary.com/dmgmf4lbz/image/upload/v1602074131/Video%20Files/Thumbnail%20Photos/Screen_Shot_2020-10-07_at_5.33.46_AM_lbp7gq.png',
+        'https://res.cloudinary.com/dmgmf4lbz/image/upload/v1607387807/Thumbnail%20Photos/Reiki.png',
       credits: [
         {
           name: 'Luis Lopez',
@@ -181,7 +181,7 @@ const About = () => {
       url:
         'https://stream.mux.com/70201ZYW49sF01AH8qVidzxLvWuaeik4tGYf9F9E1kUmWM.m3u8',
       thumbnail:
-        'https://res.cloudinary.com/dmgmf4lbz/image/upload/v1602073305/Video%20Files/Thumbnail%20Photos/Screen_Shot_2020-10-07_at_5.19.40_AM_uviw96.png',
+        'https://res.cloudinary.com/dmgmf4lbz/image/upload/v1607387804/Thumbnail%20Photos/Kassius.png',
       credits: [
         {
           name: 'Veronica Mullen',
@@ -194,7 +194,7 @@ const About = () => {
       url:
         'https://stream.mux.com/q7qTYyNp23hSN01Z01EdnDyzsGrENLxpEKzJo502cnJHsE.m3u8',
       thumbnail:
-        'https://res.cloudinary.com/dmgmf4lbz/image/upload/v1602073601/Video%20Files/Thumbnail%20Photos/Screen_Shot_2020-10-07_at_5.25.54_AM_fqqtxt.png',
+        'https://res.cloudinary.com/dmgmf4lbz/image/upload/v1607387808/Thumbnail%20Photos/Jury.png',
       credits: [],
     },
   ];
