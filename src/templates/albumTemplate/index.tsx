@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
+import  { useLocation } from '@reach/router';
 import { useTrail, useSpring, animated } from 'react-spring';
 import { createStyles } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
@@ -137,7 +138,9 @@ const useStyles = makeStyles(() =>
   })
 );
 
-// ? @props: TypeScript Types
+/**
+ * @param TypeScript Types
+ */
 type Track = {
   id: string;
   original_secure_url: string;
@@ -167,6 +170,19 @@ type Props = {
 
 const Albums: FC = ({ boolean = false, pageContext }: Props) => {
   const { albumNode, allCloudinaryIcons } = pageContext;
+  const location = useLocation();
+  const handleHashLookup = (hashMap,item) => {
+    if (hashMap.has(item)) {
+      return parseInt(hashMap.get(item))
+    } else {
+      return 0
+    }
+  }
+  const paramHash = new Map()
+  for (let i in albumNode.tracks) {
+    paramHash.set(albumNode.tracks[i].public_id.substring(12).replace(/ /g,"-").toLowerCase(), i)
+  }
+
 
   const classes = useStyles();
   const [dataFullyLoaded, setDataFullyLoaded] = useState(false);
@@ -181,7 +197,7 @@ const Albums: FC = ({ boolean = false, pageContext }: Props) => {
   const [initialFaded, changeInitialFaded] = useState(false);
   const [playing, setPlaying] = useState(false);
 
-  const [currentTrack, changeTrack] = useState(0);
+  const [currentTrack, changeTrack] = useState(handleHashLookup(paramHash, location.search.substring(1)));
   const [repeatIndex, setRepeatIndex] = useState(0);
   const [previousRepeatIndex, setPreviousRepeatIndex] = useState(0);
   const [shuffleIndex, setShuffleIndex] = useState(0);
@@ -454,6 +470,8 @@ const Albums: FC = ({ boolean = false, pageContext }: Props) => {
   }, []);
 
   useEffect((): void => {
+    const inputName = albumNode.tracks[currentTrack].public_id.substring(12);
+    window.history.replaceState(null, "", `?${inputName.toLowerCase().replace(/ /g,"-")}`);
     setLoadTakingTooLong(false);
     const checkLoadTime = setTimeout(() => setLoadTakingTooLong(true), 2500);
     setDataFullyLoaded(false);
